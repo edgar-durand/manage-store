@@ -1,0 +1,35 @@
+{% extends 'list.html' %}
+{% block colums %}
+<th scope="col" style="with: 10%;">Id</th>
+<th scope="col" style="with: 25%;">Nombre</th>
+<th scope="col" style="with: 25%;">Lider</th>
+<th scope="col" style="with: 25%;">Dirección</th>
+<th scope="col" style="with: 15%;">Telefono</th>
+<th scope="col" style="with: 15%;">Red</th>
+<th scope="col" style="with: 15%;">Opciones</th>
+
+{% endblock %}
+
+{% block rows %}
+{% for r in object_list %}
+<tr>
+    <td>{{ r.id }}</td>
+    <td>{{ r.nombre }}</td>
+    <td>{{ r.lider }}</td>
+    <td>{{ r.direccion }}</td>
+    <td>
+        {% if r.telefono %}
+        {{ r.telefono }}
+        {% endif %}
+    </td>
+    <td>{{ r.red }}</td>
+     <td>
+        <a href="{% url 'casapaz_delete_view' r.id %}" type="button"
+           class="btn btn-danger btn-flat deletebut"/><i class="fas fa-trash-alt"></i>
+        <a href="{% url 'casapaz_edit_view' r.id %}" type="button" class="btn btn-warning btn-flat"/><i
+            class="fas fa-edit"></i>
+    </td>
+</tr>
+{% endfor %}
+{% endblock %}
+

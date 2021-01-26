@@ -1,0 +1,35 @@
+{% extends 'list.html' %}
+
+
+{% block colums %}
+
+<th scope="col" style="with: 25%;">Fecha</th>
+<th scope="col" style="with: 25%;">Importe</th>
+<th scope="col" style="with: 50%;">Miembro</th>
+<th scope="col" style="with: 50%;">Opciones</th>
+
+
+{% endblock %}
+
+{% block rows %}
+{% for r in object_list %}
+<tr>
+    <td>{{ r.fecha | date:'SHORT_DATE_FORMAT' }}</td>
+    <td>{{ r.importe}}</td>
+    <td>{{ r.miembro }}</td>
+
+    <td>
+        <a href="{% url 'diezmo_delete_view' r.id %}" type="button"
+           class="btn btn-danger btn-flat deletebut"/><i class="fas fa-trash-alt"></i>
+        <a href="{% url 'diezmo_edit_view' r.id %}" type="button" class="btn btn-warning btn-flat"/><i
+            class="fas fa-edit"></i>
+    </td>
+</tr>
+
+{% endfor %}
+
+{% endblock %}
+
+
+
+

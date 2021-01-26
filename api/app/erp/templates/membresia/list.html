@@ -1,0 +1,44 @@
+{% extends 'list.html' %}
+{% load static %}
+
+{% block colums %}
+
+<th scope="col" style="with: 10%;">Foto</th>
+<th scope="col" style="with: 10%;">Exp</th>
+<th scope="col" style="with: 10%;">CI</th>
+<th scope="col" style="with: 25%;">Nombre y Apellidos</th>
+<th scope="col" style="with: 25%;">Direccion</th>
+<th scope="col" style="with: 15%;">Fecha Nacimiento</th>
+<th scope="col" style="with: 15%;">Telefonos</th>
+<th scope="col" style="with: 15%;">Opciones</th>
+
+{% endblock %}
+
+{% block rows %}
+{% for r in object_list %}
+<tr>
+    <td><img src="/media/{{ r.foto }}" class="d-block mx-auto" style="height: 50px; width: 50px;"></td>
+    <td>{{ r.Exp }}</td>
+    <td>{{ r.ci }}</td>
+    <td>{{ r.nombres }} {{ r.apellido1 }} {{ r.apellido2 }}</td>
+    <td>{{ r.direccion }}</td>
+    <td>{{ r.fecha_nacimiento }}</td>
+    <td>
+        {% if r.telf_fijo %} Fijo: {{ r.telf_fijo }} <br> {% endif %}
+        {% if r.telf_celular %} Celular: {{ r.telf_celular }} <br> {% endif %}
+        {% if r.telf_cercano %} Cercano: {{ r.telf_cercano }} {% endif %}
+    </td>
+    <td>
+        <a href="{% url 'membresia_delete_view' r.id %}" button type="button" class="btn btn-danger btn-flat deletebut"><i class="fas fa-trash-alt"></i></button>
+        <a href="{% url 'membresia_edit_view' r.id %}" class="btn btn-warning btn-flat"><i
+                class="fas fa-edit"></i></button>
+    </td>
+</tr>
+
+{% endfor %}
+
+{% endblock %}
+
+
+
+

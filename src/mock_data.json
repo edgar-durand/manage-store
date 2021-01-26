@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "name": "myFirstProduct",
+  "image": "/3.jpg",
+  "description": "Short description",
+  "price_cost": 99.99,
+  "price_vent": 150.99,
+  "inStock": 3,
+  "_public": true,
+  "category": "Tools"
+}

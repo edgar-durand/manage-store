@@ -1,0 +1,134 @@
+{% load static %}
+<!-- Navbar -->
+<nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+    <div class="container">
+        <a href="../../index3.html" class="navbar-brand">
+            <img src="{% static 'lib/adminlte-3.0.5/img/AdminLTELogo.png' %}" alt="AdminLTE Logo"
+                 class="brand-image img-circle elevation-3"
+                 style="opacity: .8">
+            <span class="brand-text font-weight-light">AdminLTE 3</span>
+        </a>
+
+        <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="index3.html" class="nav-link">Inicio</a>
+                </li>
+
+                <!-- Basico Redes -->
+                <li class="nav-item dropdown">
+                    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       class="nav-link dropdown-toggle">Generales</a>
+                    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                        <li><a href="{% url 'reds_list_view' %}" class="dropdown-item">Redes </a></li>
+                        <li><a href="{% url 'reds_create_view' %}" class="dropdown-item">Nueva Red</a></li>
+
+                    </ul>
+                </li>
+
+                <!-- Membresia -->
+
+                <li class="nav-item dropdown">
+                    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       class="nav-link dropdown-toggle">Membresia</a>
+                    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                        <li><a href="{% url 'membresia_list_view' %}" class="dropdown-item">Listado de Membresía </a>
+                        </li>
+                        <li><a href="{% url 'membresia_create_view' %}" class="dropdown-item">Nuevo Miembro</a></li>
+
+                    </ul>
+                </li>
+
+                <!-- Tesoreria-->
+
+                <li class="nav-item dropdown">
+                    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       class="nav-link dropdown-toggle">Tesorería</a>
+                    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+
+                        <li><a href="{% url 'reporte_create_view' %}" class="dropdown-item">Nuevo Reporte</a>
+                        <li class="dropdown-divider"></li>
+                        <li><a href="{% url 'tesoreria_list_view' %}" class="dropdown-item">Tesorerias </a>
+                        </li>
+                        <li><a href="{% url 'tesoreria_create_view' %}" class="dropdown-item">Nueva Tesorería</a></li>
+                        <li class="dropdown-divider"></li>
+                        <li><a href="{% url 'movimientos_list_view' %}" class="dropdown-item">Listar Movimientos</a>
+                        <li><a href="{% url 'movimientos_create_view' %}" class="dropdown-item">Nuevo Movimiento</a>
+                        <li class="dropdown-divider"></li>
+                        <li><a href="{% url 'concepto_list_view' %}" class="dropdown-item">Listar Conceptos</a>
+                        <li><a href="{% url 'concepto_create_view' %}" class="dropdown-item">Nuevo Concepto</a>
+                        <li class="dropdown-divider"></li>
+                        <li><a href="{% url 'diezmo_list_view' %}" class="dropdown-item">Diezmos</a></li>
+                        <li><a href="{% url 'diezmo_create_view' %}" class="dropdown-item">Nuevo Diezmo</a></li>
+
+                    </ul>
+                </li>
+
+                <!-- Casas de Paz -->
+
+                <li class="nav-item dropdown">
+                    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       class="nav-link dropdown-toggle">Casas de Paz</a>
+                    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                        <li><a href="{% url 'casapaz_list_view' %}" class="dropdown-item">Casas de Paz </a>
+                        </li>
+                        <li><a href="{% url 'casapaz_create_view' %}" class="dropdown-item">Nueva Casa de Paz</a></li>
+                        <li class="dropdown-divider"></li>
+                        <li><a href="{% url 'repcasapaz_list_view' %}" class="dropdown-item">Reportes Casa de Paz </a>
+                        </li>
+                        <li><a href="{% url 'repcasapaz_create_view' %}" class="dropdown-item">Nuevo Reporte</a></li>
+
+                    </ul>
+                </li>
+
+
+            </ul>
+
+
+        </div>
+
+        <!-- Right navbar links -->
+        <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+
+            <!-- Notifications Dropdown Menu -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-bell"></i>
+                    <span class="badge badge-warning navbar-badge">15</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-header">15 Notifications</span>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-envelope mr-2"></i> 4 new messages
+                        <span class="float-right text-muted text-sm">3 mins</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-users mr-2"></i> 8 friend requests
+                        <span class="float-right text-muted text-sm">12 hours</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-file mr-2"></i> 3 new reports
+                        <span class="float-right text-muted text-sm">2 days</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button"><i
+                        class="fas fa-th-large"></i></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- /.navbar -->
+

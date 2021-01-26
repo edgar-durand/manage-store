@@ -1,0 +1,43 @@
+{% extends 'list.html' %}
+{% load static %}
+
+{% block colums %}
+
+<th scope="col" style="with: 25%;">Fecha</th>
+<th scope="col" style="with: 25%;">Asist. Total</th>
+<th scope="col" style="with: 50%;">Vistas</th>
+<th scope="col" style="with: 50%;">NC</th>
+<th scope="col" style="with: 50%;">Bajas</th>
+<th scope="col" style="with: 50%;">Ofrendas</th>
+<th scope="col" style="with: 50%;">Casa de Paz</th>
+<th scope="col" style="with: 50%;">Opciones</th>
+
+
+{% endblock %}
+
+{% block rows %}
+{% for r in object_list %}
+<tr>
+    <td>{{ r.fecha | date:'SHORT_DATE_FORMAT' }}</td>
+    <td>{{ r.asist_total}}</td>
+    <td>{{ r.cant_visita }}</td>
+    <td>{{ r.cant_nc }}</td>
+    <td>{{ r.cant_bajas }}</td>
+    <td>{{ r.ofrendas }}</td>
+    <td>{{ r.casa_paz }}</td>
+
+    <td>
+        <a href="{% url 'concepto_delete_view' r.id %}" type="button"
+           class="btn btn-danger btn-flat deletebut"/><i class="fas fa-trash-alt"></i>
+        <a href="{% url 'concepto_edit_view' r.id %}" type="button" class="btn btn-warning btn-flat"/><i
+            class="fas fa-edit"></i>
+    </td>
+</tr>
+
+{% endfor %}
+
+{% endblock %}
+
+
+
+
