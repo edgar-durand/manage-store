@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import NewProductFormUI from "./NewProductFormUI";
 import send from "../js/send";
-import getBase64 from "../js/getBase64";
 import authHelper from "../js/authHelper";
 import store from "../store";
 
@@ -63,7 +62,7 @@ const NewProductForm = () => {
         e.preventDefault();
         if (name && description && price_cost && price_vent && category) {
             send({...state.product, token: authHelper()}, '/api/product/', "post")
-                .then(r => {
+                .then(() => {
                     store.dispatch({
                         type:"ADD_NEW_PRODUCT"
                     })
