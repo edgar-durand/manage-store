@@ -12,6 +12,12 @@ export default (props) => (
 
         <form onSubmit={(event) => props.handleSubmit(event)} className="m-t" action="register.js">
             <div className="form-group">
+                <input onChange={(event) => props.handleChange(event)} name="first_name" type="text" className="form-control"
+                       placeholder="First Name"
+                       value={props.first_name}
+                       required/>
+            </div>
+            <div className="form-group">
                 <input onChange={(event) => props.handleChange(event)} name="username" type="text" className="form-control"
                        placeholder="User*"
                        value={props.username}
