@@ -16,17 +16,28 @@ const reducer = (state, action) => {
                 ...state, globalState: {...state.globalState, action}
             }
         }
+            break;
         case "GET_CATEGORIES": {
             return {
                 ...state, categories: {...action}
             }
         }
+            break;
         case "ADD_NEW_PRODUCT": {
             return {
-                ...state, productList: {...state.productList, action}
+                ...state
             }
         }
-        default :{
+            break;
+        case "UPDATE_LIST": {
+            const NEW_LIST = Object.values(state.productList).filter(product => product.id !== action.id)
+            console.log(NEW_LIST)
+            console.log(state.productList)
+            return {
+                ...state, productList: {...NEW_LIST}
+            }
+        }
+        default : {
 
         }
 

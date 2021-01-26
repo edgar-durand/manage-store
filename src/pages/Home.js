@@ -40,7 +40,10 @@ const Home = () => {
 
 
     store.subscribe(() => {
-        setState({...state,0:{ prod_user: {...state[0].prod_user, ...store.getState().productList}}})
+        send(state, "/api/profile", "get")
+            .then(p => {
+                setState({...state, ...p});
+            })
 
     })
 
@@ -50,6 +53,13 @@ const Home = () => {
         localStorage.removeItem("token");
         setState({});
         return <Redirect to="/login"/>
+    }
+
+    const handleClick = (id) => {
+        send({token: authHelper()}, `/api/product/${id}`, "delete")
+            .then(r=>setState({...state,0:{prod_user:{...Object.values(state[0].prod_user).filter(x=>x.id !== id) }}}))
+
+
     }
 
     document.body.classList.remove('gray-bg');
@@ -72,6 +82,7 @@ const Home = () => {
                             <Route path="/home/edit/:id" component={Edit}/>
                             <Route path="/home/new_product/" component={NewProductForm}/>
                             <Route path="/home/my_products/" component={() => <ProductList
+                                handleClick={(id) => handleClick(id)}
                                 {...state[0].prod_user}
                             />
                             }/>/>

@@ -1,10 +1,10 @@
 const send = async (state, endPoint, method) => {
     const SERVER = "http://localhost:8000";
-    let result, res, config;
+    let result, res, config, dat;
     method = method.toUpperCase();
 
     try {
-        if(state.token) {
+        if (state.token) {
             switch (method) {
                 case "POST": {
                     config = {
@@ -12,8 +12,10 @@ const send = async (state, endPoint, method) => {
                         headers: {
                             "Accept": "application/json",
                             "Content-Type": "application/json",
+                            // "Content-Type": "multipart/form-data",
                             "Authorization": "token " + state.token
                         },
+                        // body: state
                         body: JSON.stringify(state)
                     }
                 }
@@ -43,10 +45,19 @@ const send = async (state, endPoint, method) => {
                 }
                     break;
                 case "DELETE": {
-
+                    config = {
+                        method: method,
+                        mode: "cors",
+                        headers: {
+                            "Accept": "*/*",
+                            "Authorization": `token ${state.token}`
+                        }
+                    }
+                    res = await fetch(SERVER + endPoint, config);
+                    dat = await JSON.parse(res);
                 }
             }
-        }else {
+        } else {
 
             method === "POST" ?
                 config = {
@@ -65,21 +76,22 @@ const send = async (state, endPoint, method) => {
                     }
                 }
         }
-        // method === "POST" ?
-        res = await fetch(SERVER + endPoint, config) ;
-        // res = await fetch(SERVER + endPoint);
 
-        let dat = await res.json();
 
-        result =  {...dat}  ;
+        if (method !== "DELETE") {
+            res = await fetch(SERVER + endPoint, config);
+            dat = await res.json();
+        }
+
+        result = {...dat};
 
 
     } catch (error) {
-       console.log(error)
-        result={error};
+        console.log(error)
+        result = {error};
     }
 
-return result
+    return result
 
 }
 export default send;

@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 
 const ProductList = (props) => {
     const token = {token: authHelper()}
-    if (Object.values(props).length)
+    if (Object.values(props).length > 1)
         return (
             <div className="row">
                 <div className="col-lg-12">
@@ -30,48 +30,59 @@ const ProductList = (props) => {
                                 </thead>
                                 <tbody>
                                 {
-                                    Object.values(props).map((product,index) => {
-                                        const {
-                                            name,
-                                            category,
-                                            price_cost,
-                                            price_vent,
-                                            inStock,
-                                            _public,
-                                            id
-                                        } = product
-                                        return (
-                                            <tr key={index}>
-                                                <td>
-                                                    {name}
-                                                </td>
-                                                <td>
-                                                    {category}
-                                                </td>
-                                                <td>
-                                                    {price_cost}
-                                                </td>
-                                                <td>
-                                                    {price_vent}
-                                                </td>
-                                                <td>
-                                                    {inStock}
-                                                </td>
-                                                <td>
-                                                    <Status
-                                                        status={_public}
-                                                    />
-                                                </td>
-                                                <td className="text-right">
-                                                    <div className="btn-group">
-                                                        <Link to={"/home/detail/" + id}
-                                                              className="btn-white btn btn-xs">View</Link>
-                                                        <Link to={"/home/edit/" + id}
-                                                              className="btn-white btn btn-xs">Edit</Link>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        )
+                                    Object.values(props).map((product, index) => {
+                                        if (product) {
+                                            const {
+                                                name,
+                                                category,
+                                                price_cost,
+                                                price_vent,
+                                                inStock,
+                                                _public,
+                                                id
+                                            } = product
+
+                                            if (product.name !== "handleClick")
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>
+                                                            {name}
+                                                        </td>
+                                                        <td>
+                                                            {category}
+                                                        </td>
+                                                        <td>
+                                                            {price_cost}
+                                                        </td>
+                                                        <td>
+                                                            {price_vent}
+                                                        </td>
+                                                        <td>
+                                                            {inStock}
+                                                        </td>
+                                                        <td>
+                                                            <Status
+                                                                status={_public}
+                                                            />
+                                                        </td>
+                                                        <td className="text-right">
+                                                            <div className="btn-group">
+                                                                <Link to={"/home/detail/" + id}
+                                                                      className="btn-white btn btn-xs">View</Link>
+                                                                <Link to={"/home/edit/" + id}
+                                                                      className="btn-white btn btn-xs"><i title="Edit"
+                                                                                                          style={{fontSize: "20px"}}
+                                                                                                          className="fa fa-pencil"/></Link>
+                                                                <button title="Delete"
+                                                                        onClick={() => props.handleClick(id)}
+                                                                        className="btn-danger btn btn-xs"><i
+                                                                    className="fa fa-close"/>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                        }
                                     })
                                 }
 
