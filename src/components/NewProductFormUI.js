@@ -120,7 +120,7 @@ const NewProductFormUI = ({
                                     <div className="hr-line-dashed"/>
                                     <label className="col-sm-2 col-form-label"/>
                                     <div className="col-sm-10" style={{display: "content"}}>
-                                        <input type="submit" className="btn btn-primary col-lg-auto"
+                                        <input type="submit" className="btn btn-primary col-lg-auto float-right"
                                                style={{marginTop: '20px'}} value="Save"/>
                                     </div>
 

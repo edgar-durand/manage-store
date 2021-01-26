@@ -73,9 +73,10 @@ const ProductList = (props) => {
                                                                                                           style={{fontSize: "20px"}}
                                                                                                           className="fa fa-pencil"/></Link>
                                                                 <button title="Delete"
+                                                                        style={{fontSize: "15px"}}
                                                                         onClick={() => props.handleClick(id)}
-                                                                        className="btn-danger btn btn-xs"><i
-                                                                    className="fa fa-close"/>
+                                                                        className="btn-white btn btn-xs"><i
+                                                                    className="fa fa-trash"/>
                                                                 </button>
                                                             </div>
                                                         </td>

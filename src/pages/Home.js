@@ -58,8 +58,6 @@ const Home = () => {
     const handleClick = (id) => {
         send({token: authHelper()}, `/api/product/${id}`, "delete")
             .then(r=>setState({...state,0:{prod_user:{...Object.values(state[0].prod_user).filter(x=>x.id !== id) }}}))
-
-
     }
 
     document.body.classList.remove('gray-bg');
@@ -71,6 +69,9 @@ const Home = () => {
             <div id="wrapper">
                 <Router>
                     <NavUI
+                        image={state[0].photo}
+                        last_name={state[0].last_name}
+                        status_message={state[0].status_message}
                         logOut={() => logOut()}
                     />
                     <div id="page-wrapper" className="gray-bg">

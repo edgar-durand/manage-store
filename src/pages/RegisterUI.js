@@ -8,7 +8,6 @@ export default (props) => (
         <div>
             <h1 className="logo-name">IN+</h1>
         </div>
-        {/*<h3>Register to IN+</h3>*/}
         <p>Create account to see it in action.</p>
 
         <form onSubmit={(event) => props.handleSubmit(event)} className="m-t" action="register.js">
