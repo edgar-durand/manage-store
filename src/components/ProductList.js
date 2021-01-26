@@ -2,7 +2,6 @@ import React from "react";
 import Status from "./Status";
 import authHelper from "../js/authHelper";
 import NewProductForm from "./NewProductForm";
-import "./styles/css/plugins/footable/footable.core.css"
 import {Link} from "react-router-dom";
 
 const ProductList = (props) => {
@@ -14,7 +13,7 @@ const ProductList = (props) => {
                     <div className="ibox">
                         <div className="ibox-content">
 
-                            <table className="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                            <table className="table-condensed table-hover table-striped col-lg-12" >
                                 <thead>
                                 <tr>
 
