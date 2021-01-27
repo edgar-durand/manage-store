@@ -5,7 +5,6 @@ import TopBarUI from "../components/TopBarUI";
 import FooterUI from "../components/FooterUI";
 import ProductList from "../components/ProductList";
 import NewProductForm from "../components/NewProductForm";
-import store from "../store";
 import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 // import Register from "./register";
 import Detail from "../components/Detail";
@@ -39,14 +38,6 @@ const Home = () => {
     }, [])
 
 
-    store.subscribe(() => {
-        send(state, "/api/profile", "get")
-            .then(p => {
-                setState({...state, ...p});
-            })
-
-    })
-
     const logOut = () => {
         send(state, "/api/logout", "get")
             .then(r => console.log(r))
@@ -55,10 +46,6 @@ const Home = () => {
         return <Redirect to="/login"/>
     }
 
-    const handleClick = (id) => {
-        send({token: authHelper()}, `/api/product/${id}`, "delete")
-            .then(r=>setState({...state,0:{prod_user:{...Object.values(state[0].prod_user).filter(x=>x.id !== id) }}}))
-    }
 
     document.body.classList.remove('gray-bg');
 
@@ -83,10 +70,8 @@ const Home = () => {
                             <Route path="/home/edit/:id" component={Edit}/>
                             <Route path="/home/new_product/" component={NewProductForm}/>
                             <Route path="/home/my_products/" component={() => <ProductList
-                                handleClick={(id) => handleClick(id)}
                                 {...state[0].prod_user}
-                            />
-                            }/>/>
+                            />}/>
                             {/*<Route exact path="/home" component={}/>*/}
                             <Route component={NotFound}/>
                         </Switch>
