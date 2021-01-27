@@ -23,6 +23,10 @@ const NavUI = ({logOut, image, last_name,status_message}) => (
                     <Link to="/home/my_products/"><i className="fa fa-diamond"/> <span
                         className="nav-label">My store</span></Link>
                 </li>
+                <li>
+                    <Link to="/home/categories/"><i className="fa fa-diamond"/> <span
+                        className="nav-label">Categories</span></Link>
+                </li>
 
                 <li>
                     <a href="#"><i className="fa fa-shopping-cart"/> <span
