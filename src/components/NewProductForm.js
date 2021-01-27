@@ -28,8 +28,7 @@ const NewProductForm = () => {
 
 
     const handleFile = (file) => {
-        // let form = new FormData
-        // form.append("image",file)
+
         setState({
             ...state, product: {...state.product, image: file}
         })
@@ -60,15 +59,31 @@ const NewProductForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        let form = new FormData
+        form.append("image",state.product.image)
+        form.append("name",name)
+        form.append("description",description)
+        form.append("_public",_public)
+        form.append("price_cost",price_cost)
+        form.append("price_vent",price_vent)
+        form.append("inStock",inStock)
+        form.append("category",category)
+        form.append("boundary","20000000000")
+
+
         if (name && description && price_cost && price_vent && category) {
-            send({...state.product, token: authHelper()}, '/api/product/', "post")
-                .then(() => {
+            send({form,token: authHelper()}, '/api/product/', "file")
+                .then((r) => {
+                    if (!r.error)
                     store.dispatch({
                         type:"ADD_NEW_PRODUCT"
                     })
 
                 })
+
         }else console.error("You must fill up all input fields.")
+
     }
 
 

@@ -1,3 +1,5 @@
+import authHelper from "./authHelper";
+
 const send = async (state, endPoint, method) => {
     const SERVER = "http://localhost:8000";
     let result, res, config, dat;
@@ -13,10 +15,24 @@ const send = async (state, endPoint, method) => {
                             "Accept": "application/json",
                             "Content-Type": "application/json",
                             // "Content-Type": "multipart/form-data",
-                            "Authorization": "token " + state.token
+                            "Authorization": "token " + authHelper()
                         },
                         // body: state
                         body: JSON.stringify(state)
+                    }
+                }
+                    break;
+                case "FILE": {
+                    config = {
+                        method: "POST",
+                        headers: {
+                            "Accept": "*/*",
+                            // "Content-Type": "application/json",
+                            // "Content-Type": "multipart/form-data",
+                            "Authorization": "token " + authHelper()
+                        },
+                        // body: state
+                        body: state.form
                     }
                 }
                     break;

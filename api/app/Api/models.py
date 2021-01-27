@@ -5,7 +5,7 @@ from django.db import models
 # Create your models here.
 class Usuarios(AbstractUser):
     birth_date = models.DateField(verbose_name="birth_date", null=True, blank=True)
-    photo = models.CharField(max_length=150, verbose_name="photo", null=True, blank=True)
+    photo = models.ImageField(upload_to="usersprofile/",null=True, blank=True, verbose_name="photo")
     street = models.CharField(max_length=150, verbose_name="street", null=True, blank=True)
     number = models.CharField(max_length=150, verbose_name="number", null=True, blank=True)
     between = models.CharField(max_length=150, verbose_name="between", null=True, blank=True)
@@ -24,7 +24,7 @@ class Usuarios(AbstractUser):
 class category(models.Model):
     name = models.CharField(max_length=150, verbose_name="name")
     description = models.CharField(max_length=150, verbose_name="description")
-    image = models.CharField(max_length=150, verbose_name="image", null=True, blank=True)
+    image = models.ImageField(upload_to="category/",null=True, blank=True, verbose_name="image")
 
     def __str__(self):
         return self.name
@@ -32,7 +32,7 @@ class category(models.Model):
 
 class product(models.Model):
     name = models.CharField(max_length=150, verbose_name="name")
-    image = models.ImageField(upload_to="fotos/", null=True, blank=True)
+    image = models.ImageField(upload_to="products/",null=True, blank=True, verbose_name="image")
     description = models.CharField(max_length=150, verbose_name="description")
     price_cost = models.FloatField(verbose_name="price_cost")
     price_vent = models.FloatField(verbose_name="price_vent")
