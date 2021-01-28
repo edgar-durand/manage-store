@@ -60,6 +60,18 @@ const send = async (state, endPoint, method) => {
                     }
                 }
                     break;
+                case "PUTFILE": {
+                    config = {
+                        method: "PUT",
+                        headers: {
+                            "Accept": "*/*",
+                            // "Content-Type": "application/json",
+                            "Authorization": "token " + state.token
+                        },
+                        body: state.form
+                    }
+                }
+                    break;
                 case "DELETE": {
                     config = {
                         method: method,

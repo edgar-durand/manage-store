@@ -16,7 +16,7 @@ const Edit = ({
                   handleFile,
                   handlePublic
               }) => {
-    const TOKEN = {token:authHelper()}
+    const TOKEN = {token: authHelper()}
     const [category, setCategory] = useState([])
     useEffect(() => {
         send(TOKEN, "/api/category", "get")
@@ -95,13 +95,15 @@ const Edit = ({
                                             <div className="col-sm-10"><input name="inStock" value={inStock}
                                                                               onChange={(e) => handleChange(e)}
                                                                               type="number"
-                                                                              defaultValue="1" min="0"
+                                                                              min="0"
                                                                               className="form-control"/></div>
                                         </div>
                                         <div className="form-group row"><label
                                             className="col-sm-2 col-form-label">Image</label>
                                             <div className="col-sm-10">
-                                                <img ref={img} width="400px" src={image} name="showImg" alt="" style={{
+                                                <img ref={img} width="400px"
+                                                     src={typeof (image) === "string" ? image : ""  }
+                                                     alt="" style={{
                                                     objectFit: "contain"
                                                 }}/>
                                             </div>
@@ -110,7 +112,7 @@ const Edit = ({
                                         <div className="form-group row"><label
                                             className="col-sm-2 col-form-label">Change image</label>
                                             <div className="col-sm-10">
-                                                <input ref={file} name="image" id="logo" type="file" onChange={(e) => {
+                                                <input ref={file} name="image" id="logo" type="file" onChange={() => {
                                                     if (file.current.files[0]) {
                                                         img.current.src = URL.createObjectURL(file.current.files[0])
                                                         label.current.childNodes[0].textContent = file.current.files[0].name
