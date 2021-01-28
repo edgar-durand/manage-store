@@ -10,6 +10,7 @@ import Detail from "../components/Detail";
 import authHelper from "../js/authHelper";
 import NotFound from "./NotFound";
 import Edit from "../components/Edit";
+import store from "../store";
 
 const Home = () => {
     const [state, setState] = useState({
@@ -25,15 +26,12 @@ const Home = () => {
             .then(p => {
                 setState({...state, ...p});
             })
-        // send(state, "/api/category", "get")
-        //     .then(r => {
-        //         if (!store.getState().categories.length)
-        //             store.dispatch({
-        //                 type: "GET_CATEGORIES",
-        //                 ...r
-        //             })
-        //     })
     }, [])
+
+    store.dispatch({
+        type:"UPDATE_STATE",
+        ...state
+    })
 
 
     const logOut = () => {
