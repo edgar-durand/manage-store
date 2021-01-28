@@ -116,7 +116,7 @@ const DetailUI = (props) => {
                                 <button className="btn btn-white btn-sm"><i className="fa fa-star" /> Add to
                                     wishlist
                                 </button>
-                                <a href={`mailto: ${props.author.email}`} className="btn btn-white btn-sm"><i className="fa fa-envelope"/> Contact
+                                <a href={`mailto: ${props.author}`} className="btn btn-white btn-sm"><i className="fa fa-envelope"/> Contact
                                     with author
                                 </a>
                                 <Link to="/home/my_products/" className="btn btn-white btn-sm"><i className="fa fa-home"/> Products
