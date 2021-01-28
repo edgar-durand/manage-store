@@ -86,7 +86,18 @@ const send = async (state, endPoint, method) => {
                 }
             }
         } else {
-
+            if (method==="FILE"){
+                    config = {
+                        method: "POST",
+                        headers: {
+                            "Accept": "*/*",
+                            // "Content-Type": "application/json",
+                            // "Content-Type": "multipart/form-data",
+                        },
+                        // body: state
+                        body: state.form
+                    }
+            }else
             method === "POST" ?
                 config = {
                     method: method,
