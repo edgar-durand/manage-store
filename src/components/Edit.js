@@ -81,10 +81,16 @@ const Edit = (props) => {
                         type: "ADD_NEW_PRODUCT"
                     })
                     console.log(r)
+                    redirect();
                 })
-            return <Redirect to="/home/my_products"/>
+
         } else console.error("You must fill up all input fields.")
+
         console.log(state)
+    }
+
+    function redirect() {
+        return <Redirect to="/home/my_products"/>
     }
 
     return <EditUI
