@@ -93,14 +93,15 @@ const NewProductFormUI = ({
                                     <div className="hr-line-dashed"/>
                                     <label className="col-sm-2 col-form-label">Image</label>
                                     <div className="custom-file col-sm-10">
-                                        <input ref={file} name="image" id="logo" type="file" onChange={(e) => {
+                                        <input ref={file} name="image" id="logo" type="file" onChange={() => {
                                             if (file.current.files[0]) {
                                                 img.current.src = URL.createObjectURL(file.current.files[0])
                                                 label.current.childNodes[0].textContent = file.current.files[0].name
                                                 handleFile(file.current.files[0])
                                             } else {
-                                                img.current.src = ""
+                                                img.current.src = null
                                                 label.current.childNodes[0].textContent = "Choose file..."
+                                                handleFile(file.current.files[0])
                                             }
 
                                         }} accept="image/*"
@@ -120,7 +121,7 @@ const NewProductFormUI = ({
                                     <div className="hr-line-dashed"/>
                                     <label className="col-sm-2 col-form-label"/>
                                     <div className="col-sm-10" style={{display: "content"}}>
-                                        <input type="submit" className="btn btn-primary col-lg-auto"
+                                        <input type="submit" className="btn btn-primary col-lg-auto float-right"
                                                style={{marginTop: '20px'}} value="Save"/>
                                     </div>
 

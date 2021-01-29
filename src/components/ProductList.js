@@ -1,20 +1,44 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Status from "./Status";
 import authHelper from "../js/authHelper";
 import NewProductForm from "./NewProductForm";
-import "./styles/css/plugins/footable/footable.core.css"
 import {Link} from "react-router-dom";
+import send from "../js/send";
+import store from "../store";
 
 const ProductList = (props) => {
-    const token = {token: authHelper()}
-    if (Object.values(props).length > 1)
+    const [products, setProducts] = useState({...props})
+
+    useEffect(() => {
+        send({token: authHelper()}, "/api/product/", "get")
+            .then(r => setProducts({...r}))
+    }, [])
+
+    store.subscribe(() => {
+        send({token: authHelper()}, "/api/product", "get")
+            .then(p => {
+                setProducts({...p});
+            })
+
+    })
+
+
+    const handleClick = (id) => {
+        send({token: authHelper()}, `/api/product/${id}`, "delete")
+            .then(() => store.dispatch({
+                type: "ADD_NEW_PRODUCT"
+            }))
+    }
+
+
+    if (Object.values(products).length)
         return (
             <div className="row">
                 <div className="col-lg-12">
                     <div className="ibox">
                         <div className="ibox-content">
 
-                            <table className="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                            <table className="table-condensed table-hover table-striped col-lg-12">
                                 <thead>
                                 <tr>
 
@@ -30,7 +54,7 @@ const ProductList = (props) => {
                                 </thead>
                                 <tbody>
                                 {
-                                    Object.values(props).map((product, index) => {
+                                    Object.values(products).map((product, index) => {
                                         if (product) {
                                             const {
                                                 name,
@@ -42,46 +66,46 @@ const ProductList = (props) => {
                                                 id
                                             } = product
 
-                                            if (product.name !== "handleClick")
-                                                return (
-                                                    <tr key={index}>
-                                                        <td>
-                                                            {name}
-                                                        </td>
-                                                        <td>
-                                                            {category}
-                                                        </td>
-                                                        <td>
-                                                            {price_cost}
-                                                        </td>
-                                                        <td>
-                                                            {price_vent}
-                                                        </td>
-                                                        <td>
-                                                            {inStock}
-                                                        </td>
-                                                        <td>
-                                                            <Status
-                                                                status={_public}
-                                                            />
-                                                        </td>
-                                                        <td className="text-right">
-                                                            <div className="btn-group">
-                                                                <Link to={"/home/detail/" + id}
-                                                                      className="btn-white btn btn-xs">View</Link>
-                                                                <Link to={"/home/edit/" + id}
-                                                                      className="btn-white btn btn-xs"><i title="Edit"
-                                                                                                          style={{fontSize: "20px"}}
-                                                                                                          className="fa fa-pencil"/></Link>
-                                                                <button title="Delete"
-                                                                        onClick={() => props.handleClick(id)}
-                                                                        className="btn-danger btn btn-xs"><i
-                                                                    className="fa fa-close"/>
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                )
+                                            return (
+                                                <tr key={index}>
+                                                    <td>
+                                                        {name}
+                                                    </td>
+                                                    <td>
+                                                        {category}
+                                                    </td>
+                                                    <td>
+                                                        {price_cost}
+                                                    </td>
+                                                    <td>
+                                                        {price_vent}
+                                                    </td>
+                                                    <td>
+                                                        {inStock}
+                                                    </td>
+                                                    <td>
+                                                        <Status
+                                                            status={_public}
+                                                        />
+                                                    </td>
+                                                    <td className="text-right">
+                                                        <div className="btn-group">
+                                                            <Link to={"/home/detail/" + id}
+                                                                  className="btn-white btn btn-xs">View</Link>
+                                                            <Link to={"/home/edit/" + id}
+                                                                  className="btn-white btn btn-xs"><i title="Edit"
+                                                                                                      style={{fontSize: "20px"}}
+                                                                                                      className="fa fa-pencil"/></Link>
+                                                            <button title="Delete"
+                                                                    style={{fontSize: "15px"}}
+                                                                    onClick={() => handleClick(id)}
+                                                                    className="btn-white btn btn-xs"><i
+                                                                className="fa fa-trash"/>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            )
                                         }
                                     })
                                 }
@@ -109,7 +133,7 @@ const ProductList = (props) => {
                             <h1>There are not products</h1>
                             <small>Add some product to the store.</small>
                             <NewProductForm
-                                {...token}
+                                token={authHelper()}
                             />
 
                         </div>

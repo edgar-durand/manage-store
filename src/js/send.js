@@ -1,3 +1,5 @@
+import authHelper from "./authHelper";
+
 const send = async (state, endPoint, method) => {
     const SERVER = "http://localhost:8000";
     let result, res, config, dat;
@@ -13,10 +15,24 @@ const send = async (state, endPoint, method) => {
                             "Accept": "application/json",
                             "Content-Type": "application/json",
                             // "Content-Type": "multipart/form-data",
-                            "Authorization": "token " + state.token
+                            "Authorization": "token " + authHelper()
                         },
                         // body: state
                         body: JSON.stringify(state)
+                    }
+                }
+                    break;
+                case "FILE": {
+                    config = {
+                        method: "POST",
+                        headers: {
+                            "Accept": "*/*",
+                            // "Content-Type": "application/json",
+                            // "Content-Type": "multipart/form-data",
+                            "Authorization": "token " + authHelper()
+                        },
+                        // body: state
+                        body: state.form
                     }
                 }
                     break;
@@ -44,6 +60,18 @@ const send = async (state, endPoint, method) => {
                     }
                 }
                     break;
+                case "PUTFILE": {
+                    config = {
+                        method: "PUT",
+                        headers: {
+                            "Accept": "*/*",
+                            // "Content-Type": "application/json",
+                            "Authorization": "token " + state.token
+                        },
+                        body: state.form
+                    }
+                }
+                    break;
                 case "DELETE": {
                     config = {
                         method: method,
@@ -58,7 +86,18 @@ const send = async (state, endPoint, method) => {
                 }
             }
         } else {
-
+            if (method==="FILE"){
+                    config = {
+                        method: "POST",
+                        headers: {
+                            "Accept": "*/*",
+                            // "Content-Type": "application/json",
+                            // "Content-Type": "multipart/form-data",
+                        },
+                        // body: state
+                        body: state.form
+                    }
+            }else
             method === "POST" ?
                 config = {
                     method: method,

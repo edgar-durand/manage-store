@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react"
+import {Redirect} from "react-router-dom"
 import EditUI from "./EditUI";
 import send from "../js/send";
 import authHelper from "../js/authHelper";
-import getBase64 from "../js/getBase64";
 import store from "../store";
 
 
@@ -53,27 +53,44 @@ const Edit = (props) => {
 
 
     const handleFile = (file) => {
-        getBase64(file).then(r => setState({
-            ...state, product: {...state.product, image: r}
-        }))
-            .catch(()=>setState({
-                ...state, product: {...state.product, image: ""}
-            }))
+        setState({
+            ...state,
+            product: {
+                ...state.product,
+                image: file
+            }
+        })
+
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (name && description && price_cost && price_vent && category) {
-            send({...state.product, token: authHelper()}, '/api/product/' + ID+'/', "put")
+            let form = new FormData()
+            form.append("image", image)
+            form.append("name", name)
+            form.append("description", description)
+            form.append("_public", _public)
+            form.append("price_cost", price_cost)
+            form.append("price_vent", price_vent)
+            form.append("inStock", inStock)
+            form.append("category", category)
+            send({form, token: authHelper()}, '/api/product/' + ID + '/', "putFile")
                 .then(r => {
                     store.dispatch({
-                        type:"ADD_NEW_PRODUCT",
-                        ...r
+                        type: "ADD_NEW_PRODUCT"
                     })
                     console.log(r)
+                    redirect();
                 })
+
         } else console.error("You must fill up all input fields.")
+
         console.log(state)
+    }
+
+    function redirect() {
+        return <Redirect to="/home/my_products"/>
     }
 
     return <EditUI

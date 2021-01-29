@@ -37,6 +37,7 @@ const reducer = (state, action) => {
                 ...state, productList: {...NEW_LIST}
             }
         }
+        
         default : {
 
         }
