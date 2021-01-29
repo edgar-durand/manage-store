@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from "react";
 import {Redirect} from "react-router-dom";
-import FatalError from "./FatalError";
-import send from "./../js/send";
+import FatalError from "../FatalError";
+import send from "../../js/send";
 import RegisterUI from "./RegisterUI";
-import passwordRequirements from "../validation/passwordRequirements";
-import msgNotification from "../js/msgNotification";
+import passwordRequirements from "../../validation/passwordRequirements";
+import msgNotification from "../../js/msgNotification";
 
 
 // eslint-disable-next-line import/no-anonymous-default-export

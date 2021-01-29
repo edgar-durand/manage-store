@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react";
 import NewProductFormUI from "./NewProductFormUI";
-import send from "../js/send";
-import authHelper from "../js/authHelper";
-import store from "../store";
+import send from "../../js/send";
+import authHelper from "../../js/authHelper";
+import store from "../../store";
 
 const NewProductForm = () => {
     const [state, setState] = useState({

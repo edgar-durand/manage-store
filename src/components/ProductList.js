@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import Status from "./Status";
 import authHelper from "../js/authHelper";
-import NewProductForm from "./NewProductForm";
+import NewProductForm from "./NewProductForm/NewProductForm";
 import {Link} from "react-router-dom";
 import send from "../js/send";
 import store from "../store";

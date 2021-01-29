@@ -13,7 +13,7 @@ const reducer = (state, action) => {
             break;
         case "UPDATE_STATE": {
             return {
-                ...state, globalState: {...state.globalState, action}
+                ...state, globalState: { ...action}
             }
         }
             break;

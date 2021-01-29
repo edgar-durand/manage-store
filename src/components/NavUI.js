@@ -20,27 +20,37 @@ const NavUI = ({logOut, image, last_name,status_message}) => (
                         className="nav-label"> Home </span></Link>
                 </li>
                 <li>
-                    <Link to="/home/my_products/"><i className="fa fa-diamond"/> <span
-                        className="nav-label">My store</span></Link>
+                    <Link to="/home/my_accounts/"><i className="fa fa-credit-card"/> <span
+                        className="nav-label">My accounts</span></Link>
                 </li>
+                {/*<li>*/}
+                {/*    <Link to="/home/categories/"><i className="fa fa-anchor"/> <span*/}
+                {/*        className="nav-label">Categories</span></Link>*/}
+                {/*</li>*/}
+
                 <li>
-                    <Link to="/home/categories/"><i className="fa fa-diamond"/> <span
-                        className="nav-label">Categories</span></Link>
+                    <Link to="/home/shopping/"><i className="fa fa-shopping-cart"/> <span
+                        className="nav-label">Go for shopping</span></Link>
                 </li>
 
                 <li>
-                    <a href="#"><i className="fa fa-shopping-cart"/> <span
-                        className="nav-label">E-commerce</span><span className="fa arrow"/></a>
+                    <Link to="/home/deals/"><i className="fa fa-shopping-bag"/> <span
+                        className="nav-label">Deals</span></Link>
                 </li>
 
+                {/*<li>*/}
+                {/*    <a href=""><i className="fa fa-magic"/> <span className="nav-label">CSS Animations </span><span*/}
+                {/*        className="label label-info float-right">62</span></a>*/}
+                {/*</li>*/}
+                {/*<li className="landing_link">*/}
+                {/*    <Link to="/home/new_product/"><i className="fa fa-plus"/> <span*/}
+                {/*        className="nav-label">New product</span>*/}
+                {/*        <span className="label label-warning float-right">NEW</span></Link>*/}
+                {/*</li>*/}
+                <div className="fc-divider"/>
                 <li>
-                    <a href=""><i className="fa fa-magic"/> <span className="nav-label">CSS Animations </span><span
-                        className="label label-info float-right">62</span></a>
-                </li>
-                <li className="landing_link">
-                    <Link to="/home/new_product/"><i className="fa fa-star"/> <span
-                        className="nav-label">New product</span>
-                        <span className="label label-warning float-right">NEW</span></Link>
+                    <Link to="/home/profile"><i className="fa fa-user"/><span
+                        className="nav-label"> Profile </span></Link>
                 </li>
                 <div className="fc-divider"/>
                 <li className="special_link">
