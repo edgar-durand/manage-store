@@ -5,6 +5,7 @@ import TopBarUI from "../components/TopBarUI";
 import FooterUI from "../components/FooterUI";
 import ProductList from "../components/ProductList";
 import NewProductForm from "../components/NewProductForm/NewProductForm";
+import MyAccounts from "../components/MyAccount/MyAccounts";
 import "toastr/toastr.scss";
 import toastr from "toastr";
 
@@ -20,10 +21,10 @@ import NotFound from "./NotFound";
 import Edit from "../components/Edit/Edit";
 
 //Import Category
-import CategoryList from '../components/categories/CategoryList'
-import CategoryEdit from '../components/categories/CategoryEdit'
-import CategoryNew from '../components/categories/CategoryNew'
-import CategoryShow from '../components/categories/CategoryShow'
+import CategoryList from '../components/Categories/CategoryList'
+import CategoryEdit from '../components/Categories/CategoryEdit'
+import CategoryNew from '../components/Categories/CategoryNew'
+import CategoryShow from '../components/Categories/CategoryShow'
 import msgNotification from "../js/msgNotification";
 import store from "../store";
 
@@ -44,13 +45,6 @@ const Home = () => {
                 toastr.info(`${p[0].username}`, "Bienvenido");
             }
             setState({...state, ...p});
-
-            // store.dispatch({
-            //     type:"UPDATE_STATE",
-            //     ...p
-            // })
-
-
 
         });
     }, []);
@@ -95,6 +89,10 @@ const Home = () => {
                             <Route path="/home/categories/show/:id" component={CategoryShow}/>
 
                             {/* Routes of categories */}
+
+                            {/*Routes of MyAccounts*/}
+                            <Route path="/home/my_accounts/" component={MyAccounts}/>
+                            {/*Routes of MyAccounts*/}
 
                             <Route path="/home/detail/:id" component={Detail}/>
                             <Route path="/home/edit/:id" component={Edit}/>
