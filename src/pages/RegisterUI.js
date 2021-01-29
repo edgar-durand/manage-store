@@ -7,6 +7,7 @@ export default (props) => {
     const img = useRef('img');
     const file = useRef('file');
     const label = useRef('label');
+
     return(
     <div className="align-self-xl-center">
 

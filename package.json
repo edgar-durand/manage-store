@@ -15,7 +15,8 @@
     "redux-thunk": "^2.3.0",
     "swal": "^0.1.0",
     "toastr": "^2.1.4",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "sweetalert2": "^9.7.0"
   },
   "scripts": {
     "start": "react-scripts start",

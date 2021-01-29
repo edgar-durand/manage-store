@@ -4,10 +4,11 @@ import FatalError from "./FatalError";
 import send from "./../js/send";
 import RegisterUI from "./RegisterUI";
 import passwordRequirements from "../validation/passwordRequirements";
-import authHelper from "../js/authHelper";
+import msgNotification from "../js/msgNotification";
+
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (props) => {
+export default () => {
 
     const [stat, setStat] = useState({
         agree: false, load: false, user: {
@@ -29,7 +30,7 @@ export default (props) => {
     let users;
 
     useEffect(() => {
-        send(stat, "/api/user", "get")
+        send({}, "/api/user", "get")
             .then(r => {
                 setStat({...stat, users: {...r}})
             })
@@ -37,8 +38,11 @@ export default (props) => {
 
     users = Object.values(stat.users).find(x => x.email === stat.user.email);
 
-    if (users)
+    if (users) {
+        msgNotification("Info", `Ese correo esta en uso, debe usar otra direccion`,"info"
+            , "ACEPTAR", false)
         console.log(users.email, " in use, use another email address.")
+    }
 
     const handleFile = (file) => {
 
@@ -68,9 +72,12 @@ export default (props) => {
             send({form}, "/api/user/", "file")
                 .then(r => {
                     setStat({...stat, ...r, load: false});
+                    console.dir(document)
                 })
-            : e.preventDefault();
+                .catch(r=> console.log(r))
+            : console.log("Debe llenar todos los campos")
     }
+
 
     const handleClick = () => {
         if (stat.agree)
@@ -88,17 +95,19 @@ export default (props) => {
     const handleChange = (e) => {
         setStat({
             ...stat,
-            user: { ...stat.user,
+            user: {
+                ...stat.user,
                 [e.target.name]: e.target.value
             }
         });
     }
 
-    console.log(stat.user)
 
     if (stat.id && !stat.error) {
-        console.info(`User: ${stat.username} id: ${stat.id}  has been created successfully`);
-        return <Redirect to="/login" />
+        msgNotification("New user created !", `User: ${stat.username} id: ${stat.id}  has been created successfully`, "success"
+            , "ACEPTAR", false)
+
+        return <Redirect to="/login"/>
         // props.history.push("/login", stat);
     } else if (stat.error) {
         console.error(stat.error);
@@ -109,7 +118,7 @@ export default (props) => {
             handleChange={(event) => handleChange(event)}
             handleSubmit={(event) => handleSubmit(event)}
             handleClick={() => handleClick()}
-            handleFile={(file)=>handleFile(file)}
+            handleFile={(file) => handleFile(file)}
             disable={stat.agree && passwordRequirements(stat.user.password) && !users &&
             stat.user.username !== ""}
             load={stat.load}

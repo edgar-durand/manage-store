@@ -6,9 +6,9 @@ const NavUI = ({logOut, image, last_name,status_message}) => (
         <div className="sidebar-collapse">
             <ul className="nav metismenu" id="side-menu">
                 <li className="nav-header">
-                    <div className="dropdown profile-element">
-                        <img alt="User image" className="rounded-circle" src={image}/>
-                        <span className="block m-t-xs font-bold">{last_name}</span>
+                    <div className="">
+                        <img alt="User image" width="80px" className="rounded-circle" src={image}/>
+                        <span className="block m-t-xs font-bold" style={{color: "white"}}>{last_name}</span>
                         <span className="text-muted text-xs block">{status_message}</span>
                     </div>
                     <div className="logo-element">

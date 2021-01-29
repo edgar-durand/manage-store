@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import CategoryListUI from "./CategoryListUI"
 import send from "../../js/send"
-import token from '../../js/authHelper'
 import authHelper from "../../js/authHelper"
 
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min"
