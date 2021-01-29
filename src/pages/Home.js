@@ -5,6 +5,9 @@ import TopBarUI from "../components/TopBarUI";
 import FooterUI from "../components/FooterUI";
 import ProductList from "../components/ProductList";
 import NewProductForm from "../components/NewProductForm";
+import "toastr/toastr.scss";
+import toastr from "toastr";
+
 import {
     BrowserRouter as Router,
     Redirect,
@@ -36,13 +39,20 @@ const Home = () => {
     useEffect(() => {
         send(state, "/api/profile", "get").then((p) => {
             setState({...state, ...p});
+
             store.dispatch({
                 type:"UPDATE_STATE",
                 ...p
             })
-        });
 
+
+
+        });
+        if (store.getState().globalState.action)
+        toastr.info(`${store.getState().globalState.action[0].username}`,"Bienvenido");
+        // console.log(store.getState().globalState.action)
     }, []);
+
 
     const logOut = () => {
         msgNotification("Confirmar","Desea cerrar la sesion ?","question","ACEPTAR",true)
