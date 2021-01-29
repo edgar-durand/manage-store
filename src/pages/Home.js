@@ -22,6 +22,7 @@ import CategoryEdit from '../components/categories/CategoryEdit'
 import CategoryNew from '../components/categories/CategoryNew'
 import CategoryShow from '../components/categories/CategoryShow'
 import msgNotification from "../js/msgNotification";
+import store from "../store";
 
 const Home = () => {
     const [state, setState] = useState({
@@ -35,6 +36,10 @@ const Home = () => {
     useEffect(() => {
         send(state, "/api/profile", "get").then((p) => {
             setState({...state, ...p});
+            store.dispatch({
+                type:"UPDATE_STATE",
+                ...p
+            })
         });
 
     }, []);

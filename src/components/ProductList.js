@@ -5,6 +5,7 @@ import NewProductForm from "./NewProductForm";
 import {Link} from "react-router-dom";
 import send from "../js/send";
 import store from "../store";
+import msgNotification from "../js/msgNotification";
 
 const ProductList = (props) => {
     const [products, setProducts] = useState({...props})
@@ -24,10 +25,16 @@ const ProductList = (props) => {
 
 
     const handleClick = (id) => {
-        send({token: authHelper()}, `/api/product/${id}`, "delete")
-            .then(() => store.dispatch({
-                type: "ADD_NEW_PRODUCT"
-            }))
+        msgNotification("Confirmar","Realmente desea eliminar el producto de su lista ?","question","ACEPTAR",true)
+            .then(r=>{
+                if (r.value){
+                    send({token: authHelper()}, `/api/product/${id}`, "delete")
+                        .then(() => store.dispatch({
+                            type: "ADD_NEW_PRODUCT"
+                        }))
+                }
+            })
+
     }
 
 
