@@ -4,24 +4,29 @@ import NavUI from "../components/NavUI";
 import TopBarUI from "../components/TopBarUI";
 import FooterUI from "../components/FooterUI";
 import ProductList from "../components/ProductList";
-import NewProductForm from "../components/NewProductForm";
+import NewProductForm from "../components/NewProductForm/NewProductForm";
+import MyAccounts from "../components/MyAccount/MyAccounts";
+import "toastr/toastr.scss";
+import toastr from "toastr";
+
 import {
     BrowserRouter as Router,
     Redirect,
     Route,
     Switch,
 } from "react-router-dom";
-import Detail from "../components/Detail";
+import Detail from "../components/Detail/Detail";
 import authHelper from "../js/authHelper";
 import NotFound from "./NotFound";
-import Edit from "../components/Edit";
+import Edit from "../components/Edit/Edit";
 
 //Import Category
-import CategoryList from '../components/categories/CategoryList'
-import CategoryEdit from '../components/categories/CategoryEdit'
-import CategoryNew from '../components/categories/CategoryNew'
-import CategoryShow from '../components/categories/CategoryShow'
+import CategoryList from '../components/Categories/CategoryList'
+import CategoryEdit from '../components/Categories/CategoryEdit'
+import CategoryNew from '../components/Categories/CategoryNew'
+import CategoryShow from '../components/Categories/CategoryShow'
 import msgNotification from "../js/msgNotification";
+import store from "../store";
 
 const Home = () => {
     const [state, setState] = useState({
@@ -34,19 +39,28 @@ const Home = () => {
 
     useEffect(() => {
         send(state, "/api/profile", "get").then((p) => {
+            if (p[0]) {
+                toastr.options.closeButton = true;
+                toastr.options.closeHtml = '<button><i class="fa fa-close"></i></button>';
+                toastr.info(`${p[0].username}`, "Bienvenido");
+            }
             setState({...state, ...p});
-        });
 
+        });
     }, []);
 
+
     const logOut = () => {
-        msgNotification("Confirmar","Desea cerrar la sesion ?","question","ACEPTAR",true)
+        msgNotification(`Confirmar`,"Desea cerrar la sesion ?","question","ACEPTAR",true)
             .then(r=>{
                 if (r.value){
-                    send(state, "/api/logout", "get").then((r) => msgNotification("LogOut",
+                    send(state, "/api/logout", "get").then(() => msgNotification("LogOut",
                         "Su sesion ha cerrado con exito.", "success", "ACEPTAR",false));
                     localStorage.removeItem("token");
                     setState({});
+                    store.dispatch({
+                        type:"UPDATE_STATE"
+                    })
                     return <Redirect to="/login"/>;
                 }
             })
@@ -75,6 +89,10 @@ const Home = () => {
                             <Route path="/home/categories/show/:id" component={CategoryShow}/>
 
                             {/* Routes of categories */}
+
+                            {/*Routes of MyAccounts*/}
+                            <Route path="/home/my_accounts/" component={MyAccounts}/>
+                            {/*Routes of MyAccounts*/}
 
                             <Route path="/home/detail/:id" component={Detail}/>
                             <Route path="/home/edit/:id" component={Edit}/>

@@ -1,6 +1,6 @@
 import React, {useRef, useEffect, useState} from "react"
-import send from "../js/send";
-import authHelper from "../js/authHelper";
+import send from "../../js/send";
+import authHelper from "../../js/authHelper";
 
 const Edit = ({
                   handleSubmit,

@@ -1,6 +1,6 @@
 import React, {useRef} from "react";
 import {Link} from "react-router-dom";
-import LoadingButton from "../components/LoadingButton";
+import LoadingButton from "../../components/LoadingButton";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (props) => {

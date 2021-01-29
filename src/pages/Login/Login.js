@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import LoginUI from "./LoginUI";
-import send from "./../js/send";
+import send from "../../js/send";
 import {Redirect} from "react-router-dom"
 
 

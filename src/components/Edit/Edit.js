@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react"
 import {Redirect} from "react-router-dom"
 import EditUI from "./EditUI";
-import send from "../js/send";
-import authHelper from "../js/authHelper";
-import store from "../store";
+import send from "../../js/send";
+import authHelper from "../../js/authHelper";
+import store from "../../store";
 
 
 const Edit = (props) => {
