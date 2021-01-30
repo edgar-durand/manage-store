@@ -39,7 +39,7 @@ const Detail = (props) => {
             producName={name}
             category={category}
             small={`${inStock} Left`}
-            author={`${store.getState().globalState.action[0].email}`}
+            author={`${store.getState().globalState[0].email}`}
             price={price_vent}
             description={description}
             addToCart={() => addToCart()}

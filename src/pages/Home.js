@@ -43,6 +43,10 @@ const Home = () => {
     useEffect(() => {
         send(state, "/api/profile", "get").then((p) => {
             if (p[0]) {
+                store.dispatch({
+                    type:"UPDATE_STATE",
+                    ...p
+                })
                 toastr.options.closeButton = true;
                 toastr.options.closeHtml = '<button><i class="fa fa-close"></i></button>';
                 toastr.info(`${p[0].username}`, "Bienvenido");

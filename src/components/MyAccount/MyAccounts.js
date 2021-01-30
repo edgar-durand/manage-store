@@ -7,6 +7,7 @@ import AddNewButton from "../NewAccount/AddNewButton";
 import {Link} from "react-router-dom";
 import NewAccountForm from "../NewAccount/NewAccountForm";
 import store from "../../store";
+import msgNotification from "../../js/msgNotification";
 
 const MyAccounts = () => {
     const [accounts, setAccount] = useState({...store.getState().accounts});
@@ -21,7 +22,17 @@ const MyAccounts = () => {
 
     const handleClick = (e) =>{
         e.preventDefault();
-        send({token: authHelper()},"")
+        send({token: authHelper()},`/api/accounts/${e.target.id}/`,"delete")
+            .then(()=>{
+                msgNotification("Success !",`${accounts[e.target.name].name} has been canceled successfully.`,"success")
+                    .then(r=>{
+                        if (r.value)
+                            store.dispatch({
+                                type: "DELETE_ACCOUNTS",
+                                id: e.target.id
+                            })
+                    })
+            })
     }
 
     store.subscribe(()=>{
@@ -37,6 +48,8 @@ const MyAccounts = () => {
                             Object.values(accounts).map((account, index) => {
                                 return (
                                     <Card
+                                        id={account.id}
+                                        idn={index}
                                         handleClick={(e)=>handleClick(e)}
                                         key={index}
                                         description={account.description}

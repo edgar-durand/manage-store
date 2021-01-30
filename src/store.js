@@ -35,10 +35,14 @@ const reducer = (state, action) => {
             }
         }
             break;
+        case "DELETE_ACCOUNTS": {
+            return {
+                ...state,accounts:{...state.accounts.filter(x=>x.id !== action.id)}
+            }
+        }
+            break;
         case "UPDATE_LIST": {
             const NEW_LIST = Object.values(state.productList).filter(product => product.id !== action.id)
-            console.log(NEW_LIST)
-            console.log(state.productList)
             return {
                 ...state, productList: {...NEW_LIST}
             }

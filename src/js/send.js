@@ -127,11 +127,12 @@ const send = async (state, endPoint, method) => {
 
 
     } catch (error) {
-        msgNotification("ERROR",error,"error","OK")
-            .then(r=>{
-                if (r.value)
-                    result = {error};
-            })
+        // msgNotification("ERROR",error,"error","OK")
+        //     .then(r=>{
+        //         if (r.value)
+        //             result = {error};
+        //     })
+        result = {error};
 
     }
 
