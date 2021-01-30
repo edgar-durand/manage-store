@@ -49,10 +49,20 @@ const Home = () => {
             }
             setState({...state, ...p});
 
+            send({token: authHelper()}, "/api/accounts/", "get")
+                .then(r => {
+                    store.dispatch({
+                        type:"GET_ACCOUNTS",
+                        accounts: {...r}
+                    })
+                })
+
         });
 
 
     }, []);
+
+
 
     const logOut = () => {
         msgNotification(`Confirmar`, "Desea cerrar la sesion ?", "question", "ACEPTAR", true)
@@ -93,7 +103,7 @@ const Home = () => {
                             <Route path="/home/categories/show/:id" component={CategoryShow}/>
 
                             {/* Routes of categories */}
-                            
+
 
                             {/*Routes of MyAccounts*/}
                             <Route path="/home/my_accounts/" component={MyAccounts}/>

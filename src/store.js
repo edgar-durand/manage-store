@@ -29,6 +29,12 @@ const reducer = (state, action) => {
             }
         }
             break;
+        case "GET_ACCOUNTS": {
+            return {
+                ...state,accounts:{...action.accounts}
+            }
+        }
+            break;
         case "UPDATE_LIST": {
             const NEW_LIST = Object.values(state.productList).filter(product => product.id !== action.id)
             console.log(NEW_LIST)
@@ -46,4 +52,4 @@ const reducer = (state, action) => {
     return state
 }
 
-export default createStore(reducer, {cart: [], globalState: [], productList: [], categories: []})
+export default createStore(reducer, {cart: [], globalState: [],accounts:[], productList: [], categories: []})

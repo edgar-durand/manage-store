@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import LoginUI from "./LoginUI";
 import send from "../../js/send";
 import {Redirect} from "react-router-dom"
+import msgNotification from "../../js/msgNotification";
 
 
 const Login = () => {
@@ -33,13 +34,16 @@ const Login = () => {
             })
             send(data, "/api/login", "post")
                 .then((r) => {
+                    if (r.non_field_errors)
+                        msgNotification("WARNING",r.non_field_errors,"warning" ,"OK")
                     setData({
                         ...data,
                         ...r,
                         load: false
                     });
 
-                });
+                })
+
         }
 
 

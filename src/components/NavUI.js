@@ -54,7 +54,7 @@ const NavUI = ({logOut, image, last_name,status_message}) => (
                 </li>
                 <div className="fc-divider"/>
                 <li className="special_link">
-                    <Link onClick={() => logOut()} to="/home"><i className="fa fa-close"/> <span
+                    <Link onClick={() => logOut()} to={document.location.pathname} ><i className="fa fa-close"/> <span
                         className="nav-label">Logout</span></Link>
                 </li>
             </ul>

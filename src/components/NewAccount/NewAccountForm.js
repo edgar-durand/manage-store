@@ -4,6 +4,7 @@ import send from "../../js/send";
 import authHelper from "../../js/authHelper";
 import msgNotification from "../../js/msgNotification";
 import {Redirect} from "react-router-dom";
+import store from "../../store";
 
 const NewAccountForm = () => {
     const [account, setAccount] = useState({name: null, description: null, a_amount: null})
@@ -17,13 +18,21 @@ const NewAccountForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        send({...account,token: authHelper()}, "/api/accounts/", "post")
+        send({...account, token: authHelper()}, "/api/accounts/", "post")
             .then(r => {
                 if (!r.error) {
                     msgNotification("Success !", `The new account has been added successfully`, "success", "OK")
                         .then(p => {
-                            if (p.value)
-                                setAccount({...account,...r})
+                            if (p.value) {
+                                setAccount({...account, ...r})
+                                send({token: authHelper()}, "/api/accounts/", "get")
+                                    .then(r => {
+                                        store.dispatch({
+                                            type: "GET_ACCOUNTS",
+                                            accounts: {...r}
+                                        })
+                                    })
+                            }
                         })
                 } else
                     msgNotification("Error !", `${r.error}`, "error", "OK")
