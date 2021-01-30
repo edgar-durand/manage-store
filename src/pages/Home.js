@@ -19,6 +19,8 @@ import Detail from "../components/Detail/Detail";
 import authHelper from "../js/authHelper";
 import NotFound from "./NotFound";
 import Edit from "../components/Edit/Edit";
+//accounts
+import NewAccountForm from "../components/NewAccount/NewAccountForm";
 
 //Import Category
 import CategoryList from '../components/Categories/CategoryList'
@@ -27,6 +29,7 @@ import CategoryNew from '../components/Categories/CategoryNew'
 import CategoryShow from '../components/Categories/CategoryShow'
 import msgNotification from "../js/msgNotification";
 import store from "../store";
+
 
 const Home = () => {
     const [state, setState] = useState({
@@ -47,19 +50,20 @@ const Home = () => {
             setState({...state, ...p});
 
         });
+
+
     }, []);
 
-
     const logOut = () => {
-        msgNotification(`Confirmar`,"Desea cerrar la sesion ?","question","ACEPTAR",true)
-            .then(r=>{
-                if (r.value){
+        msgNotification(`Confirmar`, "Desea cerrar la sesion ?", "question", "ACEPTAR", true)
+            .then(r => {
+                if (r.value) {
                     send(state, "/api/logout", "get").then(() => msgNotification("LogOut",
-                        "Su sesion ha cerrado con exito.", "success", "ACEPTAR",false));
+                        "Su sesion ha cerrado con exito.", "success", "ACEPTAR", false));
                     localStorage.removeItem("token");
-                    setState({});
+                    setState(null);
                     store.dispatch({
-                        type:"UPDATE_STATE"
+                        type: "UPDATE_STATE"
                     })
                     return <Redirect to="/login"/>;
                 }
@@ -89,18 +93,17 @@ const Home = () => {
                             <Route path="/home/categories/show/:id" component={CategoryShow}/>
 
                             {/* Routes of categories */}
+                            
 
                             {/*Routes of MyAccounts*/}
                             <Route path="/home/my_accounts/" component={MyAccounts}/>
+                            <Route path="/home/new_account/" component={NewAccountForm}/>
                             {/*Routes of MyAccounts*/}
 
                             <Route path="/home/detail/:id" component={Detail}/>
                             <Route path="/home/edit/:id" component={Edit}/>
                             <Route path="/home/new_product/" component={NewProductForm}/>
-                            <Route
-                                path="/home/my_products/"
-                                component={() => <ProductList {...state[0].prod_user} />}
-                            />
+                            <Route path="/home/my_products/" component={() => <ProductList {...state[0].prod_user} />}/>
                             {/*<Route exact path="/home" component={}/>*/}
                             <Route component={NotFound}/>
                         </Switch>
