@@ -37,7 +37,7 @@ const reducer = (state, action) => {
             break;
         case "DELETE_ACCOUNTS": {
             return {
-                ...state,accounts:{...state.accounts.filter(x=>x.id !== action.id)}
+                ...state,accounts:{...Object.values(state.accounts).filter(x=>x.id !== action.id)}
             }
         }
             break;

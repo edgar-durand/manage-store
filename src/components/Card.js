@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card = ({card_no,amount,description,handleClick,id,idn}) => {
+const Card = ({card_no,amount,description,handleClick,id}) => {
     return (
 
 
@@ -12,7 +12,7 @@ const Card = ({card_no,amount,description,handleClick,id,idn}) => {
                                 {description}
                             </small>
 
-                            <a href="" title="Cancel" id={id} name={idn} onClick={(e)=>handleClick(e)}> <i style={{fontSize:"30px"}} className="fa fa-recycle text-warning float-right col-sm-1"/></a>
+                            <a href="" title="Cancel" onClick={(e)=>handleClick(e,id)}> <i style={{fontSize:"30px"}} className="fa fa-recycle text-warning float-right col-sm-1"/></a>
 
                         </div>
                         <h2>

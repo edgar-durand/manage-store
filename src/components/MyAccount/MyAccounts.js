@@ -20,16 +20,16 @@ const MyAccounts = () => {
 
     }, [])
 
-    const handleClick = (e) =>{
+    const handleClick = (e,id) =>{
         e.preventDefault();
-        send({token: authHelper()},`/api/accounts/${e.target.id}/`,"delete")
+        send({token: authHelper()},`/api/accounts/${id}/`,"delete")
             .then(()=>{
-                msgNotification("Success !",`${accounts[e.target.name].name} has been canceled successfully.`,"success")
+                msgNotification("Confirm !",`Do you really want to delete.`,"question","OK",true)
                     .then(r=>{
                         if (r.value)
                             store.dispatch({
                                 type: "DELETE_ACCOUNTS",
-                                id: e.target.id
+                                id
                             })
                     })
             })
@@ -49,8 +49,7 @@ const MyAccounts = () => {
                                 return (
                                     <Card
                                         id={account.id}
-                                        idn={index}
-                                        handleClick={(e)=>handleClick(e)}
+                                        handleClick={(e,id)=>handleClick(e,id)}
                                         key={index}
                                         description={account.description}
                                         amount={account.a_amount}
