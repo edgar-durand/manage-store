@@ -19,6 +19,11 @@ const MyAccounts = () => {
 
     }, [])
 
+    const handleClick = (e) =>{
+        e.preventDefault();
+        send({token: authHelper()},"")
+    }
+
     store.subscribe(()=>{
         setAccount({...store.getState().accounts})
     })
@@ -32,6 +37,7 @@ const MyAccounts = () => {
                             Object.values(accounts).map((account, index) => {
                                 return (
                                     <Card
+                                        handleClick={(e)=>handleClick(e)}
                                         key={index}
                                         description={account.description}
                                         amount={account.a_amount}
