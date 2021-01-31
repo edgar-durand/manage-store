@@ -8,6 +8,7 @@ import store from "../../store";
 
 const Edit = (props) => {
     const [state, setState] = useState({
+        back: false,
         category: [],
         product: {
             name: "",
@@ -76,22 +77,25 @@ const Edit = (props) => {
             form.append("inStock", inStock)
             form.append("category", category)
             send({form, token: authHelper()}, '/api/product/' + ID + '/', "putFile")
-                .then(r => {
-                    store.dispatch({
-                        type: "ADD_NEW_PRODUCT"
-                    })
-                    console.log(r)
-                    redirect();
+                .then(() => {
+                    send({token: authHelper()}, "/api/product/", "get")
+                        .then(list => {
+                            store.dispatch({
+                                type: "SET_LIST_PRODUCTS",
+                                product: {...list}
+                            })
+                            setState({...state, back: true})
+                        })
+
+
                 })
 
         } else console.error("You must fill up all input fields.")
 
-        console.log(state)
     }
 
-    function redirect() {
+    if (state.back)
         return <Redirect to="/home/my_products"/>
-    }
 
     return <EditUI
         image={image}

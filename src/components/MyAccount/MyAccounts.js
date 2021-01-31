@@ -8,6 +8,7 @@ import {Link} from "react-router-dom";
 import NewAccountForm from "../NewAccount/NewAccountForm";
 import store from "../../store";
 import msgNotification from "../../js/msgNotification";
+import toastr from "toastr";
 
 const MyAccounts = () => {
     const [accounts, setAccount] = useState({...store.getState().accounts});
@@ -22,17 +23,23 @@ const MyAccounts = () => {
 
     const handleClick = (e,id) =>{
         e.preventDefault();
-        send({token: authHelper()},`/api/accounts/${id}/`,"delete")
-            .then(()=>{
-                msgNotification("Confirm !",`Do you really want to delete.`,"question","OK",true)
-                    .then(r=>{
-                        if (r.value)
+        msgNotification("Confirm !",`Do you really want to delete.`,"question","ACEPTAR",true)
+            .then(r=>{
+                if (r.value) {
+                    send({token: authHelper()},`/api/accounts/${id}/`,"delete")
+                        .then(()=>{
+
                             store.dispatch({
                                 type: "DELETE_ACCOUNTS",
                                 id
                             })
-                    })
+                            toastr.options.closeButton = true;
+                            toastr.options.closeHtml = '<button><i class="fa fa-close"></i></button>';
+                            toastr.success(`Account deleted.`, "DELETED !");
+                        })
+                }
             })
+
     }
 
     store.subscribe(()=>{

@@ -13,7 +13,7 @@ const reducer = (state, action) => {
             break;
         case "UPDATE_STATE": {
             return {
-                ...state, globalState: { ...action}
+                ...state, globalState: { ...action.state}
             }
         }
             break;
@@ -23,9 +23,17 @@ const reducer = (state, action) => {
             }
         }
             break;
+        case "SET_LIST_PRODUCTS": {
+            return {
+                ...state,
+                productList:{...action.product}
+            }
+        }
+            break;
         case "ADD_NEW_PRODUCT": {
             return {
-                ...state
+                ...state,
+                productList:{...Object.values(state.productList).concat(action.product)}
             }
         }
             break;

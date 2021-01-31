@@ -8,26 +8,29 @@ import {Link} from "react-router-dom";
 
 const Product = (props) => {
     return (
-        <div className="col-md-3">
+        <div className="col-md-2">
             <div className="ibox">
                 <div className="ibox-content product-box">
 
-                    <div className="product-imitation">
-                        {props.img || "[ INFO ]"}
+                    <div>
+                        <img height="200" width="184" src={props.img} style={{
+                                                        objectFit: "contain"
+                        }} alt=""/>
+
                     </div>
                     <div className="product-desc">
                                 <span className="product-price">
-                                    {`$${props.price}` || "RESERVED"}
+                                    {`$ ${props.price}` || "RESERVED"}
                                 </span>
                         <small className="text-muted">{props.category || "Category"}</small>
-                        <Link to="#" className="product-name"> {props.name.toUpperCase() || "PRODUCT"}</Link>
+                        <Link to="#" className="product-name"> {props.name.toUpperCase().substring(0,15)}</Link>
 
                         <div className="small m-t-xs">
-                            {props.description || "No description is provided for this product."}
+                            {props.description.substring(0,25)}...
                         </div>
-                        <div className="m-t text-righ">
+                        <div className="m-t text-right">
 
-                            <Link to={`/detail/${props.productId}`}
+                            <Link to={`/home/detail/${props.productId}`}
                                   className="btn btn-xs btn-outline btn-primary">Info <i
                                 className="fa fa-long-arrow-right"/></Link>
                         </div>

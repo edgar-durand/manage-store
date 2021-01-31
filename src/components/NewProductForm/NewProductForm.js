@@ -1,13 +1,17 @@
 import React, {useState, useEffect} from "react";
+import {Redirect} from "react-router-dom";
 import NewProductFormUI from "./NewProductFormUI";
 import send from "../../js/send";
 import authHelper from "../../js/authHelper";
 import store from "../../store";
+import toastr from "toastr";
+import msgNotification from "../../js/msgNotification";
 
 const NewProductForm = () => {
     const [state, setState] = useState({
         token: authHelper(),
         category: [],
+        goBack: false,
         product: {
             name: "",
             description: "",
@@ -71,15 +75,28 @@ const NewProductForm = () => {
             send({form, token: authHelper()}, '/api/product/', "file")
                 .then((r) => {
                     store.dispatch({
-                        type: "ADD_NEW_PRODUCT"
+                        type: "ADD_NEW_PRODUCT",
+                        product: r
                     })
-                    console.log(r)
+                    toastr.options.closeButton = true;
+                    toastr.options.closeHtml = '<button><i class="fa fa-close"></i></button>';
+                    toastr.success(`Producto agregado correctamente`, "Exito !");
+                    msgNotification("Confirmar", "desea agregar otro producto ?", "question", "AGREGAR OTRO", true)
+                        .then(r => {
+                            if (!r.value)
+                                setState({...state, goBack: true})
+                        })
                 })
 
         } else console.error("You must fill up all input fields.")
 
     }
+    store.subscribe(()=>{
+        console.log(store.getState().productList)
+    })
 
+    if (state.goBack)
+        return <Redirect to="/home/my_products/"/>
 
     return <NewProductFormUI
         handlePublic={(e) => handlePublic(e)}
