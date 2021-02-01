@@ -27,9 +27,6 @@ import CategoryNew from '../components/Categories/CategoryNew';
 import CategoryShow from '../components/Categories/CategoryShow';
 import GoForShopping from "../components/GoForShopping/GoForShopping";
 
-
-
-
 const Home = () => {
     const [state, setState] = useState({
         0: {

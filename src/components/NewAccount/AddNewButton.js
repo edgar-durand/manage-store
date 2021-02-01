@@ -1,5 +1,6 @@
 import React,{useRef} from "react";
 
+
 const AddNewButton =()=> {
     const i = useRef("i");
     const h = useRef("h");
@@ -12,11 +13,11 @@ const AddNewButton =()=> {
             i.current.classList.remove("text-primary")
             h.current.classList.remove("text-success")
             h.current.classList.add("text-muted")
-        }} className="col-md-12">
+        }} className="col-auto">
             <div className="payment-card text-center">
-                <i ref={i} className="fa fa-plus-circle payment-icon-big  col-lg-12"/>
-                <h2 ref={h} className="text-muted">New account</h2>
-                <br/>
+                <i ref={i} className="fa fa-plus-circle payment-icon-big  col-auto"/>
+                <h4 ref={h} className="text-muted">New account</h4>
+
 
             </div>
         </div>
