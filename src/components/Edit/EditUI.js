@@ -1,6 +1,7 @@
 import React, {useRef, useEffect, useState} from "react"
 import send from "../../js/send";
 import authHelper from "../../js/authHelper";
+// import Select from 'react-select'
 
 const Edit = ({
                   handleSubmit,
@@ -60,7 +61,7 @@ const Edit = ({
                                             className="col-sm-2 col-form-label">Description:</label>
                                             <textarea name="description" value={description} rows="6"
                                                       onChange={(e) => handleChange(e)}
-                                                      className="col-sm-10">
+                                                      className="col-sm-10 form-control">
                                                 Your description.
 
                                         </textarea>
@@ -68,7 +69,20 @@ const Edit = ({
                                         <div className="form-group row"><label
                                             className="col-sm-2 col-form-label">Category</label>
                                             <div className="col-sm-10">
-                                                <select name="category" value={Product_category}
+                                                {/*<Select*/}
+                                                {/*    options={*/}
+                                                {/*        {*/}
+                                                {/*            ...Object.values(category).map(categories => {*/}
+                                                {/*                return Object.values(categories).map((category) => {*/}
+                                                {/*                    return {value: category.id, label: category.name}*/}
+                                                {/*                });*/}
+                                                {/*            })*/}
+                                                {/*        }*/}
+                                                {/*    }*/}
+                                                {/*    isClearable={true}*/}
+                                                {/*    placeholder="Seleccione"*/}
+                                                {/*/>*/}
+                                                <select className="form-control col-2" name="category" value={Product_category}
                                                         onChange={(e) => handleChange(e)}>
                                                     <option value="0">{Product_category}</option>
                                                     {
@@ -87,6 +101,7 @@ const Edit = ({
                                             <div className="col-sm-10"><input type="checkbox"
                                                                               onChange={(e) => handlePublic(e)}
                                                                               checked={_public}
+                                                                              className=""
                                                                               name="_public"/> Public
                                             </div>
                                         </div>

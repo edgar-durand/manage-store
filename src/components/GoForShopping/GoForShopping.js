@@ -2,6 +2,7 @@ import React, {Fragment, useState} from "react";
 import GoForShoppingUI from "./GoForShoppingUI";
 import ProductGrid from "../ProductGrid";
 import dataToPages from "../../js/dataToPages";
+// import "bootstrap";
 import store from "../../store";
 
 const GoForShopping = () => {
@@ -13,11 +14,11 @@ const GoForShopping = () => {
     return (
         <Fragment>
             <div className="col-md-12">
-                <div className="ibox-content">
+                <div className="ibox-content form-inline">
                     <label className="col-lg-2">Show:</label>
                     <input onChange={(event) => setState({...state, page: 0, show: +event.target.value})}
                            value={state.show}
-                           className="col-lg-2"
+                           className="col-lg-2 form-control"
                            type="number" min="0" max={Object.values(state.products).length}/>
                     <label className="col-lg-1"/>
                     <button onClick={() => state.page > 0 ? setState({...state, page: state.page - 1}) : null}
