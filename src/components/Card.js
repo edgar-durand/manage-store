@@ -1,6 +1,7 @@
-import React from "react";
+import React,{useRef} from "react";
 
 const Card = ({card_no,amount,description,handleClick,id}) => {
+    const i = useRef("i");
     return (
 
 
@@ -12,7 +13,8 @@ const Card = ({card_no,amount,description,handleClick,id}) => {
                                 {description}
                             </small>
 
-                            <a href="" title="Cancel" onClick={(e)=>handleClick(e,id)}> <i style={{fontSize:"30px"}} className="fa fa-recycle text-warning float-right col-sm-1"/></a>
+                            <a href="" title="Cancel" onClick={(e)=>handleClick(e,id)}>
+                                <i ref={i} style={{fontSize:"30px"}} onMouseOut={()=>i.current.classList.remove("text-danger")} onMouseOver={()=>i.current.classList.add("text-danger")} className="fa fa-credit-card-alt text-dark float-right col-sm-1"/></a>
 
                         </div>
                         <h2>

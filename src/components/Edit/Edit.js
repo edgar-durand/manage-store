@@ -64,6 +64,18 @@ const Edit = (props) => {
 
     }
 
+   const handleSelect = selected =>{
+
+       setState({
+           ...state,
+           product: {
+               ...state.product,
+                category: selected.value
+           }
+       })
+
+   }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (name && description && price_cost && price_vent && category) {
@@ -102,6 +114,7 @@ const Edit = (props) => {
         handlePublic={(e) => handlePublic(e)}
         handleFile={(file) => handleFile(file)}
         handleChange={(e) => handleChange(e)}
+        handleSelect={(e)=>handleSelect(e)}
         name={name}
         description={description}
         price_cost={price_cost}

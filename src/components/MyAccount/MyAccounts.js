@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {Fragment, useEffect, useState} from "react"
 import MyAccountsUI from "./MyAccountsUI";
 import Card from "../Card";
 import send from "../../js/send";
@@ -48,7 +48,7 @@ const MyAccounts = () => {
 
     if (Object.values(accounts).length) {
         return (
-            <>
+            <Fragment>
                 <div className="wrapper wrapper-content animated fadeInRight">
                     <div className="row">
                         {
@@ -70,7 +70,7 @@ const MyAccounts = () => {
                     </div>
                 </div>
                 <MyAccountsUI/>
-            </>
+            </Fragment>
         )
     } else
         return (
