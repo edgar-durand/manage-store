@@ -3,8 +3,6 @@ import './static/css/animate.css';
 import './static/css/style.css';
 import './static/pe-icon-7-stroke/css/pe-icon-7-stroke.css';
 import './static/pe-icon-7-stroke/css/helper.css';
-import './nca.scss';
-import './index.css';
 import 'react-app-polyfill/ie11'; // For IE 11 support
 import "core-js/es";
 import './polyfill';

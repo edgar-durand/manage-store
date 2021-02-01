@@ -15,7 +15,7 @@ node_modules
 /build
 
 # misc
-/src/statics/
+/src/static/
 /.git
 .DS_Store
 .env.local
