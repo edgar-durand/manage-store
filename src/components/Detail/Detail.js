@@ -38,7 +38,6 @@ const Detail = (props) => {
             photo={image}
             producName={name}
             category={category}
-            small={`${inStock} Left`}
             author={`${store.getState().globalState[0].email}`}
             price={price_vent}
             description={description}

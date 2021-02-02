@@ -3,6 +3,7 @@ import LoginUI from "./LoginUI";
 import send from "../../js/send";
 import {Redirect} from "react-router-dom"
 import msgNotification from "../../js/msgNotification";
+import authHelper from "../../js/authHelper";
 
 
 const Login = () => {
@@ -14,8 +15,8 @@ const Login = () => {
     });
 
     useEffect(() => {
-        if (localStorage.getItem("token"))
-            setData({...data, token: localStorage.getItem("token")})
+        if (authHelper())
+            setData({...data, token: authHelper()})
     }, [])
 
     const handleChange = (e) => {
@@ -34,8 +35,17 @@ const Login = () => {
             })
             send(data, "/api/login", "post")
                 .then((r) => {
-                    if (r.non_field_errors)
+                    if (r.error) {
+                        setData({
+                            ...data,
+                            ...r,
+                            load: false
+                        });
+                        msgNotification("ERROR", r.error, "error", "OK")
+                    }
+                   else if (r.non_field_errors)
                         msgNotification("WARNING",r.non_field_errors,"warning" ,"OK")
+                    else
                     setData({
                         ...data,
                         ...r,

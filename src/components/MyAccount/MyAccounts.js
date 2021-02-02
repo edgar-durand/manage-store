@@ -49,25 +49,25 @@ const MyAccounts = () => {
     if (Object.values(accounts).length) {
         return (
             <Fragment>
-                <div className="wrapper wrapper-content animated fadeInRight">
-                    <div className="row">
+                <div className="wrapper wrapper-content animated fadeInRight col-12">
+                    <div className="row " style={{display: "flex"}}>
                         {
                             Object.values(accounts).map((account, index) => {
                                 return (
                                     <Card
                                         id={account.id}
-                                        handleClick={(e,id)=>handleClick(e,id)}
+                                        handleClick={(e, id) => handleClick(e, id)}
                                         key={index}
                                         description={account.description}
                                         amount={account.a_amount}
                                         card_no={account.name.substring(12, 16)}
                                     />
                                 )
-
                             })
                         }
-                        <Link to="/home/new_account/"><AddNewButton/></Link>
+
                     </div>
+                    <Link to="/home/new_account/"><AddNewButton/></Link>
                 </div>
                 <MyAccountsUI/>
             </Fragment>

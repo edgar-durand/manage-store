@@ -5,15 +5,15 @@ const reducer = (state, action) => {
     switch (action.type) {
 
         case "ADD_TO_CART": {
-            const ADD = state.cart.find(x => x.name === action.product.name && x.price_vent === action.product.price_vent);
+            const ADD = Object.values(state.cart).find(x => x.name === action.product.name && x.price_vent === action.product.price_vent);
             if (!ADD) {
                 toastr.options.closeButton = true;
                 toastr.options.closeHtml = '<button><i class="fa fa-close"></i></button>';
                 toastr.success(`${action.product.name} has been added successfully.`, "Added !");
                 return {
-                    ...state, cart: [...state.cart, action.product]
+                    ...state, cart: {...Object.values(state.cart).concat(action.product)}
                 }
-            }else {
+            } else {
                 toastr.options.closeButton = true;
                 toastr.options.closeHtml = '<button><i class="fa fa-close"></i></button>';
                 toastr.warning(`${action.product.name} already exist, check your cart and type the quantity you wish.`, "Error !");
@@ -22,7 +22,26 @@ const reducer = (state, action) => {
             break;
         case "UPDATE_STATE": {
             return {
-                ...state, globalState: { ...action.state}
+                ...state, globalState: {...action.state}
+            }
+        }
+            break;
+        case "SET_PRODUCT_QUANTITY": {
+            // console.log(Object.assign({...Object.values(state.cart).find(x => x.id === action.product.id)},{inStock:action.quantity}))
+
+            if (Object.values(action.product).length)
+            return {
+                ...state,
+                cart: {
+                    ...Object.values(state.cart).filter(x => x.id !== action.product.id).concat(action.product)
+                }
+            }
+
+        }
+            break;
+        case "CLEAR": {
+            return {
+                cart: [], globalState: [], accounts: [], productList: [], categories: []
             }
         }
             break;
@@ -35,26 +54,26 @@ const reducer = (state, action) => {
         case "SET_LIST_PRODUCTS": {
             return {
                 ...state,
-                productList:{...action.product}
+                productList: {...action.product}
             }
         }
             break;
         case "ADD_NEW_PRODUCT": {
             return {
                 ...state,
-                productList:{...Object.values(state.productList).concat(action.product)}
+                productList: {...Object.values(state.productList).concat(action.product)}
             }
         }
             break;
         case "GET_ACCOUNTS": {
             return {
-                ...state,accounts:{...action.accounts}
+                ...state, accounts: {...action.accounts}
             }
         }
             break;
         case "DELETE_ACCOUNTS": {
             return {
-                ...state,accounts:{...Object.values(state.accounts).filter(x=>x.id !== action.id)}
+                ...state, accounts: {...Object.values(state.accounts).filter(x => x.id !== action.id)}
             }
         }
             break;
@@ -64,7 +83,7 @@ const reducer = (state, action) => {
                 ...state, productList: {...NEW_LIST}
             }
         }
-        
+
         default : {
 
         }
@@ -73,4 +92,4 @@ const reducer = (state, action) => {
     return state
 }
 
-export default createStore(reducer, {cart: [], globalState: [],accounts:[], productList: [], categories: []})
+export default createStore(reducer, {cart: [], globalState: [], accounts: [], productList: [], categories: []})

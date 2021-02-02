@@ -46,19 +46,19 @@ const Edit = ({
                                                                               placeholder="Product name"/></div>
                                         </div>
                                         <div className="form-group row"><label
-                                            className="col-sm-2 col-form-label">Prior Price:</label>
+                                            className="col-sm-2 col-form-label">Price:</label>
                                             <div className="col-sm-10"><input name="price_cost" value={price_cost}
                                                                               onChange={(e) => handleChange(e)}
                                                                               type="text" className="form-control"
                                                                               placeholder="Ex. $160.00"/></div>
                                         </div>
-                                        <div className="form-group row"><label
-                                            className="col-sm-2 col-form-label">Sales Price:</label>
-                                            <div className="col-sm-10"><input name="price_vent" value={price_vent}
-                                                                              onChange={(e) => handleChange(e)}
-                                                                              type="text" className="form-control"
-                                                                              placeholder="Ex. $160.00"/></div>
-                                        </div>
+                                        {/*<div className="form-group row"><label*/}
+                                        {/*    className="col-sm-2 col-form-label">Sales Price:</label>*/}
+                                        {/*    <div className="col-sm-10"><input name="price_vent" value={price_vent}*/}
+                                        {/*                                      onChange={(e) => handleChange(e)}*/}
+                                        {/*                                      type="text" className="form-control"*/}
+                                        {/*                                      placeholder="Ex. $160.00"/></div>*/}
+                                        {/*</div>*/}
                                         <div className="form-group row"><label
                                             className="col-sm-2 col-form-label">Description:</label>
                                             <textarea name="description" value={description} rows="6"
@@ -95,14 +95,14 @@ const Edit = ({
                                                                               name="_public"/> Public
                                             </div>
                                         </div>
-                                        <div className="form-group row"><label
-                                            className="col-sm-2 col-form-label">Quantity</label>
-                                            <div className="col-sm-10"><input name="inStock" value={inStock}
-                                                                              onChange={(e) => handleChange(e)}
-                                                                              type="number"
-                                                                              min="0"
-                                                                              className="form-control"/></div>
-                                        </div>
+                                        {/*<div className="form-group row"><label*/}
+                                        {/*    className="col-sm-2 col-form-label">Quantity</label>*/}
+                                        {/*    <div className="col-sm-10"><input name="inStock" value={inStock}*/}
+                                        {/*                                      onChange={(e) => handleChange(e)}*/}
+                                        {/*                                      type="number"*/}
+                                        {/*                                      min="0"*/}
+                                        {/*                                      className="form-control"/></div>*/}
+                                        {/*</div>*/}
                                         <div className="form-group row"><label
                                             className="col-sm-2 col-form-label">Image</label>
                                             <div className="col-sm-10">

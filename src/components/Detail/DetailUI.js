@@ -93,7 +93,6 @@ const DetailUI = (props) => {
                         <h2 className="font-bold m-b-xs">
                             {props.producName || "NOT PROVIDED"}
                         </h2>
-                        <small>{props.small}</small>
                         <div className="m-t-md">
                             <h2 className="product-main-price">{ props.price || "RESERVED" } <small
                                 className="text-muted">Exclude Tax</small>
