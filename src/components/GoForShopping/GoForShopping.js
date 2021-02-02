@@ -8,18 +8,32 @@ import toastr from "toastr";
 
 const GoForShopping = () => {
     const [state, setState] = useState({
+        total: 0,
         searchField: "",
         match: {active: false, value: 0},
         show: 6,
         page: 0,
         products: {...store.getState().productList}
     })
+
+
     const {searchField, match} = state;
+
     let filtered = [];
     !match.active ?
         filtered = {...Object.values(state.products).filter(x => (x.name.toUpperCase().indexOf(searchField.toUpperCase()) !== -1) || (x.description.toUpperCase().indexOf(searchField.toUpperCase()) !== -1))} :
         filtered = {...Object.values(state.products).filter(x => ((x.name.toUpperCase().indexOf(searchField.toUpperCase()) !== -1) || (x.description.toUpperCase().indexOf(searchField.toUpperCase()) !== -1)) && x.price_vent <= match.value)}
     const MO = {...dataToPages(filtered, state.show, state.page)}
+
+    store.subscribe(() => {
+
+        if (Object.values(store.getState().cart).length)
+            setState({
+                ...state, total: +Object.values(store.getState().cart).reduce((a,b)=>a+b.price_vent,0)
+            })
+
+    })
+    console.log(store.getState().cart)
     const handleMatch = (e) => {
         setState({...state, match: {...state.match, value: e.target.value}})
     }
@@ -37,9 +51,7 @@ const GoForShopping = () => {
             type: "ADD_TO_CART",
             product: {...Object.values(state.products).find(x => x.id === id)}
         })
-        toastr.options.closeButton = true;
-        toastr.options.closeHtml = '<button><i class="fa fa-close"></i></button>';
-        toastr.success(`${Object.values(state.products).find(x => x.id === id).name} has been added successfully.`, "Added !");
+
     }
     // return <GoForShoppingUI/>
 
@@ -51,7 +63,8 @@ const GoForShopping = () => {
                     <input onChange={(event) => setState({...state, page: 0, show: +event.target.value})}
                            value={state.show}
                            className="col-lg-1 form-control"
-                           type="number" min="0" max={Object.values(filtered).length}/>&nbsp;&nbsp; / {Object.values(filtered).length}
+                           type="number" min="0"
+                           max={Object.values(filtered).length}/>&nbsp;&nbsp; / {Object.values(filtered).length}
                     <label className="col-1"/>
                     <button onClick={() => state.page > 0 ? setState({...state, page: state.page - 1}) : null}
                             className="btn btn-outline-primary "><i className="fa fa-backward"/> Prev
@@ -86,7 +99,6 @@ const GoForShopping = () => {
                         })}
 
 
-
                 </div>
                 <div className="row col-3 float-right">
 
@@ -99,7 +111,9 @@ const GoForShopping = () => {
                                 Total
                             </span>
                             <h2 className="font-bold">
-                                $390,00
+                                {
+                                    state.total
+                                }
                             </h2>
 
                             <hr/>

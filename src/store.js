@@ -1,14 +1,23 @@
 import {createStore} from "redux";
+import toastr from "toastr";
 
 const reducer = (state, action) => {
     switch (action.type) {
 
         case "ADD_TO_CART": {
-            const ADD = state.cart.find(x => x.name === action.product.name);
-            if (!ADD)
+            const ADD = state.cart.find(x => x.name === action.product.name && x.price_vent === action.product.price_vent);
+            if (!ADD) {
+                toastr.options.closeButton = true;
+                toastr.options.closeHtml = '<button><i class="fa fa-close"></i></button>';
+                toastr.success(`${action.product.name} has been added successfully.`, "Added !");
                 return {
                     ...state, cart: [...state.cart, action.product]
                 }
+            }else {
+                toastr.options.closeButton = true;
+                toastr.options.closeHtml = '<button><i class="fa fa-close"></i></button>';
+                toastr.warning(`${action.product.name} already exist, check your cart and type the quantity you wish.`, "Error !");
+            }
         }
             break;
         case "UPDATE_STATE": {

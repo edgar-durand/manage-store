@@ -65,7 +65,7 @@ const Edit = (props) => {
     }
 
    const handleSelect = selected =>{
-
+if (selected)
        setState({
            ...state,
            product: {
