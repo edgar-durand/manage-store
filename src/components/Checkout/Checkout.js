@@ -37,24 +37,26 @@ const Checkout = () => {
                 }
             })
             if (state.purchase.account && state.purchase.description) {
-                msgNotification("Confirm", `You are about to buy ${Object.values(store.getState().cart).length} products.
-             Your credit is going to decrease from $ ${state.credit.toFixed(2)} to --> $ ${(state.credit - state.total).toFixed(2)}`,
-                    "question", "OK", true, "CANCEL")
-                    .then(r => {
-                        if (r.value) {
-                            send({token: authHelper(), ...state.purchase}, "/api/purchases/", "post")
-                                .then(res => {
-                                    if (!res.error) {
-                                        if (res.id)
-                                        toastr.success(res, "SUCCESS !")
-                                        else
-                                            toastr.error(Object.keys(res).map(x=> `${x}: [Required !]<br/>`), "ERROR !")
-                                    } else {
+                if (state.credit>=state.total) {
+                    msgNotification("Confirm", `You are about to buy ${Object.values(store.getState().cart).length} products.
+                Your credit is going to decrease from $ ${state.credit.toFixed(2)} to --> $ ${(state.credit - state.total).toFixed(2)}`,
+                        "question", "OK", true, "CANCEL")
+                        .then(r => {
+                            if (r.value) {
+                                send({token: authHelper(), ...state.purchase}, "/api/purchases/", "post")
+                                    .then(res => {
+                                        if (!res.error) {
+                                            if (res.id)
+                                                toastr.success(res, "SUCCESS !")
+                                            else
+                                                toastr.error(Object.keys(res).map(x => `${x}: [Required !]<br/>`), "ERROR !")
+                                        } else {
 
-                                    }
-                                })
-                        }
-                    })
+                                        }
+                                    })
+                            }
+                        })
+                }else toastr.warning("Your credit is not enough", "WARNING !")
             }else
                 toastr.warning("You should fill up all fields", "WARNING !")
 
