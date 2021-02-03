@@ -26,6 +26,8 @@ import CategoryEdit from '../components/Categories/CategoryEdit';
 import CategoryNew from '../components/Categories/CategoryNew';
 import CategoryShow from '../components/Categories/CategoryShow';
 import GoForShopping from "../components/GoForShopping/GoForShopping";
+import CartList from "../components/CartList/CartList";
+import Checkout from "../components/Checkout/Checkout";
 
 const Home = () => {
     const [state, setState] = useState({
@@ -81,7 +83,7 @@ const Home = () => {
                     localStorage.removeItem("token");
                     setState(null);
                     store.dispatch({
-                        type: "UPDATE_STATE"
+                        type: "CLEAR"
                     })
                     return <Redirect to="/login"/>;
                 }
@@ -115,6 +117,9 @@ const Home = () => {
                             <Route path="/home/my_accounts/" component={MyAccounts}/>
                             <Route path="/home/new_account/" component={NewAccountForm}/>
                             {/*Routes of MyAccounts*/}
+
+                            <Route path="/home/my_cart/" component={CartList}/>
+                            <Route path="/home/checkout/" component={Checkout}/>
 
                             {/*Shopping*/}
                             <Route path="/home/shopping/" component={GoForShopping}/>

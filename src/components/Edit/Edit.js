@@ -65,7 +65,7 @@ const Edit = (props) => {
     }
 
    const handleSelect = selected =>{
-
+if (selected)
        setState({
            ...state,
            product: {
@@ -85,8 +85,8 @@ const Edit = (props) => {
             form.append("description", description)
             form.append("_public", _public)
             form.append("price_cost", price_cost)
-            form.append("price_vent", price_vent)
-            form.append("inStock", inStock)
+            form.append("price_vent", "0")
+            form.append("inStock", "0")
             form.append("category", category)
             send({form, token: authHelper()}, '/api/product/' + ID + '/', "putFile")
                 .then(() => {

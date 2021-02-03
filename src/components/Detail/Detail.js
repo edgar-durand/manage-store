@@ -7,9 +7,9 @@ import store from "../../store"
 const Detail = (props) => {
     const [product, setProduct] = useState({product: {}, load: true});
     const TOKEN = {token: authHelper()};
-    const {name, image, description, category, inStock, _public} = product.product;
-    let price_vent;
-    product.product.price_vent ? price_vent = `$ ${product.product.price_vent}` : price_vent = "RESERVED"
+    const {name, image, description, category, _public} = product.product;
+    let price_cost;
+    product.product.price_cost ? price_cost = `$ ${product.product.price_cost}` : price_cost = "RESERVED"
     const ID = props.match.params.id;
 
 
@@ -38,9 +38,8 @@ const Detail = (props) => {
             photo={image}
             producName={name}
             category={category}
-            small={`${inStock} Left`}
             author={`${store.getState().globalState[0].email}`}
-            price={price_vent}
+            price={price_cost}
             description={description}
             addToCart={() => addToCart()}
             load={product.load}
