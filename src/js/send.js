@@ -1,4 +1,5 @@
 import authHelper from "./authHelper";
+import msgNotification from "./msgNotification";
 
 const send = async (state, endPoint, method) => {
     const SERVER = "http://localhost:8000";
@@ -126,8 +127,13 @@ const send = async (state, endPoint, method) => {
 
 
     } catch (error) {
-        console.log(error)
+        // msgNotification("ERROR",error,"error","OK")
+        //     .then(r=>{
+        //         if (r.value)
+        //             result = {error};
+        //     })
         result = {error};
+
     }
 
     return result

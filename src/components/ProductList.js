@@ -51,9 +51,7 @@ const ProductList = (props) => {
 
                                     <th data-toggle="true">Product Name</th>
                                     <th data-hide="phone">Category</th>
-                                    <th data-hide="phone">Prior Price</th>
-                                    <th data-hide="phone">Sales Price</th>
-                                    <th data-hide="phone,tablet">Quantity</th>
+                                    <th data-hide="phone">Price</th>
                                     <th data-hide="phone">Status</th>
                                     <th className="text-right" data-sort-ignore="true">Action</th>
 
@@ -67,8 +65,6 @@ const ProductList = (props) => {
                                                 name,
                                                 category,
                                                 price_cost,
-                                                price_vent,
-                                                inStock,
                                                 _public,
                                                 id
                                             } = product
@@ -83,12 +79,6 @@ const ProductList = (props) => {
                                                     </td>
                                                     <td>
                                                         {price_cost}
-                                                    </td>
-                                                    <td>
-                                                        {price_vent}
-                                                    </td>
-                                                    <td>
-                                                        {inStock}
                                                     </td>
                                                     <td>
                                                         <Status

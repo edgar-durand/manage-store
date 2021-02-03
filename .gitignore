@@ -1,7 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-api
+/api
+e-store.rar
 node_modules
 /.pnp
 .eslintcache
@@ -14,6 +15,8 @@ node_modules
 /build
 
 # misc
+/src/static/
+/.git
 .DS_Store
 .env.local
 .env.development.local

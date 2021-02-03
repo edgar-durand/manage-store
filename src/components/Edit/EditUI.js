@@ -1,6 +1,7 @@
 import React, {useRef, useEffect, useState} from "react"
 import send from "../../js/send";
 import authHelper from "../../js/authHelper";
+import Select from 'react-select'
 
 const Edit = ({
                   handleSubmit,
@@ -14,14 +15,16 @@ const Edit = ({
                   handleChange,
                   image,
                   handleFile,
-                  handlePublic
+                  handlePublic,
+                  handleSelect
               }) => {
     const TOKEN = {token: authHelper()}
     const [category, setCategory] = useState([])
     useEffect(() => {
         send(TOKEN, "/api/category", "get")
-            .then(r => setCategory({r}))
+            .then(r => setCategory({...r}))
     }, [])
+
     const img = useRef('img');
     const file = useRef('file');
     const label = useRef('label');
@@ -43,24 +46,24 @@ const Edit = ({
                                                                               placeholder="Product name"/></div>
                                         </div>
                                         <div className="form-group row"><label
-                                            className="col-sm-2 col-form-label">Prior Price:</label>
+                                            className="col-sm-2 col-form-label">Price:</label>
                                             <div className="col-sm-10"><input name="price_cost" value={price_cost}
                                                                               onChange={(e) => handleChange(e)}
                                                                               type="text" className="form-control"
                                                                               placeholder="Ex. $160.00"/></div>
                                         </div>
-                                        <div className="form-group row"><label
-                                            className="col-sm-2 col-form-label">Sales Price:</label>
-                                            <div className="col-sm-10"><input name="price_vent" value={price_vent}
-                                                                              onChange={(e) => handleChange(e)}
-                                                                              type="text" className="form-control"
-                                                                              placeholder="Ex. $160.00"/></div>
-                                        </div>
+                                        {/*<div className="form-group row"><label*/}
+                                        {/*    className="col-sm-2 col-form-label">Sales Price:</label>*/}
+                                        {/*    <div className="col-sm-10"><input name="price_vent" value={price_vent}*/}
+                                        {/*                                      onChange={(e) => handleChange(e)}*/}
+                                        {/*                                      type="text" className="form-control"*/}
+                                        {/*                                      placeholder="Ex. $160.00"/></div>*/}
+                                        {/*</div>*/}
                                         <div className="form-group row"><label
                                             className="col-sm-2 col-form-label">Description:</label>
                                             <textarea name="description" value={description} rows="6"
                                                       onChange={(e) => handleChange(e)}
-                                                      className="col-sm-10">
+                                                      className="col-sm-10 form-control">
                                                 Your description.
 
                                         </textarea>
@@ -68,18 +71,19 @@ const Edit = ({
                                         <div className="form-group row"><label
                                             className="col-sm-2 col-form-label">Category</label>
                                             <div className="col-sm-10">
-                                                <select name="category" value={Product_category}
-                                                        onChange={(e) => handleChange(e)}>
-                                                    <option value="0">{Product_category}</option>
-                                                    {
-                                                        Object.values(category).map(categories => {
-                                                            return Object.values(categories).map((category, index) => {
-                                                                return <option key={index}
-                                                                               value={category.id}>{category.name}</option>
-                                                            });
-                                                        })
+                                                <Select
+                                                    options={
+                                                        Object.values(category).map(x => ({
+                                                                value: x.id,
+                                                                label: x.name
+                                                            })
+                                                        )
                                                     }
-                                                </select>
+                                                    isClearable={true}
+                                                    placeholder="Seleccione"
+                                                    name="category"
+                                                    onChange={(e) => handleSelect(e)}
+                                                />
                                             </div>
                                         </div>
                                         <div className="form-group row"><label className="col-sm-2 col-form-label">Is
@@ -87,22 +91,23 @@ const Edit = ({
                                             <div className="col-sm-10"><input type="checkbox"
                                                                               onChange={(e) => handlePublic(e)}
                                                                               checked={_public}
+                                                                              className=""
                                                                               name="_public"/> Public
                                             </div>
                                         </div>
-                                        <div className="form-group row"><label
-                                            className="col-sm-2 col-form-label">Quantity</label>
-                                            <div className="col-sm-10"><input name="inStock" value={inStock}
-                                                                              onChange={(e) => handleChange(e)}
-                                                                              type="number"
-                                                                              min="0"
-                                                                              className="form-control"/></div>
-                                        </div>
+                                        {/*<div className="form-group row"><label*/}
+                                        {/*    className="col-sm-2 col-form-label">Quantity</label>*/}
+                                        {/*    <div className="col-sm-10"><input name="inStock" value={inStock}*/}
+                                        {/*                                      onChange={(e) => handleChange(e)}*/}
+                                        {/*                                      type="number"*/}
+                                        {/*                                      min="0"*/}
+                                        {/*                                      className="form-control"/></div>*/}
+                                        {/*</div>*/}
                                         <div className="form-group row"><label
                                             className="col-sm-2 col-form-label">Image</label>
                                             <div className="col-sm-10">
                                                 <img ref={img} width="400px"
-                                                     src={typeof (image) === "string" ? image : ""  }
+                                                     src={typeof (image) === "string" ? image : ""}
                                                      alt="" style={{
                                                     objectFit: "contain"
                                                 }}/>

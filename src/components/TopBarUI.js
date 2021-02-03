@@ -118,7 +118,7 @@ const TopBarUI = (props) => (
 
 
                 <li>
-                    <Link to="/home" onClick={()=>props.logOut()}>
+                    <Link to={document.location.pathname} onClick={()=>props.logOut()}>
                         <i className="fa fa-sign-out"/> Log out
                     </Link>
                 </li>

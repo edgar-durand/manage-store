@@ -1,11 +1,10 @@
 import React, {useRef} from "react";
+import Select from "react-select";
 
 const NewProductFormUI = ({
                               handleSubmit,
                               _public,
-                              Product_category,
-                              inStock,
-                              price_vent,
+                              handleSelect,
                               price_cost,
                               description,
                               name,
@@ -47,42 +46,58 @@ const NewProductFormUI = ({
                                                className="form-control"/>
                                     </div>
                                     <div className="hr-line-dashed"/>
-                                    <label className="col-sm-2 col-form-label">Prior Price</label>
+                                    <label className="col-sm-2 col-form-label">Price</label>
                                     <div className="col-sm-10">
                                         <input name="price_cost" value={price_cost} onChange={(e) => handleChange(e)}
                                                type="text"
                                                className="form-control"/>
                                     </div>
-                                    <div className="hr-line-dashed"/>
-                                    <label className="col-sm-2 col-form-label">Sales Price</label>
-                                    <div className="col-sm-10">
-                                        <input name="price_vent" value={price_vent} onChange={(e) => handleChange(e)}
-                                               type="text"
-                                               className="form-control"/>
-                                    </div>
-                                    <div className="hr-line-dashed"/>
-                                    <label className="col-sm-2 col-form-label">Quantity</label>
-                                    <div className="col-sm-10">
-                                        <input name="inStock" value={inStock} onChange={(e) => handleChange(e)}
-                                               type="number"
-                                               defaultValue="1" min="0"
-                                               className="form-control"/>
-                                    </div>
+                                    {/*<div className="hr-line-dashed"/>*/}
+                                    {/*<label className="col-sm-2 col-form-label">Sales Price</label>*/}
+                                    {/*<div className="col-sm-10">*/}
+                                    {/*    <input name="price_vent" value={price_vent} onChange={(e) => handleChange(e)}*/}
+                                    {/*           type="text"*/}
+                                    {/*           className="form-control"/>*/}
+                                    {/*</div>*/}
+                                    {/*<div className="hr-line-dashed"/>*/}
+                                    {/*<label className="col-sm-2 col-form-label">Quantity</label>*/}
+                                    {/*<div className="col-sm-10">*/}
+                                    {/*    <input name="inStock" value={inStock} onChange={(e) => handleChange(e)}*/}
+                                    {/*           type="number"*/}
+                                    {/*           defaultValue="1" min="0"*/}
+                                    {/*           className="form-control"/>*/}
+                                    {/*</div>*/}
                                     <div className="hr-line-dashed"/>
                                     <label className="col-sm-2 col-form-label">Category</label>
                                     <div className="col-sm-10">
-                                        <select name="category" value={Product_category}
-                                                onChange={(e) => handleChange(e)}>
-                                            <option value="0">Select category...</option>
-                                            {
-                                                Object.values(category).map(categories => {
-                                                    return Object.values(categories).map((category, index) => {
-                                                        return <option key={index}
-                                                                       value={category.id}>{category.name}</option>
-                                                    });
+                                        <Select
+                                            options={
+
+                                                Object.values(category).map(x => {
+                                                    return {
+                                                        label: x.name,
+                                                        value: x.id
+                                                    }
+
                                                 })
+
                                             }
-                                        </select>
+                                            isClearable={true}
+                                            placeholder="Seleccione"
+                                            onChange={(e) => handleSelect(e)}
+                                        />
+                                        {/*<select name="category" value={Product_category}*/}
+                                        {/*        onChange={(e) => handleChange(e)}>*/}
+                                        {/*    <option value="0">Select category...</option>*/}
+                                        {/*    {*/}
+                                        {/*        Object.values(category).map(categories => {*/}
+                                        {/*            return Object.values(categories).map((category, index) => {*/}
+                                        {/*                return <option key={index}*/}
+                                        {/*                               value={category.id}>{category.name}</option>*/}
+                                        {/*            });*/}
+                                        {/*        })*/}
+                                        {/*    }*/}
+                                        {/*</select>*/}
                                     </div>
                                     <div className="hr-line-dashed"/>
                                     <label className="col-sm-2 col-form-label">Is Public ?</label>

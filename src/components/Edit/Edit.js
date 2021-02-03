@@ -8,6 +8,7 @@ import store from "../../store";
 
 const Edit = (props) => {
     const [state, setState] = useState({
+        back: false,
         category: [],
         product: {
             name: "",
@@ -63,6 +64,18 @@ const Edit = (props) => {
 
     }
 
+   const handleSelect = selected =>{
+if (selected)
+       setState({
+           ...state,
+           product: {
+               ...state.product,
+                category: selected.value
+           }
+       })
+
+   }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (name && description && price_cost && price_vent && category) {
@@ -72,32 +85,36 @@ const Edit = (props) => {
             form.append("description", description)
             form.append("_public", _public)
             form.append("price_cost", price_cost)
-            form.append("price_vent", price_vent)
-            form.append("inStock", inStock)
+            form.append("price_vent", "0")
+            form.append("inStock", "0")
             form.append("category", category)
             send({form, token: authHelper()}, '/api/product/' + ID + '/', "putFile")
-                .then(r => {
-                    store.dispatch({
-                        type: "ADD_NEW_PRODUCT"
-                    })
-                    console.log(r)
-                    redirect();
+                .then(() => {
+                    send({token: authHelper()}, "/api/product/", "get")
+                        .then(list => {
+                            store.dispatch({
+                                type: "SET_LIST_PRODUCTS",
+                                product: {...list}
+                            })
+                            setState({...state, back: true})
+                        })
+
+
                 })
 
         } else console.error("You must fill up all input fields.")
 
-        console.log(state)
     }
 
-    function redirect() {
+    if (state.back)
         return <Redirect to="/home/my_products"/>
-    }
 
     return <EditUI
         image={image}
         handlePublic={(e) => handlePublic(e)}
         handleFile={(file) => handleFile(file)}
         handleChange={(e) => handleChange(e)}
+        handleSelect={(e)=>handleSelect(e)}
         name={name}
         description={description}
         price_cost={price_cost}

@@ -1,7 +1,7 @@
 import Swal from "sweetalert2"
 import React from "react"
 
-const msgNotification = (title, text, icon = "success|error|info|question|warning", confirmButtonText = "ACEPTAR", showCancelButton = false) => (
+const msgNotification = (title, text, icon = "success|error|info|question|warning", confirmButtonText = "ACEPTAR", showCancelButton = false,cancelButtonText="CANCELAR") => (
     Swal.fire({
         title: title,
         html: text,
@@ -12,9 +12,9 @@ const msgNotification = (title, text, icon = "success|error|info|question|warnin
         focusConfirm: false,
         showCancelButton: showCancelButton,
         cancelButtonColor: 'rgb(26, 179, 148)',
-        cancelButtonText: 'CANCELAR',
+        cancelButtonText: cancelButtonText,
         confirmButtonColor: 'rgb(26, 179, 148)',
-        // reverseButtons: false
+        reverseButtons: false
     })
     //     .then(r => {
     //         if (r.value)

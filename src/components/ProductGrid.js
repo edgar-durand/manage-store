@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import "../components/styles/css/bootstrap.min.css";
 import "../components/styles/font-awesome/css/font-awesome.min.css";
 import "../components/styles/css/animate.css";
@@ -8,33 +8,45 @@ import {Link} from "react-router-dom";
 
 const Product = (props) => {
     return (
-        <div className="col-md-3">
-            <div className="ibox">
-                <div className="ibox-content product-box">
+        <Fragment>
+            <div className="col-3 float-left" style={{
+                display: "contents",
+            }}>
+                <div className="ibox">
+                    <div className="ibox-content product-box">
+                        <div>
+                            <img height="200" width="184" src={props.img}
+                                 style={{
+                                     objectFit: "contain"
+                                 }} alt=""/>
 
-                    <div className="product-imitation">
-                        {props.img || "[ INFO ]"}
-                    </div>
-                    <div className="product-desc">
-                                <span className="product-price">
-                                    {`$${props.price}` || "RESERVED"}
-                                </span>
-                        <small className="text-muted">{props.category || "Category"}</small>
-                        <Link to="#" className="product-name"> {props.name.toUpperCase() || "PRODUCT"}</Link>
-
-                        <div className="small m-t-xs">
-                            {props.description || "No description is provided for this product."}
                         </div>
-                        <div className="m-t text-righ">
+                        <div className="product-desc">
+                                <span className="product-price">
+                                    {`$ ${props.price}` || "RESERVED"}
+                                </span>
+                            <small className="text-muted">{props.category || "Category"}</small>
+                            <Link to="#" className="product-name"> {props.name.toUpperCase().substring(0, 15)}</Link>
 
-                            <Link to={`/detail/${props.productId}`}
-                                  className="btn btn-xs btn-outline btn-primary">Info <i
-                                className="fa fa-long-arrow-right"/></Link>
+                            <div className="small m-t-xs">
+                                {props.description.substring(0, 25)}...
+                            </div>
+                            <div className="m-t text-left">
+                                <a href="" onClick={(event) => props.addToCart(props.productId, event)}
+                                   className="btn btn-outline btn-primary">Add <i
+                                    className="fa fa-shopping-cart"/></a>
+
+
+                                <Link to={`/home/detail/${props.productId}`}
+                                      className="btn btn-outline btn-primary">Info <i
+                                    className="fa fa-long-arrow-right"/></Link>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div className="col-auto"/>
+        </Fragment>
     )
 }
 export default Product
