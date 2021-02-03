@@ -1,15 +1,17 @@
 import {createStore} from "redux";
 import toastr from "toastr";
 
+
 const reducer = (state, action) => {
     switch (action.type) {
 
         case "ADD_TO_CART": {
             const ADD = Object.values(state.cart).find(x => x.name === action.product.name && x.price_vent === action.product.price_vent);
             if (!ADD) {
+
                 toastr.options.closeButton = true;
                 toastr.options.closeHtml = '<button><i class="fa fa-close"></i></button>';
-                toastr.success(`${action.product.name} has been added successfully.`, "Added !");
+                toastr.success(`${action.product.name} has been added successfully.`, "Added !",{timeOut: 500});
                 return {
                     ...state, cart: {...Object.values(state.cart).concat(action.product)}
                 }
@@ -99,4 +101,4 @@ const reducer = (state, action) => {
     return state
 }
 
-export default createStore(reducer, {cart: [], globalState: [], accounts: [], productList: [], categories: []})
+export default createStore(reducer, {cart: [], globalState: [], accounts: {}, productList: [], categories: []})
