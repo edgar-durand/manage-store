@@ -35,9 +35,9 @@ const CartSummary = () => {
                             </span>
                     <div className="m-t-sm">
                         <div className="btn-group" style={{display: "contents"}}>
-                            <button className="btn btn-primary btn-sm"><i
+                            <Link to="/home/checkout/" className="btn btn-primary btn-sm"><i
                                 className="fa fa-check-square"/> Checkout
-                            </button>
+                            </Link>
                             &nbsp;
                             <button className="btn btn-default btn-sm"> Cancel</button>
 

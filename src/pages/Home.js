@@ -27,6 +27,7 @@ import CategoryNew from '../components/Categories/CategoryNew';
 import CategoryShow from '../components/Categories/CategoryShow';
 import GoForShopping from "../components/GoForShopping/GoForShopping";
 import CartList from "../components/CartList/CartList";
+import Checkout from "../components/Checkout/Checkout";
 
 const Home = () => {
     const [state, setState] = useState({
@@ -118,6 +119,7 @@ const Home = () => {
                             {/*Routes of MyAccounts*/}
 
                             <Route path="/home/my_cart/" component={CartList}/>
+                            <Route path="/home/checkout/" component={Checkout}/>
 
                             {/*Shopping*/}
                             <Route path="/home/shopping/" component={GoForShopping}/>

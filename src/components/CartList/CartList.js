@@ -9,9 +9,9 @@ const CartList = () => {
     const [products, setProducts] = useState({...store.getState().cart})
 
     const handleChange = (e, product) => {
-        if (e.target.value==="0") {
+        if (e.target.value === "0") {
             e.target.value = 1
-            toastr.warning("If you dont want this product here please 'Remove item' but 0 is not valid here","WARNING !")
+            toastr.warning("If you dont want this product here please 'Remove item' but 0 is not valid here", "WARNING !")
         }
 
         store.dispatch({
@@ -32,12 +32,13 @@ const CartList = () => {
 
 
     }
-    const handleClick = (id)=>{
-        msgNotification("Confirm","Are you sure of delete this item ?","question","OK",true,"CANCEL")
-            .then((r)=>{
-                if (r.value){
+
+    const handleClick = (id) => {
+        msgNotification("Confirm", "Are you sure of delete this item ?", "question", "OK", true, "CANCEL")
+            .then((r) => {
+                if (r.value) {
                     store.dispatch({
-                        type:"DELETE_FROM_CART",
+                        type: "DELETE_FROM_CART",
                         id
                     })
                 }
@@ -68,7 +69,7 @@ const CartList = () => {
                                 return (
                                     <div className="ibox-content">
                                         <div className="table-responsive">
-                                            <table className="table shoping-cart-table">
+                                            <table className="table shopping-cart-table">
                                                 <tbody>
                                                 <tr>
                                                     <td width="90">
@@ -89,12 +90,14 @@ const CartList = () => {
                                                         </p>
 
                                                         <div className="m-t-sm">
-                                                            <a href="#" className="text-muted"><i
-                                                                className="fa fa-gift"/> Add
-                                                                gift package</a>
-                                                            |
-                                                            <button onClick={()=>handleClick(product.id)} className="btn btn-xs btn-default"><i
-                                                                className="fa fa-trash"/> Remove item</button>
+                                                            {/*<a href="#" className="text-muted"><i*/}
+                                                            {/*    className="fa fa-gift"/> Add*/}
+                                                            {/*    gift package</a>*/}
+                                                            {/*|*/}
+                                                            <button onClick={() => handleClick(product.id)}
+                                                                    className="btn btn-xs btn-default"><i
+                                                                className="fa fa-trash"/> Remove item
+                                                            </button>
                                                         </div>
                                                     </td>
 
@@ -124,9 +127,9 @@ const CartList = () => {
 
                         <div className="ibox-content">
 
-                            <button className="btn btn-primary float-right"><i
-                                className="fa fa fa-shopping-cart"/> Checkout
-                            </button>
+                            <Link to="/home/checkout/" className="btn btn-primary float-right"><i
+                                className="fa fa-check-square"/> Checkout
+                            </Link>
                             <Link to="/home/shopping/" className="btn btn-white"><i
                                 className="fa fa-arrow-left"/> Continue shopping
                             </Link>

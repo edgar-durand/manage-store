@@ -6,9 +6,6 @@ import Select from 'react-select'
 const Edit = ({
                   handleSubmit,
                   _public,
-                  Product_category,
-                  inStock,
-                  price_vent,
                   price_cost,
                   description,
                   name,
