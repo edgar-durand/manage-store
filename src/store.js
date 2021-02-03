@@ -20,6 +20,12 @@ const reducer = (state, action) => {
             }
         }
             break;
+        case "DELETE_FROM_CART": {
+            return {
+                ...state, cart: {...Object.values(state.cart).filter(x=>x.id !== action.id)}
+            }
+        }
+            break;
         case "UPDATE_STATE": {
             return {
                 ...state, globalState: {...action.state}
@@ -27,15 +33,16 @@ const reducer = (state, action) => {
         }
             break;
         case "SET_PRODUCT_QUANTITY": {
-            // console.log(Object.assign({...Object.values(state.cart).find(x => x.id === action.product.id)},{inStock:action.quantity}))
 
             if (Object.values(action.product).length)
-            return {
-                ...state,
-                cart: {
-                    ...Object.values(state.cart).filter(x => x.id !== action.product.id).concat(action.product)
+                return {
+                    ...state,
+                    cart: {
+                        // ...state.cart,
+                        // ...Object.values(state.cart).find(x => x.id === action.product.id).inStock = action.product.inStock
+                        ...Object.values(state.cart).filter(x => x.id !== action.product.id).concat(action.product)
+                    }
                 }
-            }
 
         }
             break;

@@ -88,7 +88,7 @@ const GoForShopping = () => {
                                 key={index}
                                 img={x.image}
                                 name={x.name}
-                                price={x.price_vent}
+                                price={x.price_cost}
                                 category={x.category}
                                 description={x.description}
                                 addToCart={(id, e) => addToCart(id, e)}

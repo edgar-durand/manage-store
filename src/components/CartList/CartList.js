@@ -2,10 +2,17 @@ import React, {useState} from "react";
 import store from "../../store";
 import {Link} from "react-router-dom";
 import CartSummary from "../CartSummary/CartSummary";
+import msgNotification from "../../js/msgNotification";
+import toastr from "toastr";
 
 const CartList = () => {
     const [products, setProducts] = useState({...store.getState().cart})
+
     const handleChange = (e, product) => {
+        if (e.target.value==="0") {
+            e.target.value = 1
+            toastr.warning("If you dont want this product here please 'Remove item' but 0 is not valid here","WARNING !")
+        }
 
         store.dispatch({
             type: "SET_PRODUCT_QUANTITY",
@@ -24,6 +31,17 @@ const CartList = () => {
         })
 
 
+    }
+    const handleClick = (id)=>{
+        msgNotification("Confirm","Are you sure of delete this item ?","question","OK",true,"CANCEL")
+            .then((r)=>{
+                if (r.value){
+                    store.dispatch({
+                        type:"DELETE_FROM_CART",
+                        id
+                    })
+                }
+            })
     }
 
     store.subscribe(() => {
@@ -75,22 +93,23 @@ const CartList = () => {
                                                                 className="fa fa-gift"/> Add
                                                                 gift package</a>
                                                             |
-                                                            <a href="#" className="text-muted"><i
-                                                                className="fa fa-trash"/> Remove item</a>
+                                                            <button onClick={()=>handleClick(product.id)} className="btn btn-xs btn-default"><i
+                                                                className="fa fa-trash"/> Remove item</button>
                                                         </div>
                                                     </td>
 
                                                     <td>
-                                                        $ {parseFloat(product.price_vent).toFixed(2)}
+                                                        $ {parseFloat(product.price_cost).toFixed(2)}
                                                     </td>
                                                     <td width="65">
                                                         <input onChange={(event) => handleChange(event, product)}
-                                                               type="text" defaultValue={product.inStock}
-                                                               className="form-control col-12" placeholder="1"/>
+                                                               type="text"
+                                                               defaultValue={product.inStock === 0 ? 1 : product.inStock}
+                                                               className="form-control col-12"/>
                                                     </td>
                                                     <td>
                                                         <h4>
-                                                            <label>{(product.inStock * product.price_vent).toFixed(2)}</label>
+                                                            <label>{((product.inStock === 0 ? 1 : product.inStock) * product.price_cost).toFixed(2)}</label>
                                                         </h4>
                                                     </td>
                                                 </tr>
@@ -116,7 +135,7 @@ const CartList = () => {
                     </div>
                 </div>
                 <CartSummary
-                    total={Object.values(store.getState().cart).reduce((a, b) => a + b.price_vent, 0)}
+                    total={Object.values(store.getState().cart).reduce((a, b) => a + b.price_cost * b.inStock, 0)}
                 />
             </div>
         </div>

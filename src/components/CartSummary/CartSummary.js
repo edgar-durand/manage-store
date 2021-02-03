@@ -3,10 +3,12 @@ import {Link} from "react-router-dom";
 import store from "../../store";
 
 const CartSummary = () => {
-    const [total, setTotal] = useState(+Object.values(store.getState().cart).reduce((a, b) => a + (b.price_vent * b.inStock), 0))
+    const [total, setTotal] = useState(+Object.values(store.getState().cart).reduce((a, b) => a + (b.price_cost * (b.inStock===0?1:b.inStock)), 0))
+
     store.subscribe(() => {
-        setTotal(+Object.values(store.getState().cart).reduce((a, b) => a + (b.price_vent * b.inStock), 0))
-    })
+        setTotal(+Object.values(store.getState().cart).reduce((a, b) => a + (b.price_cost * (b.inStock === 0 ? 1 : b.inStock)), 0))
+    });
+
     return (
         <div className="row col-3 float-right">
 

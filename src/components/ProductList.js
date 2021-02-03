@@ -65,8 +65,6 @@ const ProductList = (props) => {
                                                 name,
                                                 category,
                                                 price_cost,
-                                                price_vent,
-                                                inStock,
                                                 _public,
                                                 id
                                             } = product
