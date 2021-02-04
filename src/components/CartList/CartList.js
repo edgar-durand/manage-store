@@ -20,10 +20,10 @@ const CartList = () => {
                 description: product.description,
                 id: product.id,
                 image: product.image,
-                inStock: +e.target.value || 1,
+                inStock: +e.target.value,
                 name: product.name,
                 price_cost: product.price_cost,
-                price_vent: product.price_vent,
+                price_vent: 0,
                 _public: product._public
 
             }

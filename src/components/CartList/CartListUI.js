@@ -8,7 +8,6 @@ const CartListUI = ({products,handleClick,handleChange}) =>{
     return (
         <div className="wrapper wrapper-content">
 
-
             <div className="row">
                 <div className="col-md-9 animated fadeInRight">
                     <div className="ibox">
@@ -20,9 +19,9 @@ const CartListUI = ({products,handleClick,handleChange}) =>{
 
 
                         {
-                            Object.values(products).sort((a, b) => a.id - b.id).map(product => {
+                            Object.values(products).sort((a, b) => a.id - b.id).map((product) => {
                                 return (
-                                    <div className="ibox-content">
+                                    <div className="ibox-content" >
                                         <div className="table-responsive">
                                             <table className="table shopping-cart-table">
                                                 <tbody>
@@ -34,7 +33,7 @@ const CartListUI = ({products,handleClick,handleChange}) =>{
                                                             }} width="80" height="80" src={product.image} alt=""/>
                                                         </div>
                                                     </td>
-                                                    <td className="desc">
+                                                    <td width="520" className="desc">
                                                         <h3>
                                                             <a href="#" className="text-navy">
                                                                 {product.name}
@@ -62,10 +61,10 @@ const CartListUI = ({products,handleClick,handleChange}) =>{
                                                     <td width="65">
                                                         <input onChange={(event) => handleChange(event, product)}
                                                                type="text"
-                                                               defaultValue={product.inStock === 0 ? 1 : product.inStock}
-                                                               className="form-control col-12"/>
+                                                               defaultValue={1}
+                                                               className="form-control col-12 float-right"/>
                                                     </td>
-                                                    <td>
+                                                    <td className="float-right">
                                                         <h4>
                                                             <label>{((product.inStock === 0 ? 1 : product.inStock) * product.price_cost).toFixed(2)}</label>
                                                         </h4>

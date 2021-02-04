@@ -60,7 +60,7 @@ const MyAccounts = () => {
                                         key={index}
                                         description={account.description}
                                         amount={account.a_amount}
-                                        card_no={account.name.substring(12, 16)}
+                                        card_no={account.name ? account.name.substring(12, 16) : null}
                                     />
                                 )
                             })

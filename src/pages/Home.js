@@ -28,6 +28,7 @@ import CategoryShow from '../components/Categories/CategoryShow';
 import GoForShopping from "../components/GoForShopping/GoForShopping";
 import CartList from "../components/CartList/CartList";
 import Checkout from "../components/Checkout/Checkout";
+import {storeToLocalStore, localStoreToStore} from "../js/storeHelper"
 
 const Home = () => {
     const [state, setState] = useState({
@@ -42,7 +43,7 @@ const Home = () => {
         send(state, "/api/profile", "get").then((p) => {
             if (p[0]) {
                 store.dispatch({
-                    type:"UPDATE_STATE",
+                    type: "UPDATE_STATE",
                     state: {...p}
                 })
                 store.dispatch({
@@ -55,24 +56,36 @@ const Home = () => {
             }
             // noinspection JSCheckFunctionSignatures
             setState({...state, ...p});
-
-            send({token: authHelper()}, "/api/accounts/", "get")
+            send({token: authHelper()}, "/api/accounts", "get")
                 .then(r => {
                     store.dispatch({
-                        type:"GET_ACCOUNTS",
+                        type: "GET_ACCOUNTS",
                         accounts: {...r}
                     })
                 })
 
+
         });
 
-
+        if (localStoreToStore())
+            store.dispatch({
+                type: "LOAD"
+            })
     }, []);
 
+    store.subscribe(() => {
+        storeToLocalStore();
+    })
 
 
     const logOut = () => {
-        msgNotification(`Confirmar`, "Desea cerrar la sesion ?", "question", "ACEPTAR", true)
+        let msg = "";
+        Object.values(store.getState().cart).length ?
+            msg = "Your shopping cart will loss the items purchased. Continue logging out ?" :
+            msg = "Desea cerrar la sesion ?"
+
+
+        msgNotification(`Confirmar`, msg, "question", "ACEPTAR", true)
             .then(r => {
                 if (r.value) {
                     send(state, "/api/logout", "get").then(() => {

@@ -33,7 +33,7 @@ const Card = ({card_no, amount, description, handleClick, id}) => {
                         <strong>Availabe amount:</strong>
                     </div>
                     <div className="col-sm-6 text-right text-success float-right">
-                        <span className="label label-primary float-right">$ {amount}</span>
+                        <span className="label label-primary float-right">$ {amount ? amount.toFixed(2):0}</span>
                     </div>
 
                 </div>

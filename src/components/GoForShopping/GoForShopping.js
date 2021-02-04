@@ -16,10 +16,14 @@ const GoForShopping = () => {
     useEffect(() => {
         if (Object.values(store.getState().cart).length)
             setState({
-                ...state, total: +Object.values(store.getState().cart).reduce((a, b) => a + b.price_vent, 0)
+                ...state, total: +Object.values(store.getState().cart).reduce((a, b) => a + b.price_cost, 0)
             })
     }, [])
-
+    store.subscribe(()=>{
+        setState({
+            ...state,products: {...store.getState().productList}
+        })
+    })
 
     const {searchField, match} = state;
 

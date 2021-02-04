@@ -17,7 +17,7 @@ const NewProductForm = () => {
             description: "",
             price_cost: "",
             price_vent: "",
-            inStock: 1,
+            inStock: 0,
             category: "",
             _public: false,
             image: null
@@ -63,7 +63,7 @@ const NewProductForm = () => {
         let form = new FormData()
         form.append("image", state.product.image)
         form.append("name", name)
-        form.append("description", description)
+        form.append("description", description || "")
         form.append("_public", _public)
         form.append("price_cost", price_cost)
         form.append("price_vent", "0")
@@ -71,7 +71,7 @@ const NewProductForm = () => {
         form.append("category", category)
 
 
-        if (name && description && price_cost && price_vent && category) {
+        if (name && price_cost && category) {
             send({form, token: authHelper()}, '/api/product/', "file")
                 .then((r) => {
                     store.dispatch({
