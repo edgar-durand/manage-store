@@ -9,12 +9,11 @@ const reducer = (state, action) => {
         case "ADD_TO_CART": {
             const ADD = Object.values(state.cart).find(x => x.name === action.product.name && x.price_vent === action.product.price_vent);
             if (!ADD) {
-
                 toastr.options.closeButton = true;
                 toastr.options.closeHtml = '<button><i class="fa fa-close"></i></button>';
                 toastr.success(`${action.product.name} has been added successfully.`, "Added !", {timeOut: 500});
                 return {
-                    ...state, cart: {...Object.values(state.cart).concat(Object.assign(action.product,{inStock:1}))}
+                    ...state, cart: {...Object.values(state.cart).concat(Object.assign(action.product, {inStock: 1}))}
                 }
             } else {
                 toastr.options.closeButton = true;
@@ -23,13 +22,13 @@ const reducer = (state, action) => {
             }
         }
             break;
+
         case "SET_PRODUCT_QUANTITY": {
             if (Object.values(action.product).length)
                 return {
                     ...state,
-                    cart: {
-                        ...Object.values(state.cart).filter(x => x.id !== action.product.id).concat(action.product)
-                    }
+                    cart: Object.values(state.cart).filter(x => x.id !== action.product.id).concat(action.product)
+
                 }
 
         }
@@ -39,13 +38,13 @@ const reducer = (state, action) => {
                 ...state, cart: {...Object.values(state.cart).filter(x => x.id !== action.id)}
             }
         }
-            break;
+
         case "CLEAR_CART": {
             return {
                 ...state, cart: {}
             }
         }
-            break;
+
 
 
 
@@ -55,7 +54,7 @@ const reducer = (state, action) => {
                 ...state, globalState: {...action.state}
             }
         }
-            break;
+
 
 
         //productList actions
@@ -65,14 +64,14 @@ const reducer = (state, action) => {
                 productList: {...action.product}
             }
         }
-            break;
+
         case "ADD_NEW_PRODUCT": {
             return {
                 ...state,
                 productList: {...Object.values(state.productList).concat(action.product)}
             }
         }
-            break;
+
         case "UPDATE_LIST": {
             const NEW_LIST = Object.values(state.productList).filter(product => product.id !== action.id)
             return {
@@ -88,22 +87,22 @@ const reducer = (state, action) => {
                 ...state, accounts: action.accounts
             }
         }
-            break;
+
         case "DELETE_ACCOUNTS": {
             return {
                 ...state, accounts: {...Object.values(state.accounts).filter(x => x.id !== action.id)}
             }
         }
-            break;
+
 
 
         //Categories actions
         case "GET_CATEGORIES": {
             return {
-                ...state, categories: {...action}
+                ...state, categories: {...action.categories}
             }
         }
-            break;
+
 
         //Logout actions
         case "CLEAR": {
@@ -117,7 +116,6 @@ const reducer = (state, action) => {
                 ...localStoreToStore()
             }
         }
-            break;
 
 
         default : {

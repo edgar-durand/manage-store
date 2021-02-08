@@ -1,7 +1,7 @@
 import React from "react";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login/Login";
-import Register from "./pages/Register/register"
+import Register from "./pages/Register/Register"
 import Home from "./pages/Home"
 
 import {BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -10,7 +10,6 @@ function App() {
             return (
             <Router>
                 <Switch>
-                    {/*<Route path="/" component={Anonymous}/>*/}
                     <Route exact path="/login" component={Login}/>
                     <Route exact path="/register" component={Register}/>
                     <Route path="/home" component={Home}/>

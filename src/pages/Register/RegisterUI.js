@@ -2,8 +2,7 @@ import React, {useRef} from "react";
 import {Link} from "react-router-dom";
 import LoadingButton from "../../components/LoadingButton";
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default (props) => {
+const RegisterUI = (props) => {
     const img = useRef('img');
     const file = useRef('file');
     const label = useRef('label');
@@ -19,26 +18,26 @@ export default (props) => {
 
         <div className="col-lg-6 float-left">
 
-            <form onSubmit={(event) => props.handleSubmit(event)} className="m-t " action="register.js">
+            <form onSubmit={(event) => props.handleSubmit(event)} className="m-t " action="Register.js">
                 <div className="form-group">
                     <input onChange={(event) => props.handleChange(event)} name="first_name" type="text"
                            className="form-control"
                            placeholder="First Name"
-                           value={props.first_name}
+                           // value={props.first_name}
                            required/>
                 </div>
                 <div className="form-group">
                     <input onChange={(event) => props.handleChange(event)} name="last_name" type="text"
                            className="form-control"
                            placeholder="Last Name"
-                           value={props.last_name}
+                           // value={props.last_name}
                            required/>
                 </div>
                 <div className="form-group">
                     <label className="col-lg-2 float-left">Birth date</label>
                     <input onChange={(event) => props.handleChange(event)} name="birth_date" type="date"
                            className="form-control col-lg-4"
-                           value={props.birth_date}
+                           // value={props.birth_date}
                            required/>
 
                 </div>
@@ -46,25 +45,25 @@ export default (props) => {
                     <input onChange={(event) => props.handleChange(event)} name="username" type="text"
                            className="form-control"
                            placeholder="User"
-                           value={props.username}
+                           // value={props.username}
                            required/>
                 </div>
                 <div className="form-group">
                     <input onChange={(event) => props.handleChange(event)} name="email" type="email"
                            className="form-control"
-                           value={props.email}
+                           // value={props.email}
                            placeholder="Email*" required/>
                 </div>
                 <div className="form-group">
                     <input onChange={(event) => props.handleChange(event)} name="phone" type="phone"
                            className="form-control"
-                           value={props.phone}
+                           // value={props.phone}
                            placeholder="Phone number" required/>
                 </div>
                 <div className="form-group">
                     <input onChange={(event) => props.handleChange(event)} name="password" type="password"
                            className="form-control"
-                           value={props.password}
+                           // value={props.password}
                            placeholder="Password*"
                            title="Min 5 characters, It must has at least a number, an special character and upperCase. "
                            required/>
@@ -105,10 +104,6 @@ export default (props) => {
                     buttonText="Register"
                     disabled={props.disable === false}
                 />
-                {/*<button type="submit" className="btn btn-primary block full-width m-b"*/}
-                {/*        disabled={props.disable === false}>Register*/}
-                {/*</button>*/}
-
                 <p className="text-muted text-center"><small>Already have an account?</small></p>
                 <Link className="btn btn-sm btn-white btn-block" to="/login">Login</Link>
             </form>
@@ -116,3 +111,4 @@ export default (props) => {
         </div>
     </div>
 )}
+export default RegisterUI

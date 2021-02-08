@@ -1,14 +1,13 @@
 import React, {Fragment, useEffect, useState} from "react"
-import MyAccountsUI from "./MyAccountsUI";
 import Card from "../Card";
 import send from "../../js/send";
 import authHelper from "../../js/authHelper";
 import AddNewButton from "../NewAccount/AddNewButton";
 import {Link} from "react-router-dom";
-import NewAccountForm from "../NewAccount/NewAccountForm";
 import store from "../../store";
 import msgNotification from "../../js/msgNotification";
 import toastr from "toastr";
+import NewAccountForm from "../NewAccount/NewAccountForm";
 
 const MyAccounts = () => {
     const [accounts, setAccount] = useState({...store.getState().accounts});
@@ -19,7 +18,14 @@ const MyAccounts = () => {
                 setAccount({...r})
             })
 
+        let unsubscribe = store.subscribe(()=>{
+            setAccount({...store.getState().accounts})
+            return unsubscribe;
+        })
+
+
     }, [])
+
 
     const handleClick = (e,id) =>{
         e.preventDefault();
@@ -42,9 +48,7 @@ const MyAccounts = () => {
 
     }
 
-    store.subscribe(()=>{
-        setAccount({...store.getState().accounts})
-    })
+
 
     if (Object.values(accounts).length) {
         return (
@@ -60,7 +64,7 @@ const MyAccounts = () => {
                                         key={index}
                                         description={account.description}
                                         amount={account.a_amount}
-                                        card_no={account.name ? account.name.substring(12, 16) : null}
+                                        card_no={account.name}
                                     />
                                 )
                             })
@@ -69,7 +73,7 @@ const MyAccounts = () => {
                     </div>
                     <Link to="/home/new_account/"><AddNewButton/></Link>
                 </div>
-                <MyAccountsUI/>
+
             </Fragment>
         )
     } else
@@ -78,8 +82,8 @@ const MyAccounts = () => {
                 <div className="row">
                     <div className="ibox ibox-content col-lg-12">
                     <h3>You have not any account. Set up your first credit for furthers loans.</h3>
+                        <NewAccountForm/>
                     </div>
-                    <NewAccountForm/>
                 </div>
             </div>
         )

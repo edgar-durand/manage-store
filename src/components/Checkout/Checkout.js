@@ -73,6 +73,9 @@ const Checkout = () => {
                 toastr.warning("You should set up the account", "WARNING !")
 
 
+        }else {
+            toastr.warning("You need to purchase some product first.", "WARNING !")
+
         }
     }
 

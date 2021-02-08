@@ -40,42 +40,55 @@ const Home = () => {
     });
 
     useEffect(() => {
+
+        if (localStoreToStore())
+            store.dispatch({
+                type: "LOAD"
+            })
+
+        let unsubscribe = store.subscribe(() => {
+            storeToLocalStore();
+            return unsubscribe;
+        })
+    }, []);
+
+
+
+    if (state && !Object.values(state[0].username).length) {
         send(state, "/api/profile", "get").then((p) => {
             if (p[0]) {
                 store.dispatch({
                     type: "UPDATE_STATE",
                     state: {...p}
                 })
-                store.dispatch({
-                    type: "SET_LIST_PRODUCTS",
-                    product: {...p[0].prod_user}
-                })
+
+                toastr.options.preventDuplicates = true;
                 toastr.options.closeButton = true;
                 toastr.options.closeHtml = '<button><i class="fa fa-close"></i></button>';
                 toastr.info(`${p[0].username}`, "Bienvenido");
             }
-            // noinspection JSCheckFunctionSignatures
+
             setState({...state, ...p});
             send({token: authHelper()}, "/api/accounts", "get")
                 .then(r => {
                     store.dispatch({
                         type: "GET_ACCOUNTS",
-                        accounts: {...r}
+                        accounts: r
                     })
                 })
-
-
         });
 
-        if (localStoreToStore())
-            store.dispatch({
-                type: "LOAD"
-            })
-    }, []);
-
-    store.subscribe(() => {
-        storeToLocalStore();
-    })
+        send({token: authHelper()}, "/api/product/", "get")
+            .then(r => store.dispatch({
+                type: "SET_LIST_PRODUCTS",
+                product: r
+            }))
+        send({token: authHelper()}, "/api/category/", "get")
+            .then(r => store.dispatch({
+                type: "GET_CATEGORIES",
+                categories: r
+            }))
+    }
 
 
     const logOut = () => {
@@ -85,7 +98,7 @@ const Home = () => {
             msg = "Desea cerrar la sesion ?"
 
 
-        msgNotification(`Confirmar`, msg, "question", "ACEPTAR", true)
+        msgNotification(`Confirm`, msg, "question", "OK", true,"CANCEL")
             .then(r => {
                 if (r.value) {
                     send(state, "/api/logout", "get").then(() => {
@@ -93,11 +106,15 @@ const Home = () => {
                         toastr.options.closeHtml = '<button><i class="fa fa-close"></i></button>';
                         toastr.success(`Su sesion se ha cerrado con exito`, "LogOut");
                     });
+
                     localStorage.removeItem("token");
                     setState(null);
+
                     store.dispatch({
                         type: "CLEAR"
                     })
+
+                    localStorage.removeItem("store");
                     return <Redirect to="/login"/>;
                 }
             })
@@ -141,7 +158,7 @@ const Home = () => {
                             <Route path="/home/detail/:id" component={Detail}/>
                             <Route path="/home/edit/:id" component={Edit}/>
                             <Route path="/home/new_product/" component={NewProductForm}/>
-                            <Route path="/home/my_products/" component={() => <ProductList {...state[0].prod_user} />}/>
+                            <Route path="/home/my_products/" component={ProductList}/>
                             {/*<Route exact path="/home" component={}/>*/}
                             <Route component={NotFound}/>
                         </Switch>

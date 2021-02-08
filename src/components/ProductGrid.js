@@ -32,9 +32,9 @@ const Product = (props) => {
                                 {props.description.substring(0, 25)}...
                             </div>
                             <div className="m-t text-left">
-                                <a href="" onClick={(event) => props.addToCart(props.productId, event)}
+                                <button onClick={(event) => props.addToCart(props.productId, event)}
                                    className="btn btn-outline btn-primary">Add <i
-                                    className="fa fa-shopping-cart"/></a>
+                                    className="fa fa-shopping-cart"/></button>
 
 
                                 <Link to={`/home/detail/${props.productId}`}

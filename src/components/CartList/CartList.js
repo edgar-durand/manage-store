@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import store from "../../store";
 import msgNotification from "../../js/msgNotification";
 import toastr from "toastr";
@@ -6,6 +6,15 @@ import CartListUI from "./CartListUI";
 
 const CartList = () => {
     const [products, setProducts] = useState({...store.getState().cart})
+
+    useEffect(()=>{
+
+        let unsubscribe = store.subscribe(() => {
+            setProducts({...store.getState().cart})
+            return unsubscribe;
+        })
+
+    },[])
 
     const handleChange = (e, product) => {
         if (e.target.value === "0") {
@@ -44,9 +53,7 @@ const CartList = () => {
             })
     }
 
-    store.subscribe(() => {
-        setProducts({...store.getState().cart})
-    })
+
 
 
     return <CartListUI

@@ -1,6 +1,5 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import { useImperativeHandle } from "react/cjs/react.production.min";
 
 const CategoryListUI = ({categories, handleClick}) => {
   

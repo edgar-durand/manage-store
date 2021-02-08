@@ -1,14 +1,13 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import {Redirect} from "react-router-dom";
 import FatalError from "../FatalError";
 import send from "../../js/send";
 import RegisterUI from "./RegisterUI";
 import passwordRequirements from "../../validation/passwordRequirements";
+import toastr from "toastr"
 import msgNotification from "../../js/msgNotification";
 
-
-// eslint-disable-next-line import/no-anonymous-default-export
-export default () => {
+const Register = () => {
 
     const [stat, setStat] = useState({
         agree: false, load: false, user: {
@@ -28,20 +27,18 @@ export default () => {
     });
 
     let users;
-
-    useEffect(() => {
-        send({}, "/api/user", "get")
-            .then(r => {
-                setStat({...stat, users: {...r}})
-            })
-    }, [])
+    if (!Object.values(stat.users).length)
+            send({}, "/api/user", "get")
+                .then(r => {
+                    setStat({...stat, users: {...r}})
+                })
 
     users = Object.values(stat.users).find(x => x.email === stat.user.email);
 
     if (users) {
-        msgNotification("Info", `Ese correo esta en uso, debe usar otra direccion`,"info"
-            , "ACEPTAR", false)
-        console.log(users.email, " in use, use another email address.")
+        toastr.options.preventDuplicates = true;
+        toastr.warning(`This email address is already in use, please provide a different one `,"Info");
+        console.log(users.email, " in use, use another email address.");
     }
 
     const handleFile = (file) => {
@@ -127,3 +124,4 @@ export default () => {
 
     )
 }
+export default Register

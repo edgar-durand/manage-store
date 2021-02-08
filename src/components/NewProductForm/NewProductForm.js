@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import {Redirect} from "react-router-dom";
 import NewProductFormUI from "./NewProductFormUI";
 import send from "../../js/send";
@@ -24,10 +24,10 @@ const NewProductForm = () => {
         }
     });
     const {name, description, price_cost, price_vent, inStock, category, _public} = state.product;
-    useEffect(() => {
+
+    if (!Object.values(state.category).length)
         send({token: authHelper()}, "/api/category", "get")
             .then(r => setState({...state, category: {...r}}))
-    }, [])
 
 
     const handleFile = (file) => {
@@ -92,7 +92,7 @@ const NewProductForm = () => {
 
     }
 
-    const handleSelect = selected =>{
+    const handleSelect = selected => {
         if (selected)
             setState({
                 ...state,
@@ -103,10 +103,6 @@ const NewProductForm = () => {
             })
 
     }
-
-    // store.subscribe(()=>{
-    //     console.log(store.getState().productList)
-    // })
 
     if (state.goBack)
         return <Redirect to="/home/my_products/"/>
@@ -124,7 +120,7 @@ const NewProductForm = () => {
         Product_category={category}
         _public={_public}
         handleSubmit={(e) => handleSubmit(e)}
-        handleSelect={(e)=>handleSelect(e)}
+        handleSelect={(e) => handleSelect(e)}
     />
 
 }

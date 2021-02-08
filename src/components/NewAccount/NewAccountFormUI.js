@@ -34,7 +34,7 @@ const NewAccountFormUI = ({handleSubmit,handleChange}) => (
                                 </div>
                                 <div className="col-md-8">
 
-                                    <form role="form" onSubmit={(e) => handleSubmit(e)} id="payment-form"
+                                    <form onSubmit={(e) => handleSubmit(e)} id="payment-form"
                                           name="formPay">
                                         <div className="row">
                                             <div className="col-12">

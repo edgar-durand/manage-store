@@ -17,7 +17,7 @@ const Login = () => {
     useEffect(() => {
         if (authHelper())
             setData({...data, token: authHelper()})
-    }, [])
+    }, [data])
 
     const handleChange = (e) => {
         setData({

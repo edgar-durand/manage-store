@@ -1,6 +1,4 @@
-import React, {useRef, useEffect, useState} from "react"
-import send from "../../js/send";
-import authHelper from "../../js/authHelper";
+import React, {useRef} from "react"
 import Select from 'react-select'
 
 const Edit = ({
@@ -15,12 +13,6 @@ const Edit = ({
                   handlePublic,
                   handleSelect
               }) => {
-    const TOKEN = {token: authHelper()}
-    const [category, setCategory] = useState([])
-    useEffect(() => {
-        send(TOKEN, "/api/category", "get")
-            .then(r => setCategory({...r}))
-    }, [])
 
     const img = useRef('img');
     const file = useRef('file');
@@ -70,7 +62,7 @@ const Edit = ({
                                             <div className="col-sm-10">
                                                 <Select
                                                     options={
-                                                        Object.values(category).map(x => ({
+                                                        Object.values(JSON.parse(localStorage.getItem("store")).categories).map(x => ({
                                                                 value: x.id,
                                                                 label: x.name
                                                             })

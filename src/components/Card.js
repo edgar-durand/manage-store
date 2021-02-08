@@ -18,15 +18,15 @@ const Card = ({card_no, amount, description, handleClick, id}) => {
                         {description}
                     </small>
 
-                    <a href="" title="Cancel" onClick={(e) => handleClick(e, id)}>
+                    <label title="Cancel" onClick={(e) => handleClick(e, id)}>
                         <i ref={i} style={{fontSize: "30px"}}
                            onMouseOut={() => i.current.classList.add("text-muted")}
                            onMouseOver={() => i.current.classList.remove("text-muted")}
-                           className="fa fa-close text-muted float-right col-sm-1"/></a>
+                           className="fa fa-close text-muted float-right col-sm-1"/></label>
 
                 </div>
                 <h2>
-                    **** **** **** {card_no}
+                    {card_no}
                 </h2>
                 <div className="row">
                     <div className="col-sm-6">

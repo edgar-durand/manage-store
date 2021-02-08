@@ -1,5 +1,4 @@
 import authHelper from "./authHelper";
-import msgNotification from "./msgNotification";
 
 const send = async (state, endPoint, method) => {
     const SERVER = "http://localhost:8000";
@@ -11,14 +10,12 @@ const send = async (state, endPoint, method) => {
             switch (method) {
                 case "POST": {
                     config = {
-                        method: method,
+                        method: "POST",
                         headers: {
                             "Accept": "application/json",
                             "Content-Type": "application/json",
-                            // "Content-Type": "multipart/form-data",
                             "Authorization": "token " + authHelper()
                         },
-                        // body: state
                         body: JSON.stringify(state)
                     }
                 }
@@ -84,7 +81,10 @@ const send = async (state, endPoint, method) => {
                     }
                     res = await fetch(SERVER + endPoint, config);
                     dat = await JSON.parse(res);
-                }
+                }break;
+                default :{
+
+                }break;
             }
         } else {
             if (method==="FILE"){

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useState} from "react"
 import {Redirect} from "react-router-dom"
 import EditUI from "./EditUI";
 import send from "../../js/send";
@@ -25,12 +25,12 @@ const Edit = (props) => {
     const {name, description, price_cost, price_vent, inStock, category, _public, image} = state.product;
     const ID = props.match.params.id;
     const TOKEN = {token: authHelper()};
-    useEffect(() => {
+
+    if (!state.product.name)
         send({...TOKEN}, "/api/product/" + ID, "get")
             .then(r => setState({
-                ...state, product: {...r}, load: false
+                ...state, product: r, load: false
             }));
-    }, [])
 
     const handlePublic = (e) => {
         setState({
@@ -78,7 +78,7 @@ if (selected)
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (name && description && price_cost && price_vent && category) {
+        if (name && description && price_cost && category) {
             let form = new FormData()
             form.append("image", image)
             form.append("name", name)
@@ -120,7 +120,6 @@ if (selected)
         price_cost={price_cost}
         price_vent={price_vent}
         inStock={inStock}
-        Product_category={category}
         _public={_public}
         handleSubmit={(e) => handleSubmit(e)}
     />

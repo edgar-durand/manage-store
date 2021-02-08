@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import DetailUI from "./DetailUI";
 import send from "../../js/send";
 import authHelper from "../../js/authHelper";
@@ -12,16 +12,12 @@ const Detail = (props) => {
     product.product.price_cost ? price_cost = `$ ${product.product.price_cost}` : price_cost = "RESERVED"
     const ID = props.match.params.id;
 
-
-    useEffect(
-        () => {
+   if (!Object.values(product.product).length)
             send(TOKEN, "/api/product/" + ID, "get")
                 .then(r => setProduct({
                     ...product, product: {...r}, load: false
                 }));
-        },
-        []
-    )
+
 
 
     const addToCart = () => {
@@ -38,7 +34,7 @@ const Detail = (props) => {
             photo={image}
             producName={name}
             category={category}
-            author={`${store.getState().globalState[0].email}`}
+            author={`${JSON.parse(localStorage.getItem("store")).globalState[0].email}`}
             price={price_cost}
             description={description}
             addToCart={() => addToCart()}

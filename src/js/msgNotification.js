@@ -1,5 +1,4 @@
 import Swal from "sweetalert2"
-import React from "react"
 
 const msgNotification = (title, text, icon = "success|error|info|question|warning", confirmButtonText = "ACEPTAR", showCancelButton = false,cancelButtonText="CANCELAR") => (
     Swal.fire({

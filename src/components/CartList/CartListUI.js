@@ -19,9 +19,9 @@ const CartListUI = ({products,handleClick,handleChange}) =>{
 
 
                         {
-                            Object.values(products).sort((a, b) => a.id - b.id).map((product) => {
+                            Object.values(products).sort((a, b) => a.id - b.id).map((product,index) => {
                                 return (
-                                    <div className="ibox-content" >
+                                    <div key={index} className="ibox-content" >
                                         <div className="table-responsive">
                                             <table className="table shopping-cart-table">
                                                 <tbody>
@@ -35,9 +35,9 @@ const CartListUI = ({products,handleClick,handleChange}) =>{
                                                     </td>
                                                     <td width="520" className="desc">
                                                         <h3>
-                                                            <a href="#" className="text-navy">
+                                                            <label className="text-navy">
                                                                 {product.name}
-                                                            </a>
+                                                            </label>
                                                         </h3>
                                                         <p className="small">
                                                             {product.description}

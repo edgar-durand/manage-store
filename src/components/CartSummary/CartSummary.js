@@ -1,13 +1,22 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import {Link} from "react-router-dom";
 import store from "../../store";
 
 const CartSummary = () => {
     const [total, setTotal] = useState(+Object.values(store.getState().cart).reduce((a, b) => a + (b.price_cost * (b.inStock === 0 ? 1 : b.inStock)), 0))
+    useEffect(()=>{
+       let unsubscribe =   store.subscribe(() => {
+           setTotal(+Object.values(store.getState().cart).reduce((a, b) => a + (b.price_cost * (b.inStock === 0 ? 1 : b.inStock)), 0))
+           return  unsubscribe;
+       });
 
-    store.subscribe(() => {
-        setTotal(+Object.values(store.getState().cart).reduce((a, b) => a + (b.price_cost * (b.inStock === 0 ? 1 : b.inStock)), 0))
-    });
+    },[])
+
+    // store.subscribe(() => {
+    //     setTotal(+Object.values(store.getState().cart).reduce((a, b) => a + (b.price_cost * (b.inStock === 0 ? 1 : b.inStock)), 0))
+    // });
+
+
 
     return (
         <div className="row col-3 float-right">
@@ -39,7 +48,7 @@ const CartSummary = () => {
                                 className="fa fa-check-square"/> Checkout
                             </Link>
                             &nbsp;
-                            <button className="btn btn-default btn-sm"> Cancel</button>
+                            <label className="btn btn-default btn-sm"> Cancel</label>
 
 
                         </div>
@@ -54,7 +63,7 @@ const CartSummary = () => {
                 <div className="ibox-content text-center">
 
 
-                    <h3><i className="fa fa-phone"/> +43 100 783 001</h3>
+                    <h3><i className="fa fa-phone"/> +53 55088452</h3>
                     <span className="small">
                                 Please contact with us if you have any questions. We are avalible 24h.
                             </span>
@@ -72,26 +81,26 @@ const CartSummary = () => {
 
                     <hr/>
                     <div>
-                        <a href="#" className="product-name"> Product 1</a>
+                        <label className="product-name"> Product 1</label>
                         <div className="small m-t-xs">
                             Many desktop publishing packages and web page editors now.
                         </div>
                         <div className="m-t text-right">
 
-                            <a href="#" className="btn btn-xs btn-outline btn-primary">Info <i
-                                className="fa fa-long-arrow-right"/> </a>
+                            <label className="btn btn-xs btn-outline btn-primary">Info <i
+                                className="fa fa-long-arrow-right"/> </label>
                         </div>
                     </div>
                     <hr/>
                     <div>
-                        <a href="#" className="product-name"> Product 2</a>
+                        <label className="product-name"> Product 2</label>
                         <div className="small m-t-xs">
                             Many desktop publishing packages and web page editors now.
                         </div>
                         <div className="m-t text-right">
 
-                            <a href="#" className="btn btn-xs btn-outline btn-primary">Info <i
-                                className="fa fa-long-arrow-right"/> </a>
+                            <label className="btn btn-xs btn-outline btn-primary">Info <i
+                                className="fa fa-long-arrow-right"/> </label>
                         </div>
                     </div>
 
