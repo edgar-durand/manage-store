@@ -20,6 +20,7 @@ const send = async (state, endPoint, method) => {
                     }
                 }
                     break;
+
                 case "FILE": {
                     config = {
                         method: "POST",

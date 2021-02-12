@@ -1,4 +1,4 @@
-import React, {Fragment, useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import ProductGrid from "../ProductGrid";
 import dataToPages from "../../js/dataToPages";
 import store from "../../store";
@@ -36,7 +36,7 @@ const GoForShopping = () => {
     let filtered = [];
     !match.active ?
         filtered = {...Object.values(state.products).filter(x => (x.name.toUpperCase().indexOf(searchField.toUpperCase()) !== -1) || (x.description.toUpperCase().indexOf(searchField.toUpperCase()) !== -1))} :
-        filtered = {...Object.values(state.products).filter(x => ((x.name.toUpperCase().indexOf(searchField.toUpperCase()) !== -1) || (x.description.toUpperCase().indexOf(searchField.toUpperCase()) !== -1)) && x.price_vent <= match.value)}
+        filtered = {...Object.values(state.products).filter(x => ((x.name.toUpperCase().indexOf(searchField.toUpperCase()) !== -1) || (x.description.toUpperCase().indexOf(searchField.toUpperCase()) !== -1)) && x.price_cost <= match.value)}
     const MO = {...dataToPages(filtered, state.show, state.page)}
 
 
@@ -64,8 +64,8 @@ const GoForShopping = () => {
     if (Object.values(JSON.parse(localStorage.getItem("store")).productList).length) {
         return (
             <React.Fragment>
-                <div className="col-12">
-                    <div className="ibox-content form-inline">
+                <div className="col-12 ">
+                    <div className="ibox-content form-inline ">
                         <label className="col-1">Show:</label>
                         <input onChange={(event) => setState({...state, page: 0, show: +event.target.value})}
                                value={state.show}
@@ -85,12 +85,12 @@ const GoForShopping = () => {
                         <label className="col-2">Match top price:</label>
                         <input type="checkbox" name="matchControl" onChange={() => handleMatchControl()}/>
                         <label/> &nbsp;&nbsp; $ &nbsp;&nbsp;
-                        <input type="number" min="0" name="match" className="form-control col-1"
+                        <input type="number" min="0" name="match" className="form-control col-2"
                                disabled={match.active === false}
                                onChange={(e) => handleMatch(e)}/>
                     </div>
                 </div>
-                <div className="wrapper wrapper-content col-12">
+                <div className="wrapper wrapper-content col-12 ">
 
                     <div className="row float-left col-9 animated fadeInRight ">
                         {

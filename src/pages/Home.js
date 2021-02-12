@@ -15,7 +15,6 @@ import authHelper from "../js/authHelper";
 import NotFound from "./NotFound";
 import Edit from "../components/Edit/Edit";
 import NavUI from "../components/NavUI";
-import TopBarUI from "../components/TopBarUI";
 import FooterUI from "../components/FooterUI";
 import ProductList from "../components/ProductList";
 import NewProductForm from "../components/NewProductForm/NewProductForm";
@@ -29,6 +28,7 @@ import GoForShopping from "../components/GoForShopping/GoForShopping";
 import CartList from "../components/CartList/CartList";
 import Checkout from "../components/Checkout/Checkout";
 import {storeToLocalStore, localStoreToStore} from "../js/storeHelper"
+import Movement from "../components/MyAccount/Movement";
 
 const Home = () => {
     const [state, setState] = useState({
@@ -134,7 +134,6 @@ const Home = () => {
                         logOut={() => logOut()}
                     />
                     <div id="page-wrapper" className="gray-bg">
-                        <TopBarUI logOut={() => logOut()}/>
                         <Switch>
                             {/* Routes of categories */}
                             <Route path="/home/categories/" component={CategoryList}/>
@@ -145,6 +144,7 @@ const Home = () => {
 
                             {/*Routes of MyAccounts*/}
                             <Route path="/home/my_accounts/" component={MyAccounts}/>
+                            <Route path="/home/account/:id" component={Movement}/>
                             <Route path="/home/new_account/" component={NewAccountForm}/>
                             {/*Routes of MyAccounts*/}
 

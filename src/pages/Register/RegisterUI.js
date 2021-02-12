@@ -11,7 +11,7 @@ const RegisterUI = (props) => {
     <div className="align-self-xl-center">
 
         <div className="float-left text-center col-lg-4">
-            <h1 className="logo-name">IN+</h1>
+            <h1 className="logo-name">ES+</h1>
             <p>Create account to see it in action.</p>
         </div>
 

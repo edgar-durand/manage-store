@@ -95,6 +95,14 @@ const reducer = (state, action) => {
         }
 
 
+        //movements
+        case "GET_MOVEMENTS": {
+            return {
+                ...state, movements: {...action.movements}
+            }
+        }
+
+
 
         //Categories actions
         case "GET_CATEGORIES": {
@@ -107,7 +115,7 @@ const reducer = (state, action) => {
         //Logout actions
         case "CLEAR": {
             return {
-                cart: [], globalState: [], accounts: [], productList: [], categories: []
+                cart: [], globalState: [], accounts: [],movements:[], productList: [], categories: []
             }
         }
         //LocalStorage actions
@@ -126,4 +134,4 @@ const reducer = (state, action) => {
     return state
 }
 
-export default createStore(reducer, {cart: [], globalState: [], accounts: {}, productList: [], categories: []})
+export default createStore(reducer, {cart: [], globalState: [], accounts: [],movements:[], productList: [], categories: []})

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef, useEffect} from "react";
 import "../styles/css/bootstrap.min.css";
 import "../styles/font-awesome/css/font-awesome.min.css";
 import "../styles/css/animate.css";
@@ -7,94 +7,48 @@ import "../styles/css/textSpinners/spinners.css";
 import {Link} from "react-router-dom";
 
 const DetailUI = (props) => {
-    if (props.load)
-        return (
-            <div className="ibox-content">
-                <div className="row">
-                    <div className="col-md-5 ">
-                        <div className="">
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <div className="sk-spinner sk-spinner-wave">
-                                <div className="sk-rect1"/>
-                                <div className="sk-rect2"/>
-                                <div className="sk-rect3"/>
-                                <div className="sk-rect4"/>
-                                <div className="sk-rect5"/>
-                            </div>
+    let div = useRef("div");
+    let div2 = useRef("div2");
 
-                            {/*<div className="sk-spinner sk-spinner-double-bounce">*/}
-                            {/*    <div className="sk-double-bounce1"/>*/}
-                            {/*    <div className="sk-double-bounce2"/>*/}
-                            {/*</div>*/}
+    useEffect(() => {
+        if (props.load) {
+            div.current.classList.add("sk-spinner");
+            div.current.classList.add("sk-spinner-wave");
+            div2.current.classList.add("sk-loading");
+        } else {
+            div.current.classList.remove("sk-spinner-wave");
+            div.current.classList.remove("sk-spinner");
+            div2.current.classList.remove("sk-loading");
+
+        }
+    }, [div, props])
+
+    return (
+        <div className="ibox">
+            <div className="ibox-content">
+
+                <div className="row">
+
+                    <div className="col-md-5">
+
+                        <div ref={div} className="img-container">
+                            <img className="img-thumbnail " src={props.photo} alt=""/>
+                            <div className="sk-rect1"/>
+                            <div className="sk-rect2"/>
+                            <div className="sk-rect3"/>
+                            <div className="sk-rect4"/>
+                            <div className="sk-rect5"/>
                         </div>
 
                     </div>
-                    <div className="col-md-7 sk-loading ibox-content">
+
+                    <div ref={div2} className="col-md-7 ibox-content">
 
                         <h2 className="font-bold m-b-xs">
                             {props.producName || "NOT PROVIDED"}
                         </h2>
-                        <small>{props.small}</small>
                         <div className="m-t-md">
                             <h2 className="product-main-price">{props.price || "RESERVED"} <small
-                                className="text-muted">Exclude Tax</small>
-                            </h2>
-                        </div>
-                        <hr/>
-
-                        <h4>Product description</h4>
-                        <h5>{props.category}</h5>
-                        <div className="small text-muted">
-                            {props.description}
-                        </div>
-                        <hr/>
-                        <div>
-                            <div className="btn-group">
-                                <button onClick={() => props.addToCart()} className="btn btn-primary btn-sm"><i
-                                    className="fa fa-cart-plus"/> Add
-                                    to cart
-                                </button>
-                                <button className="btn btn-white btn-sm"><i className="fa fa-star" /> Add to
-                                    wishlist
-                                </button>
-                                <a href={`mailto: ${props.author.email}`} className="btn btn-white btn-sm"><i className="fa fa-envelope"/> Contact
-                                    with author
-                                </a>
-                                <Link to="/" className="btn btn-white btn-sm"><i className="fa fa-home"/> Home
-                                </Link>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-
-            </div>
-        )
-    else
-        return (
-            <div className="ibox-content">
-
-                <div className="row">
-                    <div className="col-md-5">
-                        <div className="img-container">
-                            <img className="img-thumbnail" src={props.photo} alt=""/>
-                        </div>
-
-                    </div>
-                    <div className="col-md-7 ibox-content">
-
-                        <h2 className="font-bold m-b-xs">
-                            {props.producName || "NOT PROVIDED"}
-                        </h2>
-                        <div className="m-t-md">
-                            <h2 className="product-main-price">{ props.price || "RESERVED" } <small
                                 className="text-muted">Exclude Tax</small>
                             </h2>
                         </div>
@@ -112,13 +66,15 @@ const DetailUI = (props) => {
                                     className="fa fa-cart-plus"/> Add
                                     to cart
                                 </button>
-                                <button className="btn btn-white btn-sm"><i className="fa fa-star" /> Add to
+                                <button className="btn btn-white btn-sm"><i className="fa fa-star"/> Add to
                                     wishlist
                                 </button>
-                                <a href={`mailto: ${props.author}`} className="btn btn-white btn-sm"><i className="fa fa-envelope"/> Contact
+                                <a href={`mailto: ${props.author}`} className="btn btn-white btn-sm"><i
+                                    className="fa fa-envelope"/> Contact
                                     with author
                                 </a>
-                                <Link to="/home/my_products/" className="btn btn-white btn-sm"><i className="fa fa-home"/> Products
+                                <Link to="/home/my_products/" className="btn btn-white btn-sm"><i
+                                    className="fa fa-home"/> Products
                                 </Link>
                             </div>
                         </div>
@@ -128,7 +84,9 @@ const DetailUI = (props) => {
                 </div>
 
             </div>
-        )
+        </div>
+    )
+
 }
 
 export default DetailUI
