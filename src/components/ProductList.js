@@ -12,7 +12,7 @@ const ProductList = () => {
 
     useEffect(() => {
         const unsubscribe = store.subscribe(() => {
-            setProducts(JSON.parse(localStorage.getItem("store")).productList);
+            setProducts(store.getState().productList);
             return unsubscribe;
         })
     }, [])
@@ -24,7 +24,8 @@ const ProductList = () => {
                 if (r.value) {
                     send({token: authHelper()}, `/api/product/${id}`, "delete")
                         .then(() => store.dispatch({
-                            type: "ADD_NEW_PRODUCT"
+                            type: "UPDATE_LIST",
+                            id
                         }))
                 }
             })
@@ -33,6 +34,10 @@ const ProductList = () => {
 
 
     return Object.values(products).length ? (
+        <React.Fragment>
+            <div className="ibox-content col-12 text-right">
+                <Link to="/home/new_product/" className="btn btn-primary card">Add new</Link>
+            </div>
         <div className="row">
             <div className="col-lg-12">
                 <div className="ibox">
@@ -97,6 +102,7 @@ const ProductList = () => {
                                             </tr>
                                         )
                                     }
+                                    return null
                                 })
                             }
 
@@ -113,6 +119,7 @@ const ProductList = () => {
                 </div>
             </div>
         </div>
+        </React.Fragment>
     ) : (
         <div className="row">
             <div className="col-lg-12">

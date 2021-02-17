@@ -85,6 +85,7 @@ const NewProductForm = () => {
                         .then(r => {
                             if (!r.value)
                                 setState({...state, goBack: true})
+                                
                         })
                 })
 

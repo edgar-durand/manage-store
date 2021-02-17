@@ -1,8 +1,16 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import {Link} from "react-router-dom";
+import store from "../store";
+
 
 const NavUI = ({logOut, image, last_name,status_message}) => {
-
+const [products, setProducts]=useState(Object.values(store.getState().productList).length)
+useEffect(()=>{
+        const unsubscribe = store.subscribe(()=>{
+            setProducts(Object.values(store.getState().productList).length);
+            return unsubscribe;
+        })
+},[])
     return(
         <nav className="navbar-default navbar-static-side" role="navigation">
             <div className="sidebar-collapse">
@@ -25,10 +33,10 @@ const NavUI = ({logOut, image, last_name,status_message}) => {
                         <Link to="/home/my_accounts/"><i className="fa fa-credit-card"/> <span
                             className="nav-label">My accounts</span></Link>
                     </li>
-                    {/*<li>*/}
-                    {/*    <Link to="/home/categories/"><i className="fa fa-anchor"/> <span*/}
-                    {/*        className="nav-label">Categories</span></Link>*/}
-                    {/*</li>*/}
+                    <li>
+                        <Link to="/home/my_products/"><i className="fa fa-check"/> <span
+                            className="nav-label">My products </span> <span className="label label-success float-right"> {products}</span></Link>
+                    </li>
 
                     <li>
                         <Link to="/home/shopping/"><i className="fa fa-shopping-cart"/> <span

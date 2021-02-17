@@ -82,7 +82,7 @@ const GoForShopping = () => {
                         <label className="col-1">Search</label>
                         <input type="text" name="searchField" className="form-control"
                                onChange={(e) => handleChange(e)}/>
-                        <label className="col-2">Match top price:</label>
+                        <label className="col-1">Top price:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="checkbox" name="matchControl" onChange={() => handleMatchControl()}/>
                         <label/> &nbsp;&nbsp; $ &nbsp;&nbsp;
                         <input type="number" min="0" name="match" className="form-control col-2"
