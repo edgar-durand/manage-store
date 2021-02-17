@@ -42,15 +42,18 @@ const Login = () => {
                             load: false
                         });
                         msgNotification("ERROR", r.error, "error", "OK")
-                    }
-                   else if (r.non_field_errors)
-                        msgNotification("WARNING",r.non_field_errors,"warning" ,"OK")
-                    else
-                    setData({
-                        ...data,
-                        ...r,
-                        load: false
-                    });
+                    } else if (r.non_field_errors) {
+                        msgNotification("WARNING", r.non_field_errors, "warning", "OK")
+                            .then((act) => {
+                                if (act.value)
+                                    setData({...data, load: false})
+                            })
+                    } else
+                        setData({
+                            ...data,
+                            ...r,
+                            load: false
+                        });
 
                 })
 
