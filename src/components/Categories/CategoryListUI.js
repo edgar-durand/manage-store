@@ -60,6 +60,7 @@ const CategoryListUI = ({categories, handleClick}) => {
                         </tr>
                       );
                     }
+                    return null
                   })}
                 </tbody>
                 <tfoot>

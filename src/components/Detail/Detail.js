@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import DetailUI from "./DetailUI";
 import send from "../../js/send";
 import authHelper from "../../js/authHelper";
-import store from "../../store"
+import store from "../../store";
 
 const Detail = (props) => {
     const [product, setProduct] = useState({product: {}, load: true});
@@ -42,4 +42,5 @@ const Detail = (props) => {
         />
     )
 };
+
 export default Detail

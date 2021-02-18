@@ -1,4 +1,4 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import toastr from "toastr";
 import { localStoreToStore } from "./js/storeHelper";
 
@@ -100,7 +100,7 @@ const reducer = (state, action) => {
       );
       return {
         ...state,
-        productList: NEW_LIST
+        productList: NEW_LIST,
       };
     }
 
@@ -160,12 +160,21 @@ const reducer = (state, action) => {
   }
   return state;
 };
-
-export default createStore(reducer, {
-  cart: [],
-  globalState: [],
-  accounts: [],
-  movements: [],
-  productList: [],
-  categories: [],
-});
+const logger = (store) => (next) => (action) => {
+  console.log("dispatching ", action);
+  let result = next(action);
+  console.log("next state ", store.getState());
+  return result;
+};
+export default createStore(
+  reducer,
+  {
+    cart: [],
+    globalState: [],
+    accounts: [],
+    movements: [],
+    productList: [],
+    categories: [],
+  },
+  applyMiddleware(logger)
+);

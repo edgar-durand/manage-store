@@ -15,7 +15,7 @@ const Movement = (props) => {
                     movements: r
                 })
             });
-    }, [])
+    }, [ID])
     return (
         <React.Fragment>
             <div className="ibox-content" id="ibox-content">

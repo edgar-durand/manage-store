@@ -62,7 +62,7 @@ const DetailUI = (props) => {
                         <hr/>
                         <div>
                             <div className="btn-group">
-                                <button onClick={props.addToCart} className="btn btn-primary btn-sm"><i
+                                <button onClick={()=>props.addToCart()} className="btn btn-primary btn-sm"><i
                                     className="fa fa-cart-plus"/> Add
                                     to cart
                                 </button>
