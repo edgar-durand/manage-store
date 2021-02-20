@@ -6,7 +6,7 @@ import "../components/styles/css/style.css";
 import "../components/styles/css/textSpinners/spinners.css";
 import {Link} from "react-router-dom";
 
-const Product = (props) => {
+const Product = ({addToCart,image,description,price_cost,category,name,id}) => {
     return (
         <Fragment>
             <div className="col-3 float-left" style={{
@@ -15,7 +15,7 @@ const Product = (props) => {
                 <div className="ibox">
                     <div className="ibox-content product-box">
                         <div>
-                            <img height="200" width="184" src={props.img}
+                            <img height="200" width="184" src={image}
                                  style={{
                                      objectFit: "contain"
                                  }} alt=""/>
@@ -23,21 +23,21 @@ const Product = (props) => {
                         </div>
                         <div className="product-desc">
                                 <span className="product-price">
-                                    {`$ ${props.price}` || "RESERVED"}
+                                    {`$ ${price_cost}` || "RESERVED"}
                                 </span>
-                            <small className="text-muted">{props.category || "Category"}</small>
-                            <Link to="#" className="product-name"> {props.name.toUpperCase().substring(0, 15)}</Link>
+                            <small className="text-muted">{category || "Category"}</small>
+                            <Link to="#" className="product-name"> {name.toUpperCase().substring(0, 15)}</Link>
 
                             <div className="small m-t-xs">
-                                {props.description.substring(0, 25)}...
+                                {description.substring(0, 25)}...
                             </div>
                             <div className="m-t text-left">
-                                <button onClick={(event) => props.addToCart(props.productId, event)}
+                                <button onClick={(event) => addToCart(event)}
                                    className="btn btn-outline btn-primary">Add <i
                                     className="fa fa-shopping-cart"/></button>
 
 
-                                <Link to={`/home/detail/${props.productId}`}
+                                <Link to={`/home/detail/${id}`}
                                       className="btn btn-outline btn-primary">Info <i
                                     className="fa fa-long-arrow-right"/></Link>
                             </div>

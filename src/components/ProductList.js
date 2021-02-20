@@ -6,6 +6,7 @@ import msgNotification from "../js/msgNotification";
 import NewProductForm from "./NewProductForm/NewProductForm";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { updateList } from "../actions/actionCreator";
 
 const ProductList = ({ products, handleClick }) => {
   return Object.values(products).length ? (
@@ -130,10 +131,7 @@ const mapDispatchToProps = (dispatch) => {
             .then(r => {
                 if (r.value) {
                     send({token: authHelper()}, `/api/product/${id}`, "delete")
-                        .then(() => dispatch({
-                            type: "UPDATE_LIST",
-                            id
-                        }))
+                        .then(() => dispatch(updateList(id)))
                 }
             })
 

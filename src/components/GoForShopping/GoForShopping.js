@@ -4,6 +4,7 @@ import dataToPages from "../../js/dataToPages";
 import { connect } from "react-redux";
 import CartSummary from "../CartSummary/CartSummary";
 import NewProductForm from "../NewProductForm/NewProductForm";
+import { addToCart } from "../../actions/actionCreator";
 
 const GoForShopping = ({ products, cart, addToCart }) => {
   const [state, setState] = useState({
@@ -120,29 +121,26 @@ const GoForShopping = ({ products, cart, addToCart }) => {
           </div>
         </div>
         <div className="wrapper wrapper-content col-12 ">
-          <div className="row float-left col-9 animated fadeInRight ">
+          <div className={Object.values(cart).length ?"row float-left col-9 " :"row float-left col-12 "}>
+            
             {Object.values(MO).map((x, index) => {
               return (
                 <ProductGrid
                   key={index}
-                  img={x.image}
-                  name={x.name}
-                  price={x.price_cost}
-                  category={x.category}
-                  description={x.description}
-                  addToCart={(id, e) => addToCart(id, e)}
-                  productId={x.id}
+                  {...x}
+                  addToCart={(e) => addToCart(x, e)}
                 />
               );
             })}
           </div>
-          <CartSummary />
+          {Object.values(cart).length ? <CartSummary /> : null}
         </div>
       </React.Fragment>
     );
   }
   return <NewProductForm />;
 };
+
 const mapStateToProps = (state) => {
   return {
     products: state.productList,
@@ -152,16 +150,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToCart(id, e) {
+    addToCart(product, e) {
       e.preventDefault();
-      dispatch({
-        type: "ADD_TO_CART",
-        product: {
-          ...Object.values(JSON.parse(localStorage.getItem("store")).productList).find(
-            (x) => x.id === id
-          ),
-        },
-      });
+      dispatch(addToCart(product));
     },
   };
 };

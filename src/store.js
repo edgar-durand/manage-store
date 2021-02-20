@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 import toastr from "toastr";
 import { localStoreToStore } from "./js/storeHelper";
 
@@ -10,7 +11,7 @@ const reducer = (state, action) => {
         const ADD = Object.values(state.cart).find(
           (x) =>
             x.name === action.product.name &&
-            x.price_vent === action.product.price_vent
+            x.price_cost === action.product.price_cost
         );
         if (!ADD) {
           toastr.options.closeButton = true;
@@ -23,11 +24,9 @@ const reducer = (state, action) => {
           );
           return {
             ...state,
-            cart: {
-              ...Object.values(state.cart).concat(
-                Object.assign(action.product, { inStock: 1 })
-              ),
-            },
+            cart: Object.values(state.cart).concat(
+              Object.assign(action.product, { inStock: 1 })
+            ),
           };
         } else {
           toastr.options.closeButton = true;
@@ -65,7 +64,7 @@ const reducer = (state, action) => {
     case "CLEAR_CART": {
       return {
         ...state,
-        cart: {},
+        cart: [],
       };
     }
 
@@ -73,7 +72,7 @@ const reducer = (state, action) => {
     case "UPDATE_STATE": {
       return {
         ...state,
-        globalState: { ...action.state },
+        globalState: action.state,
       };
     }
 
@@ -156,6 +155,7 @@ const reducer = (state, action) => {
     }
 
     default: {
+      return state
     }
   }
   return state;
@@ -176,5 +176,5 @@ export default createStore(
     productList: [],
     categories: [],
   },
-  applyMiddleware(logger)
+  applyMiddleware(logger, thunk)
 );

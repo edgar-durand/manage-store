@@ -1,27 +1,26 @@
-import React, {useState,useEffect} from "react";
+import React from "react";
 import {Link} from "react-router-dom";
+import { connect } from 'react-redux';
 import store from "../../store";
+import { clearCart } from "../../actions/actionCreator";
+import msgNotification from "../../js/msgNotification";
+import toastr from "toastr";
 
-const CartSummary = () => {
-    const [total, setTotal] = useState(+Object.values(store.getState().cart).reduce((a, b) => a + (b.price_cost * (b.inStock === 0 ? 1 : b.inStock)), 0))
-    useEffect(()=>{
-       let unsubscribe =   store.subscribe(() => {
-           setTotal(+Object.values(store.getState().cart).reduce((a, b) => a + (b.price_cost * (b.inStock === 0 ? 1 : b.inStock)), 0))
-           return  unsubscribe;
-       });
+const CartSummary = ({total}) =>{
+    const cancel = () => {
+        msgNotification("Confir !","Are you sure of this ?","question","OK",true,"Cancel")
+        .then(r=>{
+            if (r.value) {
+              store.dispatch(clearCart())  ;
+              toastr.success("Shopping cleared !");
+            }
+        })
+        
+    }
+return(
+        <div className="row col-lg-3 float-right">
 
-    },[])
-
-    // store.subscribe(() => {
-    //     setTotal(+Object.values(store.getState().cart).reduce((a, b) => a + (b.price_cost * (b.inStock === 0 ? 1 : b.inStock)), 0))
-    // });
-
-
-
-    return (
-        <div className="row col-3 float-right">
-
-            <div className="ibox">
+            <div className="ibox col-12">
                 <div className="ibox-title" >
                     <h5 className="pull-left">Cart Summary</h5>
                     <Link to="/home/my_cart/" className="btn btn-white btn-sm pull-right"><i
@@ -48,7 +47,7 @@ const CartSummary = () => {
                                 className="fa fa-check-square"/> Checkout
                             </Link>
                             &nbsp;
-                            <label className="btn btn-default btn-sm"> Cancel</label>
+                            <button onClick={()=>cancel()} className="btn btn-default btn-sm"> Cancel</button>
 
 
                         </div>
@@ -56,7 +55,7 @@ const CartSummary = () => {
                 </div>
             </div>
 
-            <div className="ibox">
+            <div className="ibox col-12">
                 <div className="ibox-title">
                     <h5>Support</h5>
                 </div>
@@ -72,7 +71,7 @@ const CartSummary = () => {
                 </div>
             </div>
 
-            <div className="ibox">
+            <div className="ibox col-12">
                 <div className="ibox-content">
 
                     <p className="font-bold">
@@ -109,5 +108,11 @@ const CartSummary = () => {
 
         </div>
     )
+} 
+
+const mapStateToProps = (state) => {
+    return{
+        total: +Object.values(state.cart).reduce((a, b) => a + (b.price_cost * (b.inStock === 0 ? 1 : b.inStock)), 0)
+    }
 }
-export default CartSummary
+export default connect(mapStateToProps)(CartSummary)

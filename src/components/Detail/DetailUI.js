@@ -6,12 +6,12 @@ import "../styles/css/style.css";
 import "../styles/css/textSpinners/spinners.css";
 import {Link} from "react-router-dom";
 
-const DetailUI = (props) => {
+const DetailUI = ({load,photo,producName,price,category,description,author,addToCart}) => {
     let div = useRef("div");
     let div2 = useRef("div2");
 
     useEffect(() => {
-        if (props.load) {
+        if (load) {
             div.current.classList.add("sk-spinner");
             div.current.classList.add("sk-spinner-wave");
             div2.current.classList.add("sk-loading");
@@ -21,7 +21,7 @@ const DetailUI = (props) => {
             div2.current.classList.remove("sk-loading");
 
         }
-    }, [div, props])
+    }, [div, load])
 
     return (
         <div className="ibox">
@@ -32,7 +32,7 @@ const DetailUI = (props) => {
                     <div className="col-md-5">
 
                         <div ref={div} className="img-container">
-                            <img className="img-thumbnail " src={props.photo} alt=""/>
+                            <a target="blank" href={photo}><img className="img-thumbnail " src={photo} alt=""/></a>
                             <div className="sk-rect1"/>
                             <div className="sk-rect2"/>
                             <div className="sk-rect3"/>
@@ -45,31 +45,31 @@ const DetailUI = (props) => {
                     <div ref={div2} className="col-md-7 ibox-content">
 
                         <h2 className="font-bold m-b-xs">
-                            {props.producName || "NOT PROVIDED"}
+                            {producName || "NOT PROVIDED"}
                         </h2>
                         <div className="m-t-md">
-                            <h2 className="product-main-price">{props.price || "RESERVED"} <small
+                            <h2 className="product-main-price">{price || "RESERVED"} <small
                                 className="text-muted">Exclude Tax</small>
                             </h2>
                         </div>
                         <hr/>
 
                         <h4>Product description</h4>
-                        <h5>{props.category || "NOT SET"}</h5>
+                        <h5>{category || "NOT SET"}</h5>
                         <div className="small text-muted">
-                            {props.description || ""}
+                            {description || ""}
                         </div>
                         <hr/>
                         <div>
                             <div className="btn-group">
-                                <button onClick={()=>props.addToCart()} className="btn btn-primary btn-sm"><i
+                                <button onClick={()=>addToCart()} className="btn btn-primary btn-sm"><i
                                     className="fa fa-cart-plus"/> Add
                                     to cart
                                 </button>
                                 <button className="btn btn-white btn-sm"><i className="fa fa-star"/> Add to
                                     wishlist
                                 </button>
-                                <a href={`mailto: ${props.author}`} className="btn btn-white btn-sm"><i
+                                <a href={`mailto: ${author}`} className="btn btn-white btn-sm"><i
                                     className="fa fa-envelope"/> Contact
                                     with author
                                 </a>
