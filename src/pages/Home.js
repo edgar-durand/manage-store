@@ -10,6 +10,7 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
+import IndexHome from "./index/IndexHome";
 import Detail from "../components/Detail/Detail";
 import authHelper from "../js/authHelper";
 import NotFound from "./NotFound";
@@ -38,6 +39,7 @@ import {
   updateState,
 } from "../actions/actionCreator";
 import { localStoreToStore } from "../js/storeHelper";
+import Profile from "./Profile/Profile";
 
 const Home = ({ cart, globalState }) => {
   useEffect(() => {
@@ -93,33 +95,57 @@ const Home = ({ cart, globalState }) => {
           <div id="page-wrapper" className="gray-bg">
             <Switch>
               {/* Routes of categories */}
-              <Route path="/home/categories/" component={()=><CategoryList/>} />
-              <Route path="/home/categories/new" component={()=><CategoryNew/>} />
+              <Route
+                path="/home/categories/"
+                component={() => <CategoryList />}
+              />
+              <Route
+                path="/home/categories/new"
+                component={() => <CategoryNew />}
+              />
               <Route
                 path="/home/categories/edit/:id"
-                component={()=><CategoryEdit/>}
+                component={() => <CategoryEdit />}
               />
               <Route
                 path="/home/categories/show/:id"
-                component={()=><CategoryShow/>}
+                component={() => <CategoryShow />}
               />
               {/* Routes of categories */}
               {/*Routes of MyAccounts*/}
-              <Route path="/home/my_accounts/" component={()=><MyAccounts/>} />
-              <Route path="/home/account/:id" component={()=><Movement/>} />
-              <Route path="/home/new_account/" component={()=><NewAccountForm/>} />
+              <Route
+                path="/home/my_accounts/"
+                component={() => <MyAccounts />}
+              />
+              <Route path="/home/account/:id" component={() => <Movement />} />
+              <Route
+                path="/home/new_account/"
+                component={() => <NewAccountForm />}
+              />
               {/*Routes of MyAccounts*/}
-              <Route path="/home/my_cart/" component={()=><CartList/>} />
-              <Route path="/home/checkout/" component={()=><Checkout/>} />
+              <Route path="/home/my_cart/" component={() => <CartList />} />
+              <Route path="/home/checkout/" component={() => <Checkout />} />
               {/*Shopping*/}
-              <Route path="/home/shopping/" component={()=><GoForShopping/>} />
+              <Route
+                path="/home/shopping/"
+                component={() => <GoForShopping />}
+              />
               {/*Shopping*/}
               <Route path="/home/detail/:id" component={Detail} />
               <Route path="/home/edit/:id" component={Edit} />
-              <Route path="/home/new_product/" component={()=><NewProductForm/>} />
-              <Route path="/home/my_products/" component={()=><ProductList/>} />
-              {/*<Route exact path="/home" component={}/>*/}
-              <Route component={()=><NotFound/>} />
+              <Route
+                path="/home/new_product/"
+                component={() => <NewProductForm />}
+              />
+              <Route
+                path="/home/my_products/"
+                component={() => <ProductList />}
+              />
+              {/* Profile */}
+              <Route path="/home/profile/" component={() => <Profile />} />
+
+              <Route exact path="/home" component={() => <IndexHome/>} />
+              <Route component={() => <NotFound />} />
             </Switch>
             <FooterUI />
           </div>

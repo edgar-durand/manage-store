@@ -76,6 +76,7 @@ const Checkout = ({
                   getAccounts();
                   clearCart();
                   setListProducts();
+                  toastr.success("Seccess. !");
                 } else {
                   toastr.error(res, "ERROR !");
                 }
