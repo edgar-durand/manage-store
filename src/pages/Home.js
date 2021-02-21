@@ -117,7 +117,7 @@ const Home = ({ cart, globalState }) => {
                 path="/home/my_accounts/"
                 component={() => <MyAccounts />}
               />
-              <Route path="/home/account/:id" component={() => <Movement />} />
+              <Route path="/home/account/:id" component={Movement} />
               <Route
                 path="/home/new_account/"
                 component={() => <NewAccountForm />}

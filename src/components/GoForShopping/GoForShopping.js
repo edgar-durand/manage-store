@@ -57,6 +57,35 @@ const GoForShopping = ({ products, cart, addToCart }) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
+  const xmPages = () => {
+    let gather = [];
+    for (
+      let page = 1;
+      page <= Math.ceil(Object.values(filtered).length / (state.show || 1));
+      page++
+    ) {
+      page !== state.page + 1
+        ? gather.push(
+            <button
+              onClick={() => setState({ ...state, page: --page })}
+              className="btn btn-xs btn-outline-success pull-right "
+            >
+              {page}
+            </button>
+          )
+        : gather.push(
+            <button
+              onClick={() => setState({ ...state, page: --page })}
+              className="btn btn-sm btn-outline-success pull-right"
+              style={{backgroundColor:"blue",color:"white"}}             
+            >
+              {page}
+            </button>
+          );
+    }
+    return gather.reverse();
+  };
+
   if (Object.values(products).length) {
     return (
       <React.Fragment>
@@ -65,36 +94,16 @@ const GoForShopping = ({ products, cart, addToCart }) => {
             <label className="col-1">Show:</label>
             <input
               onChange={(event) =>
-                setState({ ...state, page: 0, show: +event.target.value })
+                setState({ ...state, page: 0, show: +event.target.value || 1 })
               }
               value={state.show}
               className="col-lg-1 form-control"
               type="number"
-              min="0"
+              min="1"
               max={Object.values(filtered).length}
             />
             &nbsp;&nbsp; / {Object.values(filtered).length}
             <label className="col-1" />
-            <button
-              onClick={() =>
-                state.page > 0
-                  ? setState({ ...state, page: state.page - 1 })
-                  : null
-              }
-              className="btn btn-outline-primary "
-            >
-              <i className="fa fa-backward" /> Prev
-            </button>
-            <button
-              onClick={() =>
-                state.page < Object.values(filtered).length / state.show - 1
-                  ? setState({ ...state, page: state.page + 1 })
-                  : null
-              }
-              className="btn btn-outline-primary "
-            >
-              Next <i className="fa fa-forward" />
-            </button>
             <label className="col-1">Search</label>
             <input
               type="text"
@@ -117,12 +126,17 @@ const GoForShopping = ({ products, cart, addToCart }) => {
               className="form-control col-2"
               disabled={match.active === false}
               onChange={(e) => handleMatch(e)}
-            />
+            />           
           </div>
         </div>
         <div className="wrapper wrapper-content col-12 ">
-          <div className={Object.values(cart).length ?"row float-left col-9 " :"row float-left col-12 "}>
-            
+          <div
+            className={
+              Object.values(cart).length
+                ? "row float-left col-9 "
+                : "row float-left col-12 "
+            }
+          >
             {Object.values(MO).map((x, index) => {
               return (
                 <ProductGrid
@@ -132,9 +146,41 @@ const GoForShopping = ({ products, cart, addToCart }) => {
                 />
               );
             })}
+            <div className="ibox ibox-content col-12">
+              
+              <button
+                onClick={() =>
+                  state.page > 0
+                    ? setState({ ...state, page: state.page - 1 })
+                    : null
+                }
+                className="btn btn-outline-primary"
+                disabled={state.page === 0}
+              >
+                <i className="fa fa-backward" /> Prev
+              </button>
+              {xmPages()}
+              <button
+                onClick={() =>
+                  state.page < Object.values(filtered).length / state.show - 1
+                    ? setState({ ...state, page: state.page + 1 })
+                    : null
+                }
+                className="btn btn-outline-primary"
+                disabled={
+                  state.page >=
+                  Object.values(filtered).length / state.show - 1
+                }
+              >
+                Next <i className="fa fa-forward" />
+              </button>
+            
+          </div>
           </div>
           {Object.values(cart).length ? <CartSummary /> : null}
+          
         </div>
+        
       </React.Fragment>
     );
   }

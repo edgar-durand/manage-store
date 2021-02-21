@@ -3,63 +3,63 @@ import React from "react";
 const IndexHome = () => {
   return (   
       <React.Fragment>
-        <div class="row">
-          <div class="col-lg-2">
-            <div class="ibox ">
-              <div class="ibox-title">
-                <div class="ibox-tools">
-                  <span class="label label-success float-right">Monthly</span>
+        <div className="row">
+          <div className="col-lg-2">
+            <div className="ibox ">
+              <div className="ibox-title">
+                <div className="ibox-tools">
+                  <span className="label label-success float-right">Monthly</span>
                 </div>
                 <h5>Views</h5>
               </div>
-              <div class="ibox-content">
-                <h1 class="no-margins">386,200</h1>
-                <div class="stat-percent font-bold text-success">
-                  98% <i class="fa fa-bolt"></i>
+              <div className="ibox-content">
+                <h1 className="no-margins">386,200</h1>
+                <div className="stat-percent font-bold text-success">
+                  98% <i className="fa fa-bolt"></i>
                 </div>
                 <small>Total views</small>
               </div>
             </div>
           </div>
-          <div class="col-lg-2">
-            <div class="ibox ">
-              <div class="ibox-title">
-                <div class="ibox-tools">
-                  <span class="label label-info float-right">Annual</span>
+          <div className="col-lg-2">
+            <div className="ibox ">
+              <div className="ibox-title">
+                <div className="ibox-tools">
+                  <span className="label label-info float-right">Annual</span>
                 </div>
                 <h5>Orders</h5>
               </div>
-              <div class="ibox-content">
-                <h1 class="no-margins">80,800</h1>
-                <div class="stat-percent font-bold text-info">
-                  20% <i class="fa fa-level-up"></i>
+              <div className="ibox-content">
+                <h1 className="no-margins">80,800</h1>
+                <div className="stat-percent font-bold text-info">
+                  20% <i className="fa fa-level-up"></i>
                 </div>
                 <small>New orders</small>
               </div>
             </div>
           </div>
 
-          <div class="col-lg-4">
-            <div class="ibox ">
-              <div class="ibox-title">
-                <div class="ibox-tools">
-                  <span class="label label-primary float-right">Today</span>
+          <div className="col-lg-4">
+            <div className="ibox ">
+              <div className="ibox-title">
+                <div className="ibox-tools">
+                  <span className="label label-primary float-right">Today</span>
                 </div>
                 <h5>visits</h5>
               </div>
-              <div class="ibox-content">
-                <div class="row">
-                  <div class="col-md-6">
-                    <h1 class="no-margins">406,42</h1>
-                    <div class="font-bold text-navy">
-                      44% <i class="fa fa-level-up"></i>{" "}
+              <div className="ibox-content">
+                <div className="row">
+                  <div className="col-md-6">
+                    <h1 className="no-margins">406,42</h1>
+                    <div className="font-bold text-navy">
+                      44% <i className="fa fa-level-up"></i>{" "}
                       <small>Rapid pace</small>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <h1 class="no-margins">206,12</h1>
-                    <div class="font-bold text-navy">
-                      22% <i class="fa fa-level-up"></i>{" "}
+                  <div className="col-md-6">
+                    <h1 className="no-margins">206,12</h1>
+                    <div className="font-bold text-navy">
+                      22% <i className="fa fa-level-up"></i>{" "}
                       <small>Slow pace</small>
                     </div>
                   </div>
@@ -67,28 +67,28 @@ const IndexHome = () => {
               </div>
             </div>
           </div>
-          <div class="col-lg-4">
-            <div class="ibox ">
-              <div class="ibox-title">
+          <div className="col-lg-4">
+            <div className="ibox ">
+              <div className="ibox-title">
                 <h5>Monthly income</h5>
-                <div class="ibox-tools">
-                  <span class="label label-primary">Updated 12.2015</span>
+                <div className="ibox-tools">
+                  <span className="label label-primary">Updated 12.2015</span>
                 </div>
               </div>
-              <div class="ibox-content no-padding">
-                <div class="flot-chart m-t-lg" style={{height: "55px"}}>
-                  <div class="flot-chart-content" id="flot-chart1"></div>
+              <div className="ibox-content no-padding">
+                <div className="flot-chart m-t-lg" style={{height: "55px"}}>
+                  <div className="flot-chart-content" id="flot-chart1"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-lg-8">
-            <div class="ibox ">
-              <div class="ibox-content">
+        <div className="row">
+          <div className="col-lg-8">
+            <div className="ibox ">
+              <div className="ibox-content">
                 <div>
-                  <span class="float-right text-right">
+                  <span className="float-right text-right">
                     <small>
                       Average value of sales in the past month in:{" "}
                       <strong>United states</strong>
@@ -96,31 +96,31 @@ const IndexHome = () => {
                     <br />
                     All sales: 162,862
                   </span>
-                  <h3 class="font-bold no-margins">Half-year revenue margin</h3>
+                  <h3 className="font-bold no-margins">Half-year revenue margin</h3>
                   <small>Sales marketing.</small>
                 </div>
 
-                <div class="m-t-sm">
-                  <div class="row">
-                    <div class="col-md-8">
+                <div className="m-t-sm">
+                  <div className="row">
+                    <div className="col-md-8">
                       <div>
                         <canvas id="lineChart" height="114"></canvas>
                       </div>
                     </div>
-                    <div class="col-md-4">
-                      <ul class="stat-list m-t-lg">
+                    <div className="col-md-4">
+                      <ul className="stat-list m-t-lg">
                         <li>
-                          <h2 class="no-margins">2,346</h2>
+                          <h2 className="no-margins">2,346</h2>
                           <small>Total orders in period</small>
-                          <div class="progress progress-mini">
-                            <div class="progress-bar" style={{width: "48%"}}></div>
+                          <div className="progress progress-mini">
+                            <div className="progress-bar" style={{width: "48%"}}></div>
                           </div>
                         </li>
                         <li>
-                          <h2 class="no-margins ">4,422</h2>
+                          <h2 className="no-margins ">4,422</h2>
                           <small>Orders in last month</small>
-                          <div class="progress progress-mini">
-                            <div class="progress-bar" style={{width: "60%"}}></div>
+                          <div className="progress progress-mini">
+                            <div className="progress-bar" style={{width: "60%"}}></div>
                           </div>
                         </li>
                       </ul>
@@ -128,9 +128,9 @@ const IndexHome = () => {
                   </div>
                 </div>
 
-                <div class="m-t-md">
-                  <small class="float-right">
-                    <i class="fa fa-clock-o"> </i>
+                <div className="m-t-md">
+                  <small className="float-right">
+                    <i className="fa fa-clock-o"> </i>
                     Update on 16.07.2015
                   </small>
                   <small>
@@ -142,61 +142,61 @@ const IndexHome = () => {
               </div>
             </div>
           </div>
-          <div class="col-lg-4">
-            <div class="ibox ">
-              <div class="ibox-title">
-                <span class="label label-warning float-right">
+          <div className="col-lg-4">
+            <div className="ibox ">
+              <div className="ibox-title">
+                <span className="label label-warning float-right">
                   Data has changed
                 </span>
                 <h5>User activity</h5>
               </div>
-              <div class="ibox-content">
-                <div class="row">
-                  <div class="col-4">
-                    <small class="stats-label">Pages / Visit</small>
+              <div className="ibox-content">
+                <div className="row">
+                  <div className="col-4">
+                    <small className="stats-label">Pages / Visit</small>
                     <h4>236 321.80</h4>
                   </div>
 
-                  <div class="col-4">
-                    <small class="stats-label">% New Visits</small>
+                  <div className="col-4">
+                    <small className="stats-label">% New Visits</small>
                     <h4>46.11%</h4>
                   </div>
-                  <div class="col-4">
-                    <small class="stats-label">Last week</small>
+                  <div className="col-4">
+                    <small className="stats-label">Last week</small>
                     <h4>432.021</h4>
                   </div>
                 </div>
               </div>
-              <div class="ibox-content">
-                <div class="row">
-                  <div class="col-4">
-                    <small class="stats-label">Pages / Visit</small>
+              <div className="ibox-content">
+                <div className="row">
+                  <div className="col-4">
+                    <small className="stats-label">Pages / Visit</small>
                     <h4>643 321.10</h4>
                   </div>
 
-                  <div class="col-4">
-                    <small class="stats-label">% New Visits</small>
+                  <div className="col-4">
+                    <small className="stats-label">% New Visits</small>
                     <h4>92.43%</h4>
                   </div>
-                  <div class="col-4">
-                    <small class="stats-label">Last week</small>
+                  <div className="col-4">
+                    <small className="stats-label">Last week</small>
                     <h4>564.554</h4>
                   </div>
                 </div>
               </div>
-              <div class="ibox-content">
-                <div class="row">
-                  <div class="col-4">
-                    <small class="stats-label">Pages / Visit</small>
+              <div className="ibox-content">
+                <div className="row">
+                  <div className="col-4">
+                    <small className="stats-label">Pages / Visit</small>
                     <h4>436 547.20</h4>
                   </div>
 
-                  <div class="col-4">
-                    <small class="stats-label">% New Visits</small>
+                  <div className="col-4">
+                    <small className="stats-label">% New Visits</small>
                     <h4>150.23%</h4>
                   </div>
-                  <div class="col-4">
-                    <small class="stats-label">Last week</small>
+                  <div className="col-4">
+                    <small className="stats-label">Last week</small>
                     <h4>124.990</h4>
                   </div>
                 </div>
@@ -205,43 +205,43 @@ const IndexHome = () => {
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="ibox ">
-              <div class="ibox-title">
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="ibox ">
+              <div className="ibox-title">
                 <h5>Custom responsive table </h5>
-                <div class="ibox-tools">
-                  <a href="/home#" class="collapse-link">
-                    <i class="fa fa-chevron-up"></i>
+                <div className="ibox-tools">
+                  <a href="/home#" className="collapse-link">
+                    <i className="fa fa-chevron-up"></i>
                   </a>
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="/#">
-                    <i class="fa fa-wrench"></i>
+                  <a className="dropdown-toggle" data-toggle="dropdown" href="/#">
+                    <i className="fa fa-wrench"></i>
                   </a>
-                  <ul class="dropdown-menu dropdown-user">
+                  <ul className="dropdown-menu dropdown-user">
                     <li>
-                      <a href="/#" class="dropdown-item">
+                      <a href="/#" className="dropdown-item">
                         Config option 1
                       </a>
                     </li>
                     <li>
-                      <a href="/#" class="dropdown-item">
+                      <a href="/#" className="dropdown-item">
                         Config option 2
                       </a>
                     </li>
                   </ul>
-                  <a href="/" class="close-link">
-                    <i class="fa fa-times"></i>
+                  <a href="/" className="close-link">
+                    <i className="fa fa-times"></i>
                   </a>
                 </div>
               </div>
-              <div class="ibox-content">
-                <div class="row">
-                  <div class="col-sm-9 m-b-xs">
+              <div className="ibox-content">
+                <div className="row">
+                  <div className="col-sm-9 m-b-xs">
                     <div
                       data-toggle="buttons"
-                      class="btn-group btn-group-toggle"
+                      className="btn-group btn-group-toggle"
                     >
-                      <label class="btn btn-sm btn-white">
+                      <label className="btn btn-sm btn-white">
                         {" "}
                         <input
                           type="radio"
@@ -249,7 +249,7 @@ const IndexHome = () => {
                           name="options"
                         /> Day{" "}
                       </label>
-                      <label class="btn btn-sm btn-white active">
+                      <label className="btn btn-sm btn-white active">
                         {" "}
                         <input
                           type="radio"
@@ -257,7 +257,7 @@ const IndexHome = () => {
                           name="options"
                         /> Week{" "}
                       </label>
-                      <label class="btn btn-sm btn-white">
+                      <label className="btn btn-sm btn-white">
                         {" "}
                         <input
                           type="radio"
@@ -267,23 +267,23 @@ const IndexHome = () => {
                       </label>
                     </div>
                   </div>
-                  <div class="col-sm-3">
-                    <div class="input-group mb-3">
+                  <div className="col-sm-3">
+                    <div className="input-group mb-3">
                       <input
                         type="text"
-                        class="form-control form-control-sm"
+                        className="form-control form-control-sm"
                         placeholder="Search"
                       />
-                      <div class="input-group-append">
-                        <button class="btn btn-sm btn-primary" type="button">
+                      <div className="input-group-append">
+                        <button className="btn btn-sm btn-primary" type="button">
                           Go!
                         </button>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="table-responsive">
-                  <table class="table table-striped">
+                <div className="table-responsive">
+                  <table className="table table-striped">
                     <thead>
                       <tr>
                         <th>#</th>
@@ -307,13 +307,13 @@ const IndexHome = () => {
                         <td>0800 051213</td>
                         <td>Inceptos Hymenaeos Ltd</td>
                         <td>
-                          <span class="pie">0.52/1.561</span>
+                          <span className="pie">0.52/1.561</span>
                         </td>
                         <td>20%</td>
                         <td>Jul 14, 2013</td>
                         <td>
                           <a href="/#">
-                            <i class="fa fa-check text-navy"></i>
+                            <i className="fa fa-check text-navy"></i>
                           </a>
                         </td>
                       </tr>
@@ -324,13 +324,13 @@ const IndexHome = () => {
                         <td>0500 780909</td>
                         <td>Nec Euismod In Company</td>
                         <td>
-                          <span class="pie">6,9</span>
+                          <span className="pie">6,9</span>
                         </td>
                         <td>40%</td>
                         <td>Jul 16, 2013</td>
                         <td>
                           <a href="/#">
-                            <i class="fa fa-check text-navy"></i>
+                            <i className="fa fa-check text-navy"></i>
                           </a>
                         </td>
                       </tr>
@@ -341,13 +341,13 @@ const IndexHome = () => {
                         <td>0800 1111</td>
                         <td>Erat Volutpat</td>
                         <td>
-                          <span class="pie">3,1</span>
+                          <span className="pie">3,1</span>
                         </td>
                         <td>75%</td>
                         <td>Jul 18, 2013</td>
                         <td>
                           <a href="/#">
-                            <i class="fa fa-check text-navy"></i>
+                            <i className="fa fa-check text-navy"></i>
                           </a>
                         </td>
                       </tr>
@@ -358,13 +358,13 @@ const IndexHome = () => {
                         <td>(016977) 0648</td>
                         <td>Tellus Ltd</td>
                         <td>
-                          <span class="pie">4,9</span>
+                          <span className="pie">4,9</span>
                         </td>
                         <td>18%</td>
                         <td>Jul 22, 2013</td>
                         <td>
                           <a href="/#">
-                            <i class="fa fa-check text-navy"></i>
+                            <i className="fa fa-check text-navy"></i>
                           </a>
                         </td>
                       </tr>
@@ -375,13 +375,13 @@ const IndexHome = () => {
                         <td>0500 780909</td>
                         <td>Nec Euismod In Company</td>
                         <td>
-                          <span class="pie">6,9</span>
+                          <span className="pie">6,9</span>
                         </td>
                         <td>40%</td>
                         <td>Jul 16, 2013</td>
                         <td>
                           <a href="/#">
-                            <i class="fa fa-check text-navy"></i>
+                            <i className="fa fa-check text-navy"></i>
                           </a>
                         </td>
                       </tr>
@@ -394,13 +394,13 @@ const IndexHome = () => {
                         <td>0800 051213</td>
                         <td>Inceptos Hymenaeos Ltd</td>
                         <td>
-                          <span class="pie">0.52/1.561</span>
+                          <span className="pie">0.52/1.561</span>
                         </td>
                         <td>20%</td>
                         <td>Jul 14, 2013</td>
                         <td>
                           <a href="/#">
-                            <i class="fa fa-check text-navy"></i>
+                            <i className="fa fa-check text-navy"></i>
                           </a>
                         </td>
                       </tr>
@@ -411,13 +411,13 @@ const IndexHome = () => {
                         <td>(016977) 0648</td>
                         <td>Tellus Ltd</td>
                         <td>
-                          <span class="pie">4,9</span>
+                          <span className="pie">4,9</span>
                         </td>
                         <td>18%</td>
                         <td>Jul 22, 2013</td>
                         <td>
                           <a href="/#">
-                            <i class="fa fa-check text-navy"></i>
+                            <i className="fa fa-check text-navy"></i>
                           </a>
                         </td>
                       </tr>
@@ -430,13 +430,13 @@ const IndexHome = () => {
                         <td>0800 051213</td>
                         <td>Inceptos Hymenaeos Ltd</td>
                         <td>
-                          <span class="pie">0.52/1.561</span>
+                          <span className="pie">0.52/1.561</span>
                         </td>
                         <td>20%</td>
                         <td>Jul 14, 2013</td>
                         <td>
                           <a href="/#">
-                            <i class="fa fa-check text-navy"></i>
+                            <i className="fa fa-check text-navy"></i>
                           </a>
                         </td>
                       </tr>
@@ -447,13 +447,13 @@ const IndexHome = () => {
                         <td>0500 780909</td>
                         <td>Nec Euismod In Company</td>
                         <td>
-                          <span class="pie">6,9</span>
+                          <span className="pie">6,9</span>
                         </td>
                         <td>40%</td>
                         <td>Jul 16, 2013</td>
                         <td>
                           <a href="/#">
-                            <i class="fa fa-check text-navy"></i>
+                            <i className="fa fa-check text-navy"></i>
                           </a>
                         </td>
                       </tr>
@@ -464,13 +464,13 @@ const IndexHome = () => {
                         <td>0800 1111</td>
                         <td>Erat Volutpat</td>
                         <td>
-                          <span class="pie">3,1</span>
+                          <span className="pie">3,1</span>
                         </td>
                         <td>75%</td>
                         <td>Jul 18, 2013</td>
                         <td>
                           <a href="/#">
-                            <i class="fa fa-check text-navy"></i>
+                            <i className="fa fa-check text-navy"></i>
                           </a>
                         </td>
                       </tr>
@@ -481,13 +481,13 @@ const IndexHome = () => {
                         <td>(016977) 0648</td>
                         <td>Tellus Ltd</td>
                         <td>
-                          <span class="pie">4,9</span>
+                          <span className="pie">4,9</span>
                         </td>
                         <td>18%</td>
                         <td>Jul 22, 2013</td>
                         <td>
                           <a href="/#">
-                            <i class="fa fa-check text-navy"></i>
+                            <i className="fa fa-check text-navy"></i>
                           </a>
                         </td>
                       </tr>
@@ -498,13 +498,13 @@ const IndexHome = () => {
                         <td>0500 780909</td>
                         <td>Nec Euismod In Company</td>
                         <td>
-                          <span class="pie">6,9</span>
+                          <span className="pie">6,9</span>
                         </td>
                         <td>40%</td>
                         <td>Jul 16, 2013</td>
                         <td>
                           <a href="/#">
-                            <i class="fa fa-check text-navy"></i>
+                            <i className="fa fa-check text-navy"></i>
                           </a>
                         </td>
                       </tr>
@@ -517,13 +517,13 @@ const IndexHome = () => {
                         <td>0800 051213</td>
                         <td>Inceptos Hymenaeos Ltd</td>
                         <td>
-                          <span class="pie">0.52/1.561</span>
+                          <span className="pie">0.52/1.561</span>
                         </td>
                         <td>20%</td>
                         <td>Jul 14, 2013</td>
                         <td>
                           <a href="/#">
-                            <i class="fa fa-check text-navy"></i>
+                            <i className="fa fa-check text-navy"></i>
                           </a>
                         </td>
                       </tr>
@@ -534,13 +534,13 @@ const IndexHome = () => {
                         <td>(016977) 0648</td>
                         <td>Tellus Ltd</td>
                         <td>
-                          <span class="pie">4,9</span>
+                          <span className="pie">4,9</span>
                         </td>
                         <td>18%</td>
                         <td>Jul 22, 2013</td>
                         <td>
                           <a href="/#">
-                            <i class="fa fa-check text-navy"></i>
+                            <i className="fa fa-check text-navy"></i>
                           </a>
                         </td>
                       </tr>
@@ -551,6 +551,8 @@ const IndexHome = () => {
             </div>
           </div>
         </div>
+        
+
       </React.Fragment>
 
     
