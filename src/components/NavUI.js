@@ -2,15 +2,26 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-const NavUI = ({ logOut, image, last_name, status_message, products }) => {  
-
+const NavUI = ({ logOut, image, last_name, status_message, products }) => {
   return (
     <nav className="navbar-default navbar-static-side" role="navigation">
       <div className="sidebar-collapse">
         <ul className="nav metismenu" id="side-menu">
           <li className="nav-header">
             <div>
-              <img alt="" width="80px" className="rounded-circle" src={image} />
+              {
+                image ? (<img
+                style={{ objectFit: "contain" }}
+                alt=""
+                width="150"
+                height="150"
+                className="rounded-circle m-b-md"
+                src={image}
+              />):(
+                <i style={{ fontSize: "150px" }} className="fa fa-user-circle" />
+              )
+              }
+              
               <span
                 className="block m-t-xs font-bold"
                 style={{ color: "white" }}

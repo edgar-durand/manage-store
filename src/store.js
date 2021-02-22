@@ -69,10 +69,28 @@ const reducer = (state, action) => {
     }
 
     //globalState actions
+    case "SET_LOAD": {
+      return {
+        ...state,
+        load: action.load,
+      };
+    }
     case "UPDATE_STATE": {
       return {
         ...state,
         globalState: action.state,
+      };
+    }
+
+    case "UPDATE_PROFILE": {
+      return {
+        ...state,
+        globalState: {
+          0: {
+            ...state.globalState[0],
+            ...action.profile,
+          },
+        },
       };
     }
 
@@ -145,9 +163,11 @@ const reducer = (state, action) => {
         movements: [],
         productList: [],
         categories: [],
+        load: false,
       };
     }
     //LocalStorage actions
+
     case "LOAD": {
       return {
         ...localStoreToStore(),
@@ -155,10 +175,9 @@ const reducer = (state, action) => {
     }
 
     default: {
-      return state
+      return state;
     }
   }
-  return state;
 };
 const logger = (store) => (next) => (action) => {
   console.log("dispatching ", action);
@@ -170,11 +189,12 @@ export default createStore(
   reducer,
   {
     cart: [],
-    globalState: [],
+    globalState: { 0: { address: [], social_net: [] } },
     accounts: [],
     movements: [],
     productList: [],
     categories: [],
+    load: false,
   },
   applyMiddleware(logger, thunk)
 );

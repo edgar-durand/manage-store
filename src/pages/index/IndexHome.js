@@ -103,9 +103,19 @@ const IndexHome = () => {
                 <div className="m-t-sm">
                   <div className="row">
                     <div className="col-md-8">
-                      <div>
-                        <canvas id="lineChart" height="114"></canvas>
-                      </div>
+                    <div className="widget navy-bg no-padding">
+                    <div className="p-m">
+                        <h1 className="m-xs">$ 1,540</h1>
+
+                        <h3 className="font-bold no-margins">
+                            Annual income
+                        </h3>
+                        <small>Income form project Alpha.</small>
+                    </div>
+                    <div className="flot-chart">
+                        <div className="flot-chart-content" id="flot-chart1"></div>
+                    </div>
+                </div>
                     </div>
                     <div className="col-md-4">
                       <ul className="stat-list m-t-lg">

@@ -43,7 +43,7 @@ const GoForShopping = ({ products, cart, addToCart }) => {
             x.price_cost <= match.value
         ),
       });
-  const MO = { ...dataToPages(filtered, state.show, state.page) };
+  const FORMATED = { ...dataToPages(filtered, state.show, state.page) };
 
   const handleMatch = (e) => {
     setState({ ...state, match: { ...state.match, value: e.target.value } });
@@ -67,6 +67,7 @@ const GoForShopping = ({ products, cart, addToCart }) => {
       page !== state.page + 1
         ? gather.push(
             <button
+              key = {page}
               onClick={() => setState({ ...state, page: --page })}
               className="btn btn-xs btn-outline-success pull-right "
             >
@@ -75,6 +76,7 @@ const GoForShopping = ({ products, cart, addToCart }) => {
           )
         : gather.push(
             <button
+              key = {page}
               onClick={() => setState({ ...state, page: --page })}
               className="btn btn-sm btn-outline-success pull-right"
               style={{backgroundColor:"blue",color:"white"}}             
@@ -137,7 +139,7 @@ const GoForShopping = ({ products, cart, addToCart }) => {
                 : "row float-left col-12 "
             }
           >
-            {Object.values(MO).map((x, index) => {
+            {Object.values(FORMATED).map((x, index) => {
               return (
                 <ProductGrid
                   key={index}
