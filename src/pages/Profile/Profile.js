@@ -51,7 +51,7 @@ const Profile = ({
       password: null,
     },
   });
-  const img = useRef("img");
+  const imgs = useRef("imgs");
   const file = useRef("file");
   const handleChange = (event) => {
     setState({
@@ -90,11 +90,17 @@ const Profile = ({
               </small>
             </div>
             <img
-              src=""
+              src={
+                state.globalState.photo
+                  ? !state.globalState.photo.size
+                    ? state.globalState.photo
+                    : URL.createObjectURL(state.globalState.photo)
+                  : ""
+              }
               width={state.globalState.photo ? "150px" : ""}
               height={state.globalState.photo ? "150px" : ""}
               style={{ objectFit: "contain" }}
-              ref={img}
+              ref={imgs}
               className={
                 state.globalState.photo
                   ? "rounded-circle circle-border m-b-md"
@@ -102,13 +108,7 @@ const Profile = ({
               }
               alt=""
             />
-            {state.globalState.photo ? (
-              !state.globalState.photo.size ? (
-                (img.current.src = state.globalState.photo)
-              ) : (
-                (img.current.src = URL.createObjectURL(state.globalState.photo))
-              )
-            ) : (
+            {state.globalState.photo ? null : (
               <i style={{ fontSize: "150px" }} className="fa fa-user-circle" />
             )}
 
@@ -133,12 +133,12 @@ const Profile = ({
                     type="file"
                     onChange={() => {
                       if (file.current.files[0]) {
-                        img.current.src = URL.createObjectURL(
+                        imgs.current.src = URL.createObjectURL(
                           file.current.files[0]
                         );
                         handleFile(file.current.files[0]);
                       } else {
-                        img.current.src = null;
+                        imgs.current.src = null;
                         handleFile(file.current.files[0]);
                       }
                     }}
@@ -172,7 +172,10 @@ const Profile = ({
               <li>
                 <a
                   target="blank"
-                  href={"http://www.facebook.com/" + state.globalState.facebook || ""}
+                  href={
+                    "http://www.facebook.com/" + state.globalState.facebook ||
+                    ""
+                  }
                   className="btn btn-social-icon btn-facebook"
                 >
                   <span className="fa fa-facebook"></span>
@@ -182,7 +185,9 @@ const Profile = ({
               <li>
                 <a
                   target="blank"
-                  href={"http://www.twitter.com/" + state.globalState.twitter || ""}
+                  href={
+                    "http://www.twitter.com/" + state.globalState.twitter || ""
+                  }
                   className="btn btn-social-icon btn-twitter"
                 >
                   <span className="fa fa-twitter"></span>
@@ -192,7 +197,10 @@ const Profile = ({
               <li>
                 <a
                   target="blank"
-                  href={"http://www.instagram.com/" + state.globalState.instagram || ""}
+                  href={
+                    "http://www.instagram.com/" + state.globalState.instagram ||
+                    ""
+                  }
                   className="btn btn-social-icon btn-instagram"
                 >
                   <span className="fa fa-instagram"></span>
