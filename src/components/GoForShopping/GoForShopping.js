@@ -8,19 +8,12 @@ import { addToCart } from "../../actions/actionCreator";
 
 const GoForShopping = ({ products, cart, addToCart }) => {
   const [state, setState] = useState({
-    total: 0,
+    total: +Object.values(cart).reduce((a, b) => a + b.price_cost, 0),
     searchField: "",
     match: { active: false, value: 0 },
     show: 6,
     page: 0,
   });
-
-  if (state.total === 0)
-    if (Object.values(cart).length)
-      setState({
-        ...state,
-        total: +Object.values(cart).reduce((a, b) => a + b.price_cost, 0),
-      });
 
   const { searchField, match } = state;
 

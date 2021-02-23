@@ -98,16 +98,14 @@ const reducer = (state, action) => {
     case "SET_LIST_PRODUCTS": {
       return {
         ...state,
-        productList: { ...action.product },
+        productList: action.product,
       };
     }
 
     case "ADD_NEW_PRODUCT": {
       return {
         ...state,
-        productList: {
-          ...Object.values(state.productList).concat(action.product),
-        },
+        productList: Object.values(state.productList).concat(action.product),
       };
     }
 
@@ -157,6 +155,7 @@ const reducer = (state, action) => {
     //Logout actions
     case "CLEAR": {
       return {
+        ...state,
         cart: [],
         globalState: [],
         accounts: [],
@@ -166,10 +165,18 @@ const reducer = (state, action) => {
         load: false,
       };
     }
+    // USERS
+    case "GET_USERS": {
+      return {
+        ...state,
+        users: action.users,
+      };
+    }
     //LocalStorage actions
 
     case "LOAD": {
       return {
+        ...state,
         ...localStoreToStore(),
       };
     }
@@ -194,6 +201,7 @@ export default createStore(
     movements: [],
     productList: [],
     categories: [],
+    users: [],
     load: false,
   },
   applyMiddleware(logger, thunk)

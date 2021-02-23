@@ -107,6 +107,14 @@ export const addNewProduct = (product) => {
     product,
   };
 };
+// USERS
+export const getUsers = () => {
+  return (dispatch) => {
+    send({}, "/api/user/", "get").then((r) =>
+      dispatch({ type: "GET_USERS", users: r })
+    );
+  };
+};
 // GLOBAL STATE
 export const setLoad = (load) => {
   return {

@@ -38,12 +38,17 @@ import {
   setListProducts,
   updateState,
 } from "../actions/actionCreator";
-import { localStoreToStore } from "../js/storeHelper";
 import Profile from "./Profile/Profile";
+import Deals from "./Deals/Deals";
 
 const Home = ({ cart, globalState }) => {
   useEffect(() => {
-    if (localStoreToStore()) store.dispatch(load());
+    if (
+      Object.values(
+        JSON.parse(localStorage?.getItem("store"))?.globalState[0]?.email
+      || []).length
+    )
+      store.dispatch(load());
     else {
       store.dispatch(updateState());
       store.dispatch(getAccounts());
@@ -72,7 +77,6 @@ const Home = ({ cart, globalState }) => {
           localStorage.removeItem("token");
 
           store.dispatch(clear());
-          localStorage.removeItem("store");
 
           return <Redirect to="/login" />;
         }
@@ -133,6 +137,7 @@ const Home = ({ cart, globalState }) => {
               {/*Shopping*/}
               <Route path="/home/detail/:id" component={Detail} />
               <Route path="/home/edit/:id" component={Edit} />
+              {/* Products */}
               <Route
                 path="/home/new_product/"
                 component={() => <NewProductForm />}
@@ -141,10 +146,12 @@ const Home = ({ cart, globalState }) => {
                 path="/home/my_products/"
                 component={() => <ProductList />}
               />
+              {/* Deals */}
+              <Route exact path="/home/deals/" component={() => <Deals />} />
               {/* Profile */}
               <Route path="/home/profile/" component={() => <Profile />} />
 
-              <Route exact path="/home" component={() => <IndexHome/>} />
+              <Route exact path="/home" component={() => <IndexHome />} />
               <Route component={() => <NotFound />} />
             </Switch>
             <FooterUI />
