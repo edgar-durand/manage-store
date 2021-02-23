@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/io/myProyects/static/css/main.5204e26f.chunk.css",
-    "main.js": "/io/myProyects/static/js/main.bdf59f08.chunk.js",
-    "main.js.map": "/io/myProyects/static/js/main.bdf59f08.chunk.js.map",
-    "runtime-main.js": "/io/myProyects/static/js/runtime-main.15db5fa8.js",
-    "runtime-main.js.map": "/io/myProyects/static/js/runtime-main.15db5fa8.js.map",
-    "static/css/2.9de1d075.chunk.css": "/io/myProyects/static/css/2.9de1d075.chunk.css",
-    "static/js/2.7eba8c45.chunk.js": "/io/myProyects/static/js/2.7eba8c45.chunk.js",
-    "static/js/2.7eba8c45.chunk.js.map": "/io/myProyects/static/js/2.7eba8c45.chunk.js.map",
-    "index.html": "/io/myProyects/index.html",
-    "static/css/2.9de1d075.chunk.css.map": "/io/myProyects/static/css/2.9de1d075.chunk.css.map",
-    "static/css/main.5204e26f.chunk.css.map": "/io/myProyects/static/css/main.5204e26f.chunk.css.map",
-    "static/js/2.7eba8c45.chunk.js.LICENSE.txt": "/io/myProyects/static/js/2.7eba8c45.chunk.js.LICENSE.txt",
-    "static/media/style.css": "/io/myProyects/static/media/shattered.adf86f85.png",
-    "static/media/font-awesome.min.css": "/io/myProyects/static/media/fontawesome-webfont.f691f37e.woff"
+    "main.css": "/myProyects/static/css/main.92a2ae15.chunk.css",
+    "main.js": "/myProyects/static/js/main.bdf59f08.chunk.js",
+    "main.js.map": "/myProyects/static/js/main.bdf59f08.chunk.js.map",
+    "runtime-main.js": "/myProyects/static/js/runtime-main.171d6566.js",
+    "runtime-main.js.map": "/myProyects/static/js/runtime-main.171d6566.js.map",
+    "static/css/2.9de1d075.chunk.css": "/myProyects/static/css/2.9de1d075.chunk.css",
+    "static/js/2.7eba8c45.chunk.js": "/myProyects/static/js/2.7eba8c45.chunk.js",
+    "static/js/2.7eba8c45.chunk.js.map": "/myProyects/static/js/2.7eba8c45.chunk.js.map",
+    "index.html": "/myProyects/index.html",
+    "static/css/2.9de1d075.chunk.css.map": "/myProyects/static/css/2.9de1d075.chunk.css.map",
+    "static/css/main.92a2ae15.chunk.css.map": "/myProyects/static/css/main.92a2ae15.chunk.css.map",
+    "static/js/2.7eba8c45.chunk.js.LICENSE.txt": "/myProyects/static/js/2.7eba8c45.chunk.js.LICENSE.txt",
+    "static/media/style.css": "/myProyects/static/media/shattered.adf86f85.png",
+    "static/media/font-awesome.min.css": "/myProyects/static/media/fontawesome-webfont.f691f37e.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.15db5fa8.js",
+    "static/js/runtime-main.171d6566.js",
     "static/css/2.9de1d075.chunk.css",
     "static/js/2.7eba8c45.chunk.js",
-    "static/css/main.5204e26f.chunk.css",
+    "static/css/main.92a2ae15.chunk.css",
     "static/js/main.bdf59f08.chunk.js"
   ]
 }
