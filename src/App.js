@@ -4,7 +4,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Home from "./pages/Home";
 
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {HashRouter as Router, Route, Switch } from "react-router-dom";
 import { storeToLocalStore } from "./js/storeHelper";
 import store from "./store";
 import { getUsers } from "./actions/actionCreator";
@@ -28,7 +28,7 @@ function App() {
   }, []);
 
   return (
-    <Router basename="/manage-store" >
+    <Router>
       <Switch>
         <Route exact path="/login" component={() => <Login />} />
         <Route exact path="/register" component={() => <Register />} />
