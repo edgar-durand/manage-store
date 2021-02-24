@@ -40,6 +40,7 @@ import {
 } from "../actions/actionCreator";
 import Profile from "./Profile/Profile";
 import Deals from "./Deals/Deals";
+import Section from "./Deals/Section";
 
 const Home = ({ cart, globalState }) => {
   useEffect(() => {
@@ -148,6 +149,8 @@ const Home = ({ cart, globalState }) => {
               />
               {/* Deals */}
               <Route exact path="/home/deals/" component={() => <Deals />} />
+              <Route exact path="/home/deals/:id" component={Section} />
+
               {/* Profile */}
               <Route path="/home/profile/" component={() => <Profile />} />
 

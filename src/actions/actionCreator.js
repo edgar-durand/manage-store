@@ -125,26 +125,69 @@ export const setLoad = (load) => {
 
 export const updateProfile = (profile) => {
   let data = new FormData();
-  const keys = Object.keys(profile).entries();
-  const values = Object.values(profile).entries();
-  for (let i = 0; i < Object.values(profile).length; i++) {
-    data.append(JSON.stringify(keys.next().value[1]), values?.next()?.value[1]);
-  }
+  const {
+    street,
+    between,
+    municipality,
+    province,
+    building,
+    apto,
 
+    facebook,
+    twitter,
+    instagram,
+
+    photo,
+    first_name,
+    last_name,
+    birth_date,
+    status_message,
+    username,
+    email,
+    phone,
+    password
+  } = profile;
+
+  data.append("street", street);
+  data.append("between", between);
+  data.append("municipality", municipality);
+  data.append("province", province);
+  data.append("building", building);
+  data.append("apto", apto);
+  data.append("facebook", facebook);
+  data.append("twitter", twitter);
+  data.append("instagram", instagram);
+  data.append("photo", photo || null);
+  data.append("first_name", first_name);
+  data.append("last_name", last_name);
+  data.append("birth_date", birth_date);
+  data.append("status_message", status_message);
+  data.append("username", username);
+  data.append("email", email);
+  data.append("phone", phone);
+  data.append("password", password);
+
+  // const keys = Object.keys(profile).entries();
+  // const values = Object.values(profile).entries();
+  // for (let i = 0; i < Object.values(profile).length; i++) {
+  //   data.append(JSON.stringify(keys.next().value[1]), values?.next()?.value[1]);
+  // }
   return (dispatch) => {
-    send({ token: authHelper(), ...data }, "/api/profile/", "putFile").then(
-      (r) => {
-        dispatch({
-          type: "UPDATE_PROFILE",
-          profile: r,
-        });
-        dispatch({
-          type: "SET_LOAD",
-          load: false,
-        });
-        r.detail ? toastr.info(r.detail) : toastr.success("Updated !");
-      }
-    );
+    send(
+      { token: authHelper(), form: data },
+      "/api/user/" + profile.id + "/",
+      "putFile"
+    ).then((r) => {
+      dispatch({
+        type: "UPDATE_PROFILE",
+        profile: r,
+      });
+      dispatch({
+        type: "SET_LOAD",
+        load: false,
+      });
+      r.detail ? toastr.info(r.detail) : toastr.success("Updated !");
+    });
   };
 };
 

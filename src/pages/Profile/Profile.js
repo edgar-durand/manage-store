@@ -6,6 +6,7 @@ import "../../components/styles/css/plugins/bootstrapSocial/bootstrap-social.css
 import { setLoad, updateProfile } from "../../actions/actionCreator";
 
 const Profile = ({
+  id,
   photo,
   first_name,
   last_name,
@@ -29,6 +30,7 @@ const Profile = ({
 }) => {
   const [state, setState] = useState({
     globalState: {
+      id,
       street,
       between,
       municipality,
@@ -53,6 +55,7 @@ const Profile = ({
   });
   const imgs = useRef("imgs");
   const file = useRef("file");
+
   const handleChange = (event) => {
     setState({
       globalState: {
@@ -61,11 +64,13 @@ const Profile = ({
       },
     });
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoad(true);
     handleProfile({ ...state.globalState });
   };
+  
   const handleFile = (file) => {
     setState({
       globalState: {
@@ -323,7 +328,7 @@ const Profile = ({
                     onChange={(event) => handleChange(event)}
                     name="apto"
                     value={state.globalState.apto || ""}
-                    placeholder="Apartament no."
+                    placeholder="Apartament/House no."
                     className="form-control col-8"
                   />
                 </div>
@@ -434,6 +439,7 @@ const mapStateToProps = (state) => {
     phone: state?.globalState[0]?.phone,
     email: state?.globalState[0]?.email,
     load: state.load,
+    id: state?.globalState[0]?.id,
 
     street: state?.globalState[0]?.address[0]?.street,
     between: state?.globalState[0]?.address[0]?.between,

@@ -78,6 +78,8 @@ const send = async (state, endPoint, method) => {
               method: "PUT",
               headers: {
                 Accept: "*/*",
+                // "Content-Type": "application/json",
+                // "Content-Type": "multipart/form-data",
                 Authorization: "token " + state.token,
               },
               body: state.form,

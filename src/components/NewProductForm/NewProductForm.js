@@ -76,7 +76,6 @@ const NewProductForm = ({ categories, addNewProduct, setListProducts }) => {
     if (name && price_cost && category) {
       send({ form, token: authHelper() }, "/api/product/", "file").then((r) => {
         addNewProduct(r);
-        setListProducts();
         toastr.options.closeButton = true;
         toastr.options.closeHtml =
           '<button><i class="fa fa-close"></i></button>';
