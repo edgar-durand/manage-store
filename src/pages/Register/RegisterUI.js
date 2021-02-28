@@ -72,9 +72,11 @@ const RegisterUI = (props) => {
                 <div className="form-group col-lg-auto">
                     <input ref={file} name="photo" id="logo" type="file" onChange={() => {
                         if (file.current.files[0]) {
-                            img.current.src = URL.createObjectURL(file.current.files[0])
-                            label.current.childNodes[0].textContent = file.current.files[0].name
-                            props.handleFile(file.current.files[0])
+                            if (file.current.files[0].size <= 30000) {
+                            img.current.src = URL.createObjectURL(file.current.files[0]);
+                            label.current.childNodes[0].textContent = file.current.files[0].name;                            
+                            }
+                            props.handleFile(file.current.files[0]);
                         } else {
                             img.current.src = null
                             label.current.childNodes[0].textContent = "Choose file..."

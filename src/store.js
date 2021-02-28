@@ -36,9 +36,11 @@ const reducer = (state, action) => {
             `${action.product.name} already exist, check your cart and type the quantity you wish.`,
             "Error !"
           );
+          return {
+            ...state,
+          };
         }
       }
-      break;
 
     case "SET_PRODUCT_QUANTITY":
       // eslint-disable-next-line no-lone-blocks
@@ -95,6 +97,12 @@ const reducer = (state, action) => {
     }
 
     //productList actions
+    case "GET_ALL_PRODUCTS": {
+      return {
+        ...state,
+        allproducts: action.products,
+      };
+    }
     case "SET_LIST_PRODUCTS": {
       return {
         ...state,
@@ -162,6 +170,7 @@ const reducer = (state, action) => {
         movements: [],
         productList: [],
         categories: [],
+        allproducts:[],
         load: false,
       };
     }
@@ -202,6 +211,7 @@ export default createStore(
     productList: [],
     categories: [],
     users: [],
+    allproducts: [],
     load: false,
   },
   applyMiddleware(logger, thunk)

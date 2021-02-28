@@ -5,7 +5,7 @@ import send from "../../js/send";
 import authHelper from "../../js/authHelper";
 import store from "../../store";
 import { setListProducts } from "../../actions/actionCreator";
-
+import toastr from "toastr";
 const Edit = (props) => {
   const [state, setState] = useState({
     back: false,
@@ -89,7 +89,7 @@ const Edit = (props) => {
     e.preventDefault();
     if (name && description && price_cost && category) {
       let form = new FormData();
-      form.append("image", image);
+      (image?.size && form.append("image", image));
       form.append("name", name);
       form.append("description", description);
       form.append("_public", _public);
@@ -101,9 +101,14 @@ const Edit = (props) => {
         { form, token: authHelper() },
         "/api/product/" + ID + "/",
         "putFile"
-      ).then(() => {
+      ).then((r) => {
+        console.log(r);
+        if (r.error) {
+          toastr.error(r.error, "ERROR");
+        }else{
+          toastr.success("Updated successfully !");
         store.dispatch(setListProducts());
-        setState({ ...state, back: true });
+        setState({ ...state, back: true });}
       });
     } else console.error("You must fill up all input fields.");
   };

@@ -3,6 +3,8 @@ import Select from "react-select";
 import { Link } from "react-router-dom";
 import CartSummary from "../CartSummary/CartSummary";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "../styles/fontawesome";
 
 const CheckoutUI = ({
   credit,
@@ -14,17 +16,13 @@ const CheckoutUI = ({
   accounts,
 }) => {
   const label = useRef("label");
-  const text = useRef("text");
+  
 
   if (label.current.classList)
     if (credit >= total) {
-      text.current.innerHTML =
-        " <i style='font-size: 30px' class='fa fa-check text-info text-right'/>";
       label.current.classList.remove("text-warning");
       label.current.classList.add("text-success");
     } else {
-      text.current.innerHTML =
-        " <i style='font-size: 30px' class='fa fa-close text-danger text-right'/>";
       label.current.classList.remove("text-success");
       label.current.classList.add("text-warning");
     }
@@ -48,16 +46,20 @@ const CheckoutUI = ({
                   {" "}
                   $ {credit.toFixed(2)}{" "}
                 </h5>
-                <p ref={text}></p>
+                <p>
+                  {credit >= total ? (
+                    <FontAwesomeIcon icon={"check"} size="2x" />
+                  ) : (
+                    <FontAwesomeIcon icon={"angry"} size="2x" />
+                  )}
+                </p>
               </label>
               <div className="col-12">
                 <Select
-                  options={Object.values(accounts).map(
-                    (x) => ({
-                      value: x.id,
-                      label: `${x.name} ${x.description}`,
-                    })
-                  )}
+                  options={Object.values(accounts).map((x) => ({
+                    value: x.id,
+                    label: `${x.name} ${x.description}`,
+                  }))}
                   isClearable={true}
                   placeholder="Select account"
                   name="accounts"
@@ -94,8 +96,7 @@ const CheckoutUI = ({
 const mapStateToProps = (state) => {
   return {
     items: +Object.values(state.cart).length,
-    accounts : state.accounts,
-
+    accounts: state.accounts,
   };
 };
 export default connect(mapStateToProps)(CheckoutUI);

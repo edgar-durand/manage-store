@@ -9,12 +9,12 @@ import {
 } from "../../actions/actionCreator";
 
 const CartList = ({ cart, handleChange, handleClick }) => (
-    <CartListUI
-      products={cart}
-      handleClick={(e) => handleClick(e)}
-      handleChange={(e, p) => handleChange(e, p)}
-    />
-  );
+  <CartListUI
+    products={cart}
+    handleClick={(e) => handleClick(e)}
+    handleChange={(e, p) => handleChange(e, p)}
+  />
+);
 
 const mapStateToProps = (state) => {
   return {
@@ -22,35 +22,38 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = (dispatch) => {
-    return{
-        handleChange(e, product){
-            if (e.target.value === "0") {
-              e.target.value = 1;
-              toastr.warning(
-                "If you dont want this product here please 'Remove item' but 0 is not valid here",
-                "WARNING !"
-              );
-            }
-        
-            dispatch(
-              setProductQuantity(Object.assign(product, { inStock: +e.target.value }))
-            );
-          },
-          handleClick(id){
-            msgNotification(
-              "Confirm",
-              "Are you sure of delete this item ?",
-              "question",
-              "OK",
-              true,
-              "CANCEL"
-            ).then((r) => {
-              if (r.value) {
-                dispatch(deleteFromCart(id));
-              }
-            });
-          }
-
-    }
-}
-export default connect(mapStateToProps,mapDispatchToProps)(CartList);
+  return {
+    handleChange(e, product) {
+      clearTimeout();
+      setTimeout(() => {
+        dispatch(
+          setProductQuantity(
+            Object.assign(product, { inStock: +e.target.value })
+          )
+        );
+      },2000);
+      if (e.target.value === "0") {
+        e.target.value = 1;
+        toastr.warning(
+          "If you dont want this product here please 'Remove item' but 0 is not valid here",
+          "WARNING !"
+        );
+      }
+    },
+    handleClick(id) {
+      msgNotification(
+        "Confirm",
+        "Are you sure of delete this item ?",
+        "question",
+        "OK",
+        true,
+        "CANCEL"
+      ).then((r) => {
+        if (r.value) {
+          dispatch(deleteFromCart(id));
+        }
+      });
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(CartList);

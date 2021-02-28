@@ -4,10 +4,13 @@ import authHelper from "../js/authHelper";
 import send from "../js/send";
 import msgNotification from "../js/msgNotification";
 import NewProductForm from "./NewProductForm/NewProductForm";
+import "./treeTableReact/treeTable.css";
+import { TreeTable } from "./treeTableReact/treeTable";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { updateList } from "../actions/actionCreator";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./styles/fontawesome";
 const ProductList = ({ products, handleClick }) => {
   return Object.values(products).length ? (
     <React.Fragment>
@@ -20,86 +23,96 @@ const ProductList = ({ products, handleClick }) => {
         <div className="col-lg-12">
           <div className="ibox">
             <div className="ibox-content">
-              <table className="table-condensed table-hover table-striped col-lg-12">
-                <thead>
-                  <tr>
-                    <th data-toggle="true">Product Name</th>
-                    <th data-hide="phone">Category</th>
-                    <th data-hide="phone">Price</th>
-                    <th data-hide="phone">Status</th>
-                    <th className="text-right" data-sort-ignore="true">
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Object.values(products).map((product, index) => {
-                    if (product) {
-                      const {
-                        name,
-                        category,
-                        price_cost,
-                        _public,
-                        id,
-                        inStock,
-                      } = product;
-
-                      return (
-                        <tr key={index}>
-                          <td>
-                            {name}{" "}
+              <TreeTable
+                columns={[
+                  {
+                    data: "name",
+                    render: (data, row) =>
+                      data && (
+                        <React.Fragment>
+                          {row.name}
+                          {row.action && (
                             <span className="label label-success text-right ">
-                              {" "}
-                              {inStock}
+                              {`${row.inStock}`}
                             </span>
-                          </td>
-                          <td>{category}</td>
-                          <td>{price_cost}</td>
-                          <td>
-                            <Status status={_public} />
-                          </td>
-                          <td className="text-right">
-                            <div className="btn-group">
-                              <Link
-                                to={"/home/detail/" + id}
-                                className="btn-white btn btn-xs"
-                              >
-                                View
-                              </Link>
-                              <Link
-                                to={"/home/edit/" + id}
-                                className="btn-white btn btn-xs"
-                              >
-                                <i
-                                  title="Edit"
-                                  style={{ fontSize: "20px" }}
-                                  className="fa fa-pencil"
-                                />
-                              </Link>
-                              <button
-                                title="Delete"
-                                style={{ fontSize: "15px" }}
-                                onClick={() => handleClick(id)}
-                                className="btn-white btn btn-xs"
-                              >
-                                <i className="fa fa-trash" />
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    }
-                    return null;
-                  })}
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td colSpan="6">
-                      <ul className="pagination float-right" />
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
+                          )}
+                        </React.Fragment>
+                      ),
+                    title: "Name",
+                  },
+                  {
+                    data: "category",
+                    title: "Category",
+                  },
+                  {
+                    data: "price",
+                    title: "Price",
+                  },
+                  {
+                    data: "status",
+                    render: (data) => <Status status={data} />,
+                    title: "Status",
+                  },
+                  {
+                    data: "action",
+                    render: (data, row) =>
+                      data && (
+                        <div className="btn-group">
+                          <Link
+                            to={"/home/detail/" + row.id}
+                            className="btn-white btn btn-xs"
+                            title="View"
+                          >
+                            <FontAwesomeIcon
+                              icon={"glasses"}
+                              transform="grow-9x down-3"
+                              size="1x"
+                            />
+                          </Link>
+                          <Link
+                            to={"/home/edit/" + row.id}
+                            className="btn-white btn btn-xs"
+                            title="Edit"
+                          >
+                            <FontAwesomeIcon
+                              icon={"pencil-alt"}
+                              transform="grow-9x down-3"
+                              size="1x"
+                            />
+                          </Link>
+                          <button
+                            title="Delete"
+                            style={{ fontSize: "15px" }}
+                            onClick={() => handleClick(row.id)}
+                            className="btn-white btn btn-xs"
+                          >
+                            <FontAwesomeIcon
+                              icon={"trash"}
+                              transform="grow-6x"
+                              size="1x"
+                            />
+                          </button>
+                        </div>
+                      ),
+                    title: "Action",
+                  },
+                ]}
+                data={Object.values(products).map((x) => ({
+                  name: x.name,
+                  category: x.category,
+                  price: x.price_cost,
+                  status: x._public,
+                  id: x.id,
+                  inStock: x.inStock,
+                  action: true,
+                  children: [
+                    {
+                      name: "Description: " + x.description,
+                    },
+                  ],
+                }))}
+              />
+              
             </div>
           </div>
         </div>
@@ -125,16 +138,24 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = (dispatch) => {
-    return{
-         handleClick (id) {
-        msgNotification("Confirmar", "Realmente desea eliminar el producto de su lista ?", "question", "ACEPTAR", true)
-            .then(r => {
-                if (r.value) {
-                    send({token: authHelper()}, `/api/product/${id}`, "delete")
-                        .then(() => dispatch(updateList(id)))
-                }
-            })
-
-    }}
+  return {
+    handleClick(id) {
+      msgNotification(
+        "Confirmar",
+        "Realmente desea eliminar el producto de su lista ?",
+        "question",
+        "ACEPTAR",
+        true
+      ).then((r) => {
+        if (r.value) {
+          send(
+            { token: authHelper() },
+            `/api/product/${id}`,
+            "delete"
+          ).then(() => dispatch(updateList(id)));
+        }
+      });
+    },
+  };
 };
-export default connect(mapStateToProps,mapDispatchToProps)(ProductList);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

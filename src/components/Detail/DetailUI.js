@@ -1,9 +1,4 @@
 import React, {useRef, useEffect} from "react";
-import "../styles/css/bootstrap.min.css";
-import "../styles/font-awesome/css/font-awesome.min.css";
-import "../styles/css/animate.css";
-import "../styles/css/style.css";
-import "../styles/css/textSpinners/spinners.css";
 import {Link} from "react-router-dom";
 
 const DetailUI = ({load,photo,producName,price,category,description,author,addToCart}) => {

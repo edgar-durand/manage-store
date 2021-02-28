@@ -6,9 +6,9 @@ import authHelper from "../../js/authHelper";
 import toastr from "toastr";
 import msgNotification from "../../js/msgNotification";
 import { connect } from "react-redux";
-import { addNewProduct, setListProducts } from "../../actions/actionCreator";
+import { addNewProduct } from "../../actions/actionCreator";
 
-const NewProductForm = ({ categories, addNewProduct, setListProducts }) => {
+const NewProductForm = ({ categories, addNewProduct }) => {
   const [state, setState] = useState({
     token: authHelper(),
     goBack: false,
@@ -64,33 +64,27 @@ const NewProductForm = ({ categories, addNewProduct, setListProducts }) => {
     e.preventDefault();
 
     let form = new FormData();
-    form.append("image", state.product.image);
-    form.append("name", name);
-    form.append("description", description || "");
-    form.append("_public", _public);
-    form.append("price_cost", price_cost);
-    form.append("price_vent", "0");
-    form.append("inStock", "0");
-    form.append("category", category);
+    for (let [keys, values] of Object.entries(state.product))
+      form.append(keys, values);
 
     if (name && price_cost && category) {
       send({ form, token: authHelper() }, "/api/product/", "file").then((r) => {
-        addNewProduct(r);
-        toastr.options.closeButton = true;
-        toastr.options.closeHtml =
-          '<button><i class="fa fa-close"></i></button>';
-        toastr.success(`Producto agregado correctamente`, "Exito !");
-        msgNotification(
-          "Confirmar",
-          "desea agregar otro producto ?",
-          "question",
-          "AGREGAR OTRO",
-          true
-        ).then((r) => {
-          if (!r.value) setState({ ...state, goBack: true });
-        });
+        if (!r.error) {
+          addNewProduct(r);          
+          msgNotification(
+            "Confirmar",
+            "desea agregar otro producto ?",
+            "question",
+            "AGREGAR OTRO",
+            true
+          ).then((r) => {
+            if (!r.value) setState({...state, goBack: true });
+          });
+        }else{
+          toastr.error(r.error, "ERROR");
+        }
       });
-    } else console.error("You must fill up all input fields.");
+    } else toastr.error("You must fill up all input fields.", "ERROR");
   };
 
   const handleSelect = (selected) => {
@@ -136,9 +130,6 @@ const mapDispatchToProps = (dispatch) => {
     addNewProduct(product) {
       dispatch(addNewProduct(product));
     },
-    setListProducts(){
-      dispatch(setListProducts());
-    }
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(NewProductForm);

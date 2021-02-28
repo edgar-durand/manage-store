@@ -1,0 +1,4 @@
+/* TreeTable */
+.fnu-treetable tbody tr td:first-of-type svg {
+    cursor: pointer;
+}

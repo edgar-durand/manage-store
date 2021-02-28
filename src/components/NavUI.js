@@ -1,27 +1,37 @@
 import React from "react";
+import "./styles/fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-const NavUI = ({ logOut, image, last_name, status_message, products }) => {
+const NavUI = ({
+  logOut,
+  image,
+  last_name,
+  status_message,
+  products,
+  contacts,
+}) => {
   return (
     <nav className="navbar-default navbar-static-side" role="navigation">
       <div className="sidebar-collapse">
         <ul className="nav metismenu" id="side-menu">
           <li className="nav-header">
             <div>
-              {
-                image ? (<img
-                style={{ objectFit: "contain" }}
-                alt=""
-                width="150"
-                height="150"
-                className="rounded-circle m-b-md"
-                src={image}
-              />):(
-                <i style={{ fontSize: "150px" }} className="fa fa-user-circle" />
-              )
-              }
-              
+              {image ? (
+                <img
+                  style={{ objectFit: "contain" }}
+                  alt=""
+                  width="150"
+                  height="150"
+                  className="rounded-circle m-b-md"
+                  src={image}
+                />
+              ) : (
+                <FontAwesomeIcon icon={'user-circle'} style={{ fontSize: "150px" }} />
+                
+              )}
+
               <span
                 className="block m-t-xs font-bold"
                 style={{ color: "white" }}
@@ -34,19 +44,19 @@ const NavUI = ({ logOut, image, last_name, status_message, products }) => {
           </li>
           <li>
             <Link to="/home">
-              <i className="fa fa-th-large" />
+              <FontAwesomeIcon icon={'home'} size="2x" />
               <span className="nav-label active"> Home </span>
             </Link>
           </li>
           <li>
             <Link to="/home/my_accounts/">
-              <i className="fa fa-credit-card" />{" "}
-              <span className="nav-label">My accounts</span>
+              <FontAwesomeIcon icon={'credit-card'} size="2x" />{" "}
+              <span className="nav-label"> My accounts</span>
             </Link>
           </li>
           <li>
             <Link to="/home/my_products/">
-              <i className="fa fa-check" />{" "}
+              <FontAwesomeIcon icon={'shopping-basket'} size="2x" />{" "}
               <span className="nav-label">My products </span>{" "}
               <span className="label label-success float-right">
                 {" "}
@@ -57,14 +67,14 @@ const NavUI = ({ logOut, image, last_name, status_message, products }) => {
 
           <li>
             <Link to="/home/shopping/">
-              <i className="fa fa-shopping-cart" />{" "}
+              <FontAwesomeIcon icon={'shopping-cart'} size="2x" />{" "}
               <span className="nav-label">Go for shopping</span>
             </Link>
           </li>
 
           <li>
             <Link to="/home/deals/">
-              <i className="fa fa-shopping-bag" />{" "}
+              <FontAwesomeIcon icon={'shopping-bag'} size="2x" />{" "}
               <span className="nav-label">Deals</span>
             </Link>
           </li>
@@ -73,22 +83,26 @@ const NavUI = ({ logOut, image, last_name, status_message, products }) => {
           {/*    <a href=""><i className="fa fa-magic"/> <span className="nav-label">CSS Animations </span><span*/}
           {/*        className="label label-info float-right">62</span></a>*/}
           {/*</li>*/}
-          {/*<li className="landing_link">*/}
-          {/*    <Link to="/home/new_product/"><i className="fa fa-plus"/> <span*/}
-          {/*        className="nav-label">New product</span>*/}
-          {/*        <span className="label label-warning float-right">NEW</span></Link>*/}
-          {/*</li>*/}
           <div className="fc-divider" />
           <li>
             <Link to="/home/profile">
-              <i className="fa fa-user" />
+              <FontAwesomeIcon icon={'user-edit'} size="2x" />
               <span className="nav-label"> Profile </span>
             </Link>
           </li>
-          <div className="fc-divider" />
-          <li className="special_link">
+          <li>
+            <Link to="/home/user-contact/">
+              <FontAwesomeIcon icon={'address-book'} size="2x" />{" "}
+              <span className="nav-label">Contacts</span>
+              <span className="label label-success float-right">
+                {contacts}
+              </span>
+            </Link>
+          </li>
+          {/* <div className="fc-divider" /> */}
+          <li>
             <Link onClick={() => logOut()} to={document.location.pathname}>
-              <i className="fa fa-close" />
+              <FontAwesomeIcon icon={'sign-out-alt'} size="2x" />{" "}
               <span className="nav-label">Logout</span>
             </Link>
           </li>
@@ -98,9 +112,14 @@ const NavUI = ({ logOut, image, last_name, status_message, products }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
   return {
-    products: Object.values(state.productList).length,
+    products: Object.values(
+      JSON.parse(localStorage.getItem("store"))?.productList || []
+    ).length,
+    contacts:
+      Object.values(JSON.parse(localStorage.getItem("store"))?.users || []).length -
+      1,
   };
 };
 export default connect(mapStateToProps)(NavUI);

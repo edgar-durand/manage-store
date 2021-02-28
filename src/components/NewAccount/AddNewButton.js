@@ -1,22 +1,20 @@
 import React,{useRef} from "react";
-
+import "../styles/fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const AddNewButton =()=> {
-    const i = useRef("i");
     const h = useRef("h");
    return (
-        <div onMouseOver={()=> {
-            i.current.classList.add("text-primary")
+        <div onMouseOver={()=> {           
             h.current.classList.remove("text-muted")
             h.current.classList.add("text-success")
-        }} onMouseOut={()=> {
-            i.current.classList.remove("text-primary")
+        }} onMouseOut={()=> {           
             h.current.classList.remove("text-success")
             h.current.classList.add("text-muted")
-        }} className="col-auto">
-            <div className="payment-card text-center">
-                <i ref={i} className="fa fa-plus-circle payment-icon-big  col-auto"/>
-                <h4 ref={h} className="text-muted">New account</h4>
+        }} className="ibox">
+            <div className="ibox-content payment-card text-center">
+               <FontAwesomeIcon icon={'plus'} size="10x" transform="grow-2" />
+                <h2 ref={h} className="text-muted">New account</h2>
 
 
             </div>

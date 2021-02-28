@@ -1,39 +1,35 @@
-import React, {useRef} from "react";
+import React from "react";
 import {Link} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import "./styles/fontawesome";
 
 const Card = ({card_no, amount, description, handleClick, id}) => {
-    const i = useRef("i");
-    const i2 = useRef("i2");
+
     return (
 
 
         <div className="col-md-4">
             <div className="payment-card">
-                <Link to={"/home/account/" + id}><i title="Account status" ref={i2}
-                                                    onMouseOut={() => i2.current.classList.remove("text-primary")}
-                                                    onMouseOver={() => i2.current.classList.add("text-primary")}
-                                                    className="fa fa-check-circle-o payment-icon-big col-sm-1"/></Link>
+                <FontAwesomeIcon icon={'credit-card'} size="6x" />
                 <div className="col-sm-10 text-right float-right">
                     <small>
                         {description}
                     </small>
 
-                    <label title="Cancel" onClick={(e) => handleClick(e, id)}>
-                        <i ref={i} style={{fontSize: "30px"}}
-                           onMouseOut={() => i.current.classList.add("text-muted")}
-                           onMouseOver={() => i.current.classList.remove("text-muted")}
-                           className="fa fa-close text-muted float-right col-sm-1"/></label>
+                    
 
                 </div>
                 <h2>
                     {card_no}
                 </h2>
                 <div className="row">
-                    <div className="col-sm-6">
-                        <strong>Availabe amount:</strong>
+                    <div className="col-sm-4">
+                        <strong>Amount:</strong>
                     </div>
-                    <div className="col-sm-6 text-right text-success float-right">
-                        <span className="label label-primary float-right">$ {amount ? amount.toFixed(2):0}</span>
+                    <div className="col-sm-8 text-right text-success float-right form-inline">
+                        <span className="label label-primary">$ {amount ? amount.toFixed(2):0}</span>
+                        <Link className="btn btn-xs btn-white " to={"/home/account/" + id}>Movements</Link>
+                        <button className="btn btn-xs btn-white float-right" onClick={(e) => handleClick(e, id)}>Cancel</button>
                     </div>
 
                 </div>

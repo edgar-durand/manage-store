@@ -29,10 +29,11 @@ const MyAccounts = ({ accounts, deleteAccounts}) => {
                 />
               );
             })}
-          </div>
-          <Link to="/home/new_account/">
+            <Link to="/home/new_account/">
             <AddNewButton />
           </Link>
+          </div>
+          
         </div>
       </React.Fragment>
     );

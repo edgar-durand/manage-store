@@ -38,10 +38,12 @@ const Register = () => {
       `This email address is already in use, please provide a different one `,
       "Info"
     );
-    console.log(users.email, " in use, use another email address.");
   }
 
   const handleFile = (file) => {
+    if(file.size > 30000)
+    toastr.warning("You should set a picture that size is bellow 30 kb.")
+    else
     setStat({
       ...stat,
       user: { ...stat.user, photo: file },
@@ -52,14 +54,18 @@ const Register = () => {
     setStat({ ...stat, load: true });
     e.preventDefault();
     let form = new FormData();
+    for(let [keys, values] of Object.entries(stat.user))
+    if(keys!=="photo")
+    form.append(keys, values);
+    if(stat.user.photo?.size <= 30000)
     form.append("photo", stat.user.photo);
-    form.append("username", stat.user.username);
-    form.append("password", stat.user.password);
-    form.append("email", stat.user.email);
-    form.append("first_name", stat.user.first_name);
-    form.append("last_name", stat.user.last_name);
-    form.append("birth_date", stat.user.birth_date);
-    form.append("phone", stat.user.phone);
+    // form.append("username", stat.user.username);
+    // form.append("password", stat.user.password);
+    // form.append("email", stat.user.email);
+    // form.append("first_name", stat.user.first_name);
+    // form.append("last_name", stat.user.last_name);
+    // form.append("birth_date", stat.user.birth_date);
+    // form.append("phone", stat.user.phone);
 
     passwordRequirements(stat.user.password) &&
     stat.user.username &&

@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { connect } from "react-redux";
 import Select from "react-select";
-
+import toastr from "toastr";
 const Edit = ({
   handleSubmit,
   _public,
@@ -18,6 +18,7 @@ const Edit = ({
   const img = useRef("img");
   const file = useRef("file");
   const label = useRef("label");
+
   return (
     <div className="wrapper wrapper-content animated fadeInRight ecommerce">
       <form
@@ -110,8 +111,9 @@ const Edit = ({
                       <div className="col-sm-10">
                         <img
                           ref={img}
-                          width="400px"
-                          src={typeof image === "string" ? image : ""}
+                          width="300px"
+                          height="300px"
+                          src={typeof image === "string" ? image : (image?.size ? URL.createObjectURL(image):"")}
                           alt=""
                           style={{
                             objectFit: "contain",
@@ -132,12 +134,19 @@ const Edit = ({
                           type="file"
                           onChange={() => {
                             if (file.current.files[0]) {
-                              img.current.src = URL.createObjectURL(
-                                file.current.files[0]
-                              );
+                              if(file.current.files[0].size > 30000)
+                              toastr.warning("You should set a picture that size is bellow 30 kb.")
+                              else{
+                                handleFile(file.current.files[0]);
+                              //   if(file.current.files[0].size)
+                              // img.current.src = URL.createObjectURL(
+                              //   file.current.files[0]
+                              // )
+                              // else
+                              // img.current.src = image;
                               label.current.childNodes[0].textContent =
-                                file.current.files[0].name;
-                              handleFile(file.current.files[0]);
+                                file.current.files[0].name;                              
+                              }
                             } else {
                               img.current.src = "";
                               label.current.childNodes[0].textContent =
@@ -145,7 +154,7 @@ const Edit = ({
                               handleFile(null);
                             }
                           }}
-                          accept="image/*"
+                          accept="image/jpg"
                           className="custom-file-input"
                         />
                         <label
