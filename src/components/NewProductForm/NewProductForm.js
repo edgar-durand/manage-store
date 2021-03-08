@@ -7,6 +7,7 @@ import toastr from "toastr";
 import msgNotification from "../../js/msgNotification";
 import { connect } from "react-redux";
 import { addNewProduct } from "../../actions/actionCreator";
+import getBase64 from "../../js/getBase64";
 
 const NewProductForm = ({ categories, addNewProduct }) => {
   const [state, setState] = useState({
@@ -18,7 +19,7 @@ const NewProductForm = ({ categories, addNewProduct }) => {
       price_cost: "",
       price_vent: "",
       inStock: 0,
-      category: "",
+      category_id: "",
       _public: false,
       image: null,
     },
@@ -27,17 +28,19 @@ const NewProductForm = ({ categories, addNewProduct }) => {
     name,
     description,
     price_cost,
-    price_vent,
     inStock,
-    category,
+    category_id,
     _public,
   } = state.product;
 
   const handleFile = (file) => {
-    setState({
+    getBase64(file).then(res=>{
+      setState({
       ...state,
-      product: { ...state.product, image: file },
+      product: { ...state.product, image: res },
     });
+    })
+    
   };
 
   const handlePublic = (e) => {
@@ -62,15 +65,15 @@ const NewProductForm = ({ categories, addNewProduct }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (name && price_cost && category_id) {
+      // let form = new FormData();
+      // for (let [keys, values] of Object.entries(state.product))
+      //   form.append(keys, values);
 
-    let form = new FormData();
-    for (let [keys, values] of Object.entries(state.product))
-      form.append(keys, values);
-
-    if (name && price_cost && category) {
-      send({ form, token: authHelper() }, "/api/product/", "file").then((r) => {
-        if (!r.error) {
-          addNewProduct(r);          
+      send({ ...state.product, token: authHelper() }, "/api/product", "post").then((r) => {
+        if (!r.error?.message) {
+          console.log(r);
+          addNewProduct(r.response?.data);
           msgNotification(
             "Confirmar",
             "desea agregar otro producto ?",
@@ -78,10 +81,10 @@ const NewProductForm = ({ categories, addNewProduct }) => {
             "AGREGAR OTRO",
             true
           ).then((r) => {
-            if (!r.value) setState({...state, goBack: true });
+            if (!r.value) setState({ ...state, goBack: true });
           });
-        }else{
-          toastr.error(r.error, "ERROR");
+        } else {
+          toastr.error(r.error.message, "ERROR");
         }
       });
     } else toastr.error("You must fill up all input fields.", "ERROR");
@@ -93,7 +96,7 @@ const NewProductForm = ({ categories, addNewProduct }) => {
         ...state,
         product: {
           ...state.product,
-          category: selected.value,
+          category_id: selected.value,
         },
       });
   };
@@ -109,9 +112,8 @@ const NewProductForm = ({ categories, addNewProduct }) => {
       name={name}
       description={description}
       price_cost={price_cost}
-      price_vent={price_vent}
       inStock={inStock}
-      Product_category={category}
+      Product_category={category_id}
       _public={_public}
       handleSubmit={(e) => handleSubmit(e)}
       handleSelect={(e) => handleSelect(e)}

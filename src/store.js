@@ -165,12 +165,13 @@ const reducer = (state, action) => {
       return {
         ...state,
         cart: [],
+        page:0,
         globalState: [],
         accounts: [],
         movements: [],
         productList: [],
         categories: [],
-        allproducts:[],
+        allproducts:[],        
         load: false,
       };
     }
@@ -189,6 +190,12 @@ const reducer = (state, action) => {
         ...localStoreToStore(),
       };
     }
+    case "SET_PAGE_NUMBER": {
+      return {
+        ...state,
+        page: action.page,
+      };
+    }
 
     default: {
       return state;
@@ -205,7 +212,8 @@ export default createStore(
   reducer,
   {
     cart: [],
-    globalState: { 0: { address: [], social_net: [] } },
+    page:0,
+    globalState: {},
     accounts: [],
     movements: [],
     productList: [],

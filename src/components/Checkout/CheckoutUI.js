@@ -10,7 +10,6 @@ const CheckoutUI = ({
   credit,
   total,
   handleSelect,
-  handleChange,
   handleCheckout,
   items,
   accounts,
@@ -44,7 +43,7 @@ const CheckoutUI = ({
                 Account credit:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
                 <h5 className="text-center" ref={label}>
                   {" "}
-                  $ {credit.toFixed(2)}{" "}
+                  $ {credit?.toFixed(2) || 0}{" "}
                 </h5>
                 <p>
                   {credit >= total ? (
@@ -65,14 +64,7 @@ const CheckoutUI = ({
                   name="accounts"
                   onChange={(e) => handleSelect(e)}
                 />
-              </div>
-              <br />
-              <label className="col-12 form-inline">Description</label>
-              <textarea
-                onChange={(event) => handleChange(event)}
-                className="form-control"
-                name="description"
-              />
+              </div>              
             </div>
             <div className="ibox-content">
               <button

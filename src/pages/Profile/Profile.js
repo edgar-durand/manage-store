@@ -6,6 +6,7 @@ import "../../components/styles/css/plugins/bootstrapSocial/bootstrap-social.css
 import { connect } from "react-redux";
 import { setLoad, updateProfile } from "../../actions/actionCreator";
 import toastr from "toastr";
+import getBase64 from "../../js/getBase64";
 const LoadingButton = React.lazy(() =>
   import("../../components/LoadingButton")
 );
@@ -22,7 +23,7 @@ const Profile = ({
   street,
   between,
   building,
-  apto,
+  number,
   municipality,
   province,
   phone,
@@ -41,7 +42,7 @@ const Profile = ({
       municipality,
       province,
       building,
-      apto,
+      number,
 
       facebook,
       twitter,
@@ -55,7 +56,6 @@ const Profile = ({
       username,
       email,
       phone,
-      password: null,
     },
   });
   const imgs = useRef("imgs");
@@ -80,11 +80,13 @@ const Profile = ({
     if (file.size > 30000) {
       toastr.warning("You should set a picture that size is bellow 30 kb.");
     } else
-      setState({
-        globalState: {
-          ...state.globalState,
-          photo: file,
-        },
+      getBase64(file).then((res) => {
+        setState({
+          globalState: {
+            ...state.globalState,
+            photo: res,
+          },
+        });
       });
   };
   return (
@@ -123,7 +125,7 @@ const Profile = ({
                 alt=""
               />
               {state.globalState.photo ? null : (
-                <FontAwesomeIcon icon={'user-circle'} size="9x" />
+                <FontAwesomeIcon icon={"user-circle"} size="9x" />
               )}
 
               <div className="form-group col-lg-auto">
@@ -340,8 +342,8 @@ const Profile = ({
                     <input
                       type="text"
                       onChange={(event) => handleChange(event)}
-                      name="apto"
-                      value={state.globalState.apto || ""}
+                      name="number"
+                      value={state.globalState.number || ""}
                       placeholder="Apartament/House no."
                       className="form-control col-8"
                     />
@@ -421,12 +423,15 @@ const Profile = ({
               />
             </form>
             <div className="form-group form-inline col-12">
-              <form className="form-inline col-12">
+              <form
+                className="form-inline col-12"
+                onSubmit={(event) => handleSubmit(event)}
+              >
                 <label className="col-4">Change password:</label>
                 <input
                   onChange={(event) => handleChange(event)}
                   name="password"
-                  type="password"
+                  type="text"
                   className="form-control col-4"
                   placeholder="Password*"
                   title="Min 5 characters, It must has at least a number, an special character and upperCase. "
@@ -445,41 +450,38 @@ const Profile = ({
 };
 const mapStateToProps = (state) => {
   return {
-    username: state?.globalState[0]?.username,
-    photo: state?.globalState[0]?.photo,
-    first_name: state?.globalState[0]?.first_name,
-    last_name: state?.globalState[0]?.last_name,
-    birth_date: state?.globalState[0]?.birth_date,
-    status_message: state?.globalState[0]?.status_message,
-    phone: state?.globalState[0]?.phone,
-    email: state?.globalState[0]?.email,
+    username: state?.globalState?.username,
+    photo: state?.globalState?.photo,
+    first_name: state?.globalState?.first_name,
+    last_name: state?.globalState?.last_name,
+    birth_date: state?.globalState?.birth_date,
+    status_message: state?.globalState?.status_message,
+    phone: state?.globalState?.phone,
+    email: state?.globalState?.email,
     load: state.load,
-    id: state?.globalState[0]?.id,
+    id: state?.globalState?.id,
 
-    street: state?.globalState[0]?.address[0]?.street,
-    between: state?.globalState[0]?.address[0]?.between,
-    building: state?.globalState[0]?.address[0]?.building,
-    apto: state?.globalState[0]?.address[0]?.number,
-    municipality: state?.globalState[0]?.address[0]?.municipality,
-    province: state?.globalState[0]?.address[0]?.province,
+    street: state?.globalState?.street,
+    between: state?.globalState?.between,
+    building: state?.globalState?.building,
+    number: state?.globalState?.number,
+    municipality: state?.globalState?.municipality,
+    province: state?.globalState?.province,
 
-    facebook: JSON.parse(localStorage.getItem("store"))?.globalState[0]
-      ?.socialNet[0]?.facebook,
-    twitter: JSON.parse(localStorage.getItem("store"))?.globalState[0]
-      ?.socialNet[0]?.twitter,
-    instagram: JSON.parse(localStorage.getItem("store"))?.globalState[0]
-      ?.socialNet[0]?.instagram,
+    facebook: JSON.parse(localStorage.getItem("store"))?.globalState?.facebook,
+    twitter: JSON.parse(localStorage.getItem("store"))?.globalState?.twitter,
+    instagram: JSON.parse(localStorage.getItem("store"))?.globalState
+      ?.instagram,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleProfile(profile) {     
-        dispatch(updateProfile(profile));      
+    handleProfile(profile) {
+      dispatch(updateProfile(profile));
     },
     setLoad(load) {
       dispatch(setLoad(load));
     },
-    
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

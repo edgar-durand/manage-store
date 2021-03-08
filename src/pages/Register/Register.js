@@ -6,6 +6,8 @@ import RegisterUI from "./RegisterUI";
 import passwordRequirements from "../../validation/passwordRequirements";
 import toastr from "toastr";
 import msgNotification from "../../js/msgNotification";
+import store from "../../store";
+import { getUsers } from "../../actions/actionCreator";
 
 const Register = () => {
   const [stat, setStat] = useState({
@@ -25,11 +27,10 @@ const Register = () => {
       street: null,
       number: null,
     },
-    users: JSON.parse(localStorage.getItem("store")).users,
-  });
-
+    users: JSON.parse(localStorage.getItem("store"))?.users,
+  }); 
   let users = Object.values(stat.users).find(
-    (x) => x.email === stat?.user?.email
+    (x) => x.email === stat.user.email
   );
 
   if (users) {
@@ -41,31 +42,22 @@ const Register = () => {
   }
 
   const handleFile = (file) => {
-    if(file.size > 30000)
-    toastr.warning("You should set a picture that size is bellow 30 kb.")
+    if (file.size > 30000)
+      toastr.warning("You should set a picture that size is bellow 30 kb.");
     else
-    setStat({
-      ...stat,
-      user: { ...stat.user, photo: file },
-    });
+      setStat({
+        ...stat,
+        user: { ...stat.user, photo: file },
+      });
   };
 
   const handleSubmit = (e) => {
     setStat({ ...stat, load: true });
     e.preventDefault();
     let form = new FormData();
-    for(let [keys, values] of Object.entries(stat.user))
-    if(keys!=="photo")
-    form.append(keys, values);
-    if(stat.user.photo?.size <= 30000)
-    form.append("photo", stat.user.photo);
-    // form.append("username", stat.user.username);
-    // form.append("password", stat.user.password);
-    // form.append("email", stat.user.email);
-    // form.append("first_name", stat.user.first_name);
-    // form.append("last_name", stat.user.last_name);
-    // form.append("birth_date", stat.user.birth_date);
-    // form.append("phone", stat.user.phone);
+    for (let [keys, values] of Object.entries(stat.user))
+      if (keys !== "photo") form.append(keys, values);
+    if (stat.user.photo?.size <= 30000) form.append("photo", stat.user.photo);
 
     passwordRequirements(stat.user.password) &&
     stat.user.username &&
@@ -75,10 +67,10 @@ const Register = () => {
       ? send({ form }, "/api/user/", "file")
           .then((r) => {
             setStat({ ...stat, ...r, load: false });
-            console.dir(document);
+            store.dispatch(getUsers());
           })
-          .catch((r) => console.log(r))
-      : console.log("Debe llenar todos los campos");
+          .catch((r) => toastr.error(r))
+      : toastr.warning("Debe llenar todos los campos");
   };
 
   const handleClick = () => {

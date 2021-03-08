@@ -6,20 +6,12 @@ import authHelper from "../../js/authHelper";
 import store from "../../store";
 import { setListProducts } from "../../actions/actionCreator";
 import toastr from "toastr";
+import getBase64 from "../../js/getBase64";
 const Edit = (props) => {
   const [state, setState] = useState({
     back: false,
     category: [],
-    product: {
-      name: "",
-      description: "",
-      price_cost: "",
-      price_vent: "",
-      inStock: 1,
-      category: "",
-      _public: false,
-      image: null,
-    },
+    product: {},
     load: true,
   });
   const {
@@ -28,18 +20,18 @@ const Edit = (props) => {
     price_cost,
     price_vent,
     inStock,
-    category,
+    category_id,
     _public,
     image,
   } = state.product;
   const ID = props.match.params.id;
   const TOKEN = { token: authHelper() };
 
-  if (!state.product.name)
-    send({ ...TOKEN }, "/api/product/" + ID, "get").then((r) =>
+  if (!name)
+    send({ ...TOKEN }, "/api/product/" + ID, "get").then((r) => 
       setState({
         ...state,
-        product: r,
+        product: r.response?.data[0],
         load: false,
       })
     );
@@ -65,13 +57,16 @@ const Edit = (props) => {
   };
 
   const handleFile = (file) => {
-    setState({
+    getBase64(file).then(res=>{
+      setState({
       ...state,
       product: {
         ...state.product,
-        image: file,
+        image: res,
       },
     });
+    })
+    
   };
 
   const handleSelect = (selected) => {
@@ -80,37 +75,37 @@ const Edit = (props) => {
         ...state,
         product: {
           ...state.product,
-          category: selected.value,
+          category_id: selected.value,
         },
       });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name && description && price_cost && category) {
-      let form = new FormData();
-      (image?.size && form.append("image", image));
-      form.append("name", name);
-      form.append("description", description);
-      form.append("_public", _public);
-      form.append("price_cost", price_cost);
-      form.append("price_vent", "0");
-      form.append("inStock", inStock);
-      form.append("category", category);
+    if (name && description && price_cost && category_id) {
+      // let form = new FormData();
+      // (image?.size && form.append("image", image));
+      // form.append("name", name);
+      // form.append("description", description);
+      // form.append("_public", _public);
+      // form.append("price_cost", price_cost);
+      // form.append("price_vent", "0");
+      // form.append("inStock", inStock);
+      // form.append("category", category);
       send(
-        { form, token: authHelper() },
+        { form: state.product, token: authHelper() },
         "/api/product/" + ID + "/",
-        "putFile"
+        "patch"
       ).then((r) => {
-        console.log(r);
-        if (r.error) {
-          toastr.error(r.error, "ERROR");
+        if (r.error?.message) {
+          toastr.error(r.error.message, "ERROR");
         }else{
-          toastr.success("Updated successfully !");
+          
+          toastr.success(r.response.message);
         store.dispatch(setListProducts());
         setState({ ...state, back: true });}
       });
-    } else console.error("You must fill up all input fields.");
+    } else toastr.error("You must fill up all input fields.");
   };
 
   if (state.back) return <Redirect to="/home/my_products" />;

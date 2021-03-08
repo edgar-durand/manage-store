@@ -21,10 +21,10 @@ const Contact = ({
   email,
   id,
   photo,
-  socialNet,
+  facebook,
+  twitter,
+  instagram,
 }) => {
-  const { facebook, twitter, instagram } = socialNet[0];
-
   return (
     <React.Fragment>
       <div className="col-lg-3">

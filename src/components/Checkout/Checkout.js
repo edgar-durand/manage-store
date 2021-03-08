@@ -19,8 +19,7 @@ const Checkout = ({
   setListProducts,
 }) => {
   const [state, setState] = useState({
-    purchase: {
-      description: null,
+    purchase: {  
       products: [],
     },
     credit: 0,
@@ -36,7 +35,7 @@ const Checkout = ({
       setState({
         ...state,
         account: e.value,
-        credit: Object.values(accounts).find((x) => x.id === e.value).a_amount,
+        credit: Object.values(accounts).find((x) => x.id === e.value).cash,
       });
     else setState({ ...state, credit: 0 });
   };
@@ -61,15 +60,14 @@ const Checkout = ({
                 {
                   token: authHelper(),
                   data: Object.values(cart).map((x) => ({
-                    product: x.id,
-                    cant: x.inStock,
-                    p_cost: x.price_cost,
+                    product_id: x.id,
+                    quantity: x.inStock,
+                    price: x.price_cost,
                   })),
                   account: state.account,
-                  venta_total: state.total,
-                  description: state.purchase.description,
+                  total: state.total
                 },
-                "/api/purchasescart",
+                "/api/purchase",
                 "post"
               ).then((res) => {
                 if (!res.error) {
@@ -78,7 +76,7 @@ const Checkout = ({
                   setListProducts();
                   toastr.success("Seccess. !");
                 } else {
-                  toastr.error(res, "ERROR !");
+                  toastr.error(res.error.message, "ERROR !");
                 }
               });
             }
@@ -93,22 +91,11 @@ const Checkout = ({
     }
   };
 
-  const handleChange = (e) => {
-    setState({
-      ...state,
-      purchase: {
-        ...state.purchase,
-        description: e.target.value,
-      },
-    });
-  };
-
   return (
     <CheckoutUI
       credit={state.credit}
       total={state.total}
       handleSelect={(e) => handleSelect(e)}
-      handleChange={(e) => handleChange(e)}
       handleCheckout={() => handleCheckout()}
     />
   );

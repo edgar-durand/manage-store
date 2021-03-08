@@ -12,7 +12,7 @@ const NewAccountForm = () => {
   const [account, setAccount] = useState({
     name: null,
     description: null,
-    a_amount: null,
+    amount: null,
     in: false,
   });
 
@@ -25,13 +25,13 @@ const NewAccountForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    send({ ...account, token: authHelper() }, "/api/accounts/", "post").then(
+    send({ ...account, token: authHelper() }, "/api/account/", "post").then(
       (r) => {
-        if (!r.error) {
+        if (!r.error?.message) {
           setAccount({ ...account, in: true });
           store.dispatch(getAccounts());
           toastr.success("Committed", "SUCCESS !");
-        } else msgNotification("Error !", `${r.error}`, "error", "OK");
+        } else msgNotification("Error !", `${r.error.message}`, "error", "OK");
       }
     );
   };

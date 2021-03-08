@@ -16,10 +16,10 @@ const Detail = (props) => {
   const ID = props.match.params.id;
 
   if (!Object.values(product.product).length)
-    send(TOKEN, "/api/product/" + ID, "get").then((r) =>
+    send(TOKEN, "/api/product/" + ID, "get").then((r) => 
       setProduct({
         ...product,
-        product: { ...r },
+        product: r.response.data[0],
         load: false,
       })
     ); 
@@ -31,7 +31,7 @@ const Detail = (props) => {
       producName={name}
       category={category}
       author={`${
-        JSON.parse(localStorage.getItem("store")).globalState[0].email
+        JSON.parse(localStorage.getItem("store"))?.globalState?.email
       }`}
       price={price_cost}
       description={description}

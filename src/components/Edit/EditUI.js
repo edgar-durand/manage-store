@@ -37,7 +37,7 @@ const Edit = ({
                       <div className="col-sm-10">
                         <input
                           name="name"
-                          value={name}
+                          value={name || ""}
                           onChange={(e) => handleChange(e)}
                           type="text"
                           className="form-control"
@@ -50,7 +50,7 @@ const Edit = ({
                       <div className="col-sm-10">
                         <input
                           name="price_cost"
-                          value={price_cost}
+                          value={price_cost || 0}
                           onChange={(e) => handleChange(e)}
                           type="text"
                           className="form-control"
@@ -65,13 +65,12 @@ const Edit = ({
                       </label>
                       <textarea
                         name="description"
-                        value={description}
+                        placeholder="Your description."
+                        value={description || ""}
                         rows="6"
                         onChange={(e) => handleChange(e)}
                         className="col-sm-10 form-control"
-                      >
-                        Your description.
-                      </textarea>
+                      />
                     </div>
                     <div className="form-group row">
                       <label className="col-sm-2 col-form-label">

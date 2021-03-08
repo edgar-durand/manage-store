@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import {
   clear,
   getAccounts,
+  getAllProducts,
   getCategories,
   load,
   setListProducts,
@@ -20,7 +21,8 @@ import msgNotification from "../js/msgNotification";
 import authHelper from "../js/authHelper";
 import Loading from "../components/Loading/Loading";
 import NavUI from "../components/NavUI";
-import FooterUI from "../components/FooterUI";
+import MovementDetail from "../components/MyAccount/MovementDetail";
+// import FooterUI from "../components/FooterUI";
 
 const IndexHome = lazy(() => import("./index/IndexHome"));
 const Detail = lazy(() => import("../components/Detail/Detail"));
@@ -51,7 +53,7 @@ const GoForShopping = lazy(() =>
 );
 const CartList = lazy(() => import("../components/CartList/CartList"));
 const Checkout = lazy(() => import("../components/Checkout/Checkout"));
-const Movement = lazy(() => import("../components/MyAccount/Movement"));
+// const Movement = lazy(() => import("../components/MyAccount/Movement"));
 const Profile = lazy(() => import("./Profile/Profile"));
 const Deals = lazy(() => import("./Deals/Deals"));
 const Section = lazy(() => import("./Deals/Section"));
@@ -82,7 +84,7 @@ const Home = ({ cart, globalState }) => {
   useEffect(() => {
     if (
       Object.values(
-        JSON.parse(localStorage?.getItem("store"))?.globalState[0]?.email || []
+        JSON.parse(localStorage?.getItem("store"))?.globalState?.email || []
       ).length
     )
       store.dispatch(load());
@@ -91,6 +93,7 @@ const Home = ({ cart, globalState }) => {
       store.dispatch(getAccounts());
       store.dispatch(setListProducts());
       store.dispatch(getCategories());
+      store.dispatch(getAllProducts());
     }
   }, []);
 
@@ -104,17 +107,15 @@ const Home = ({ cart, globalState }) => {
     msgNotification(`Confirm`, msg, "question", "OK", true, "CANCEL").then(
       (r) => {
         if (r.value) {
-          send({ token: authHelper() }, "/api/logout", "get").then(() => {
+          send({ token: authHelper() }, "/api/logout", "post").then(() => {
             toastr.options.closeButton = true;
             toastr.options.closeHtml =
               '<button><i class="fa fa-close"></i></button>';
             toastr.success(`Su sesion se ha cerrado con exito`, "LogOut");
           });
 
-          localStorage.removeItem("token");
-
-          store.dispatch(clear());
-
+          localStorage.removeItem("token");          
+          store.dispatch(clear());                  
           return <Redirect to="/login" />;
         }
       }
@@ -164,7 +165,7 @@ const Home = ({ cart, globalState }) => {
                   exact
                   component={() => <MyAccounts />}
                 />
-                <Route path="/home/account/:id" component={Movement} />
+                 <Route exact path="/home/movement_detail/:id/:date" component={MovementDetail} />
                 <Route
                   path="/home/new_account/"
                   component={() => <NewAccountForm />}
@@ -205,7 +206,7 @@ const Home = ({ cart, globalState }) => {
                 <Route component={NotFound} />
               </Switch>
             </Suspense>
-            <FooterUI />
+            {/* <FooterUI /> */}
           </div>
         </div>      
     );
@@ -219,7 +220,7 @@ const mapStateToProps = (state) => {
   return {
     cart: state?.cart,
     // cart: JSON.parse(localStorage.getItem("store"))?.cart,
-    globalState: state?.globalState[0],
+    globalState: state?.globalState,
     // globalState: JSON.parse(localStorage.getItem("store"))?.globalState[0],
   };
 };

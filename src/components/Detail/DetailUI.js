@@ -27,7 +27,7 @@ const DetailUI = ({load,photo,producName,price,category,description,author,addTo
                     <div className="col-md-5">
 
                         <div ref={div} className="img-container">
-                            <a target="blank" href={photo}><img className="img-thumbnail " src={photo} alt=""/></a>
+                            <img width="300px" height="300px" style={{ objectFit: "contain" }} className="img-thumbnail " src={photo} alt=""/>
                             <div className="sk-rect1"/>
                             <div className="sk-rect2"/>
                             <div className="sk-rect3"/>
@@ -43,15 +43,15 @@ const DetailUI = ({load,photo,producName,price,category,description,author,addTo
                             {producName || "NOT PROVIDED"}
                         </h2>
                         <div className="m-t-md">
-                            <h2 className="product-main-price">{price || "RESERVED"} <small
-                                className="text-muted">Exclude Tax</small>
-                            </h2>
+                            <h2 className="product-main-price">{price || "RESERVED"}</h2> <h4
+                                className="text-muted">(Exclude Tax)</h4>
+                            
                         </div>
                         <hr/>
 
                         <h4>Product description</h4>
                         <h5>{category || "NOT SET"}</h5>
-                        <div className="small text-muted">
+                        <div className="text-muted">
                             {description || ""}
                         </div>
                         <hr/>

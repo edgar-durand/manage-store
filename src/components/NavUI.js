@@ -28,17 +28,17 @@ const NavUI = ({
                   src={image}
                 />
               ) : (
-                <FontAwesomeIcon icon={'user-circle'} style={{ fontSize: "150px" }} />
+                <FontAwesomeIcon icon={'user-circle'} transform="right-1" style={{ fontSize: "150px" }} />
                 
               )}
 
               <span
-                className="block m-t-xs font-bold"
+                className="block m-t-xs font-bold text-center"
                 style={{ color: "white" }}
               >
                 {last_name}
               </span>
-              <span className="text-muted text-xs block">{status_message}</span>
+              <span className="text-muted text-center text-xs block">{status_message}</span>
             </div>
             <div className="logo-element">ES+</div>
           </li>
@@ -95,7 +95,7 @@ const NavUI = ({
               <FontAwesomeIcon icon={'address-book'} size="2x" />{" "}
               <span className="nav-label">Contacts</span>
               <span className="label label-success float-right">
-                {contacts}
+                {contacts > 0 ? contacts : 0}
               </span>
             </Link>
           </li>

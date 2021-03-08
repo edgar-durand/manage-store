@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import { updateList } from "../actions/actionCreator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./styles/fontawesome";
+
 const ProductList = ({ products, handleClick }) => {
   return Object.values(products).length ? (
     <React.Fragment>
@@ -27,21 +28,31 @@ const ProductList = ({ products, handleClick }) => {
                 columns={[
                   {
                     data: "name",
-                    render: (data, row) =>
-                      data && (
-                        <React.Fragment>
-                          {row.name}
-                          {row.action && (
-                            <span className="label label-success text-right ">
-                              {`${row.inStock}`}
-                            </span>
-                          )}
-                        </React.Fragment>
-                      ),
+                    render: (data, row) => (
+                      <React.Fragment>
+                        {row.name}
+                        {row.action && (
+                          <span className="label label-success text-right ">
+                            {`${row.inStock}`}
+                          </span>
+                        )}
+                      </React.Fragment>
+                    ),
                     title: "Name",
                   },
                   {
                     data: "category",
+                    render: (data, row) => (row.action && data) || (
+                      <img
+                        style={{
+                          objectFit: "contain",
+                        }}
+                        width="90px"
+                        height="90px"
+                        src={`${row.image}`}
+                        alt=""
+                      />
+                    ),
                     title: "Category",
                   },
                   {
@@ -50,7 +61,8 @@ const ProductList = ({ products, handleClick }) => {
                   },
                   {
                     data: "status",
-                    render: (data) => <Status status={data} />,
+                    render: (data, row) =>
+                      row.action && <Status status={data} />,
                     title: "Status",
                   },
                   {
@@ -107,12 +119,20 @@ const ProductList = ({ products, handleClick }) => {
                   action: true,
                   children: [
                     {
-                      name: "Description: " + x.description,
+                      name: `${x.description} `,
+                      image: x.image,
                     },
                   ],
                 }))}
+
+                // puedes cambiarle el icono opcional:?  Ej:-->
+                // icon={<FontAwesomeIcon
+                // className="btn btn-default"
+                //   icon={"glasses"}
+                //   transform="grow-9"
+                // />}
+
               />
-              
             </div>
           </div>
         </div>
@@ -122,9 +142,13 @@ const ProductList = ({ products, handleClick }) => {
     <div className="row">
       <div className="col-lg-12">
         <div className="ibox">
-          <div className="ibox-content">
-            <h1>There are not products</h1>
-            <small>Add some product to the store.</small>
+          <div className="ibox-content ">
+            <h1 className="text-center alert alert-warning">
+              There are not products
+            </h1>
+            <h2 className="text-center alert alert-info">
+              Add some product to the store.
+            </h2>
             <NewProductForm token={authHelper()} />
           </div>
         </div>

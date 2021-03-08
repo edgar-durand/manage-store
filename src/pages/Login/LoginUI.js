@@ -25,15 +25,15 @@ const LoginUI = ({handleChange, load, handleSubmit}) => {
                     <div className="col-md-6">
                         <h2 className="font-bold">Welcome to E-Store</h2>
 
-                        <p>
+                        <p style={{fontSize: "15px"}}>
                             Perfectly designed and precisely prepared for small business management.
                         </p>
 
-                        <p>
+                        <p style={{fontSize: "15px"}}>
                             This prompt new opportunities of sales and buys such like a trade new world at the reach of you.
                         </p>
 
-                        <p>
+                        <p style={{fontSize: "15px"}}>
                             Don't matter how, when and where we just care to serve you as high as you deserve.
                         </p>
 
@@ -43,7 +43,7 @@ const LoginUI = ({handleChange, load, handleSubmit}) => {
                             <form className="m-t" action="/"
                                   onSubmit={(event) => handleSubmit(event)}>
                                 <div className="form-group">
-                                    <input onChange={(event) => handleChange(event)} name="username" type="email"
+                                    <input onChange={(event) => handleChange(event)} name="email" type="email"
                                            className="form-control" placeholder="Username (email)"
                                            required=""/>
                                 </div>
@@ -60,8 +60,8 @@ const LoginUI = ({handleChange, load, handleSubmit}) => {
                                     buttonText="Login"
                                 />
 
-                                <p className="text-muted text-center">
-                                    <small>Do not have an account?</small>
+                                <p style={{fontSize: "15px"}} className="text-muted text-center">
+                                    Do not have an account?
                                 </p>
                                 <Link className="btn btn-sm btn-white btn-block" to="/register">Create an account</Link>
                             </form>
@@ -71,10 +71,10 @@ const LoginUI = ({handleChange, load, handleSubmit}) => {
                 <hr/>
                 <div className="row">
                     <div className="col-md-6">
-                        Copyright E-Store Trades Company
+                       <h5> Copyright E-Store Trades Company </h5>
                     </div>
                     <div className="col-md-6 text-right">
-                        <small>© 2020-2021</small>
+                        <h5>© 2020-2021</h5>
                     </div>
                 </div>
             </div>

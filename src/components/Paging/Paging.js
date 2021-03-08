@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import dataToPages from "../../js/dataToPages";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../styles/fontawesome";
+import store from "../../store";
+import { uuidv4 } from "../../js/uuidv4";
+import { setPageNumber } from "../../actions/actionCreator";
 
 const Paging = ({
   data,
@@ -11,11 +14,12 @@ const Paging = ({
   priceField,
   col,
   action,
+  page,
 }) => {
   const [state, setState] = useState({
     searchField: "",
     match: { active: false, value: 0 },
-    page: 0,
+    page: page || 0,
     show: +show || 8,
   });
   const { searchField, match } = state;
@@ -95,6 +99,7 @@ const Paging = ({
       : setState({ ...state, match: { ...state.match, active: true } });
   };
   const handleChange = (e) => {
+    store.dispatch(setPageNumber(0));
     setState({ ...state, page: 0, [e.target.name]: e.target.value });
   };
 
@@ -108,19 +113,25 @@ const Paging = ({
       page !== state.page + 1
         ? gather.push(
             <button
-              key={page}
-              onClick={() => setState({ ...state, page: --page })}
-              className="btn btn-xs btn-outline-success pull-right "
+              key={uuidv4()}
+              onClick={() => {
+                store.dispatch(setPageNumber(--page));
+                setState({ ...state, page: page });
+              }}
+              className="btn btn-xs btn-light pull-right "
             >
               {page}
             </button>
           )
         : gather.push(
             <button
-              key={page}
-              onClick={() => setState({ ...state, page: --page })}
-              className="btn btn-sm btn-outline-success pull-right"
-              style={{ backgroundColor: "blue", color: "white" }}
+              key={uuidv4()}
+              onClick={() => {
+                store.dispatch(setPageNumber(--page));
+                setState({ ...state, page: page });
+              }}
+              className="btn btn-sm btn-outline-info pull-right"
+              style={{ backgroundColor: "white", color: "black" }}
             >
               {page}
             </button>
@@ -138,7 +149,9 @@ const Paging = ({
         onChange={() => handleMatchControl()}
       />
       <label />
-      &nbsp;&nbsp;<FontAwesomeIcon icon={"dollar-sign"} size="2x" />&nbsp;&nbsp;
+      &nbsp;&nbsp;
+      <FontAwesomeIcon icon={"dollar-sign"} size="2x" />
+      &nbsp;&nbsp;
       <input
         type="number"
         min="0"
@@ -176,13 +189,13 @@ const Paging = ({
             {showingField && showingFieldSet()}
 
             <label>
-              <FontAwesomeIcon icon={"search"} size="2x" />   &nbsp;         
-            <input
-              type="text"
-              name="searchField"
-              className="form-control"
-              onChange={(e) => handleChange(e)}
-            />
+              <FontAwesomeIcon icon={"search"} size="2x" /> &nbsp;
+              <input
+                type="text"
+                name="searchField"
+                className="form-control"
+                onChange={(e) => handleChange(e)}
+              />
             </label>
 
             {priceField && topPriceFieldSet()}
@@ -197,24 +210,27 @@ const Paging = ({
             })}
             <div className="ibox ibox-content social-footer col-12">
               <button
-                onClick={() =>
-                  state.page > 0
-                    ? setState({ ...state, page: state.page - 1 })
-                    : null
+                onClick={() =>{
+                  if(state.page > 0){
+                   setState({...state, page:state.page -1}); 
+                   store.dispatch(setPageNumber(state.page - 1));
+                  }
+                   
+                  }
                 }
-                className="btn btn-outline-primary"
+                className="btn btn-light"
                 disabled={state.page === 0}
               >
                 <FontAwesomeIcon icon="backward" /> Prev
               </button>
               {xmPages()}
               <button
-                onClick={() =>
-                  state.page < Object.values(filtered).length / state.show - 1
-                    ? setState({ ...state, page: state.page + 1 })
-                    : null
+                onClick={() =>{
+                  setState({...state, page:state.page +1}); 
+                   store.dispatch(setPageNumber(state.page + 1));
                 }
-                className="btn btn-outline-primary"
+                }
+                className="btn btn-light"
                 disabled={
                   state.page >= Object.values(filtered).length / state.show - 1
                 }
@@ -227,7 +243,15 @@ const Paging = ({
       </React.Fragment>
     );
   }
-  return <div className="ibox ibox-content">There is nothing here !</div>;
+  return (
+    <React.Fragment>
+      <div className="wrapper wrapper-content">
+        <div className="ibox ibox-content">
+          <h2>Empty !</h2>
+        </div>
+      </div>
+    </React.Fragment>
+  );
 };
 
 export default Paging;

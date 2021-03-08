@@ -9,6 +9,12 @@ export const addToCart = (product) => {
     product,
   };
 };
+export const setPageNumber = (page) =>{
+  return {
+    type: "SET_PAGE_NUMBER",
+    page,
+  };
+}
 
 export const deleteFromCart = (id) => {
   return {
@@ -34,7 +40,7 @@ export const deleteAccounts = (id) => {
       true
     ).then((r) => {
       if (r.value) {
-        send({ token: authHelper() }, `/api/accounts/${id}/`, "delete").then(
+        send({ token: authHelper() }, `/api/account/${id}/`, "delete").then(
           () => {
             dispatch({
               type: "DELETE_ACCOUNTS",
@@ -53,10 +59,10 @@ export const deleteAccounts = (id) => {
 
 export const getAccounts = () => {
   return (dispatch) => {
-    send({ token: authHelper() }, "/api/accounts", "get").then((res) => {
+    send({ token: authHelper() }, "/api/account", "get").then((res) => {
       dispatch({
         type: "GET_ACCOUNTS",
-        accounts: res,
+        accounts: res.response.data.accounts,
       });
     });
   };
@@ -65,10 +71,10 @@ export const getAccounts = () => {
 // CATEGORIES
 export const getCategories = () => {
   return (dispatch) => {
-    send({ token: authHelper() }, "/api/category/", "get").then((r) =>
+    send({ token: authHelper() }, "/api/category", "get").then((r) =>
       dispatch({
         type: "GET_CATEGORIES",
-        categories: r,
+        categories: r.response.data,
       })
     );
   };
@@ -77,17 +83,17 @@ export const getCategories = () => {
 // PRODUCTS
 export const getAllProducts = () => {
   return (dispatch) => {
-    send({ token: authHelper() }, "/api/allproducts", "get").then((r) => {
-      dispatch({ type: "GET_ALL_PRODUCTS", products: r });
+    send({ token: authHelper() }, "/api/product", "get").then((r) => {
+      dispatch({ type: "GET_ALL_PRODUCTS", products: r.response.data });
     });
   };
 };
 export const setListProducts = () => {
   return (dispatch) => {
-    send({ token: authHelper() }, "/api/product/", "get").then((r) =>
+    send({ token: authHelper() }, "/api/my_product", "get").then((r) =>
       dispatch({
         type: "SET_LIST_PRODUCTS",
-        product: r,
+        product: r.response.data,
       })
     );
   };
@@ -118,9 +124,9 @@ export const addNewProduct = (product) => {
 // USERS
 export const getUsers = () => {
   return (dispatch) => {
-    send({}, "/api/user/", "get").then((r) =>
-      dispatch({ type: "GET_USERS", users: r })
-    );
+    send({}, "/api/user/", "get").then((r) => {
+      dispatch({ type: "GET_USERS", users: r?.response?.data });
+    });
   };
 };
 // GLOBAL STATE
@@ -132,28 +138,28 @@ export const setLoad = (load) => {
 };
 
 export const updateProfile = (profile) => {
-  let data = new FormData();  
-  for(let [keys,values] of Object.entries(profile)){
-    data.append(keys,values)
-  }
-  console.log(data);
+  // let data = new FormData();
+  // for (let [keys, values] of Object.entries(profile)) {
+  //   data.append(keys, values);
+  // }
+  
   return (dispatch) => {
     send(
-      { token: authHelper(), form: data },
-      "/api/user/" + profile.id + "/",
-      "putFile"
+      { token: authHelper(), form: profile },
+      "/api/user/" + profile.id,
+      "patch"
     ).then((r) => {
-      if(!r.error){
-      dispatch({
-        type: "UPDATE_PROFILE",
-        profile: r,
-      });
+      console.log(r);
+      if (!r.error?.message) {
+        dispatch(updateState());        
+      }
       dispatch({
         type: "SET_LOAD",
         load: false,
-      });}
-      console.dir(r);
-      (document.readyState === 4) ? toastr.info(r.error ?? r.detail) : toastr.success("Updated !");
+      });
+      r.error?.message
+        ? toastr.info(r.error.message)
+        : toastr.success("Updated !");
     });
   };
 };
@@ -175,17 +181,17 @@ export const clear = () => {
 export const updateState = () => {
   return (dispatch) => {
     send({ token: authHelper() }, "/api/profile", "get").then((p) => {
-      if (p[0]) {
+      if (p.response.data) {
         dispatch({
           type: "UPDATE_STATE",
-          state: { ...p },
+          state: { ...p.response.data },
         });
 
         toastr.options.preventDuplicates = true;
         toastr.options.closeButton = true;
         toastr.options.closeHtml =
           '<button><i class="fa fa-close"></i></button>';
-        toastr.info(`${p[0].username}`, "Bienvenido");
+        toastr.info(`${p.response.data.username}`, "Bienvenido");
       }
     });
   };

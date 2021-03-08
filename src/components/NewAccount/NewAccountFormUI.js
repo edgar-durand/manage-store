@@ -64,7 +64,7 @@ const NewAccountFormUI = ({handleSubmit,handleChange}) => (
                                                 <div className="form-group">
                                                     <label>AMOUNT OF CREDIT</label>
                                                     <input onChange={(e)=>handleChange(e)} type="text" className="form-control"
-                                                           name="a_amount" required/>
+                                                           name="amount" required/>
                                                 </div>
                                             </div>
                                         </div>

@@ -15,7 +15,7 @@ const send = async (state, endPoint, method) => {
               headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
-                Authorization: "token " + authHelper(),
+                Authorization: "Bearer " + authHelper(),
               },
               body: JSON.stringify(state),
             };
@@ -31,7 +31,7 @@ const send = async (state, endPoint, method) => {
               method: "POST",
               headers: {
                 Accept: "*/*",
-                Authorization: "token " + authHelper(),
+                Authorization: "Bearer " + authHelper(),
               },
               body: state.form,
             };
@@ -48,7 +48,7 @@ const send = async (state, endPoint, method) => {
               headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
-                Authorization: `token ${state.token}`,
+                Authorization: `Bearer ${state.token}`,
               },
             };
             res = await fetch(SERVER + endPoint, config);
@@ -63,7 +63,7 @@ const send = async (state, endPoint, method) => {
               headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
-                Authorization: "token " + state.token,
+                Authorization: "Bearer " + state.token,
               },
               body: JSON.stringify(state),
             };
@@ -80,7 +80,7 @@ const send = async (state, endPoint, method) => {
                 Accept: "*/*",
                 // "Content-Type": "application/json",
                 // "Content-Type": "multipart/form-data",
-                Authorization: "token " + state.token,
+                Authorization: "Bearer " + state.token,
               },
               body: state.form,
             };
@@ -89,6 +89,23 @@ const send = async (state, endPoint, method) => {
             result = { ...dat };
           }
           break;
+        case "PATCH":
+          {
+            const config = {
+              method: "PATCH",
+              headers: {
+                Accept: "*/*",
+                "Content-Type": "application/json",
+                // "Content-Type": "multipart/form-data",
+                Authorization: "Bearer " + state.token,
+              },
+              body: JSON.stringify(state.form),
+            };
+            res = await fetch(SERVER + endPoint, config);
+            dat = await res.json();
+            result = { ...dat };
+          }
+          break;  
         case "DELETE":
           {
             const config = {
@@ -96,7 +113,7 @@ const send = async (state, endPoint, method) => {
               mode: "cors",
               headers: {
                 Accept: "*/*",
-                Authorization: `token ${state.token}`,
+                Authorization: `Bearer ${state.token}`,
               },
             };
             res = await fetch(SERVER + endPoint, config);

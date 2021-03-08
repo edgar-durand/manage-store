@@ -26,7 +26,7 @@ function App() {
         .length ||
       store.getState?.users?.error
     ) {
-      store.dispatch(getUsers());
+      store.dispatch(getUsers());      
     }
 
     let unsubscribe = store.subscribe(() => {

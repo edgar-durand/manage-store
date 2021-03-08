@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
+        <meta charset="utf-8" >
+        <!-- <link rel='manifest' crossorigin="use-credentials" href='manifest.webmanifest'> -->
         <link rel="icon" href="./favicon.ico">
         <meta
             name="viewport"
@@ -11,7 +12,9 @@
             name="theme-color"
             content="#000000"
         >
-       
+
+
+
         <title>E-Store</title>
     </head>
     <body class="gray-bg">
@@ -19,6 +22,15 @@
             You need to enable JavaScript to run this app.
         </noscript>
         <div id="root"></div>
-        
+        <!-- <script>
+           
+             // Register the service worker 
+            navigator.serviceWorker.register("pwabuilder-sw.js").then(function (reg) { 
+                console.log("Service worker has been registered"); 
+            } )
+            .catch(err=>{
+                console.error(err);
+            })
+        </script> -->
     </body>
 </html>

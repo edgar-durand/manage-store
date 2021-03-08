@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
       JSON.parse(localStorage.getItem("store"))?.users
     )?.filter(
       (x) =>
-        x.id !== JSON.parse(localStorage.getItem("store"))?.globalState[0]?.id
+        x.id !== JSON.parse(localStorage.getItem("store"))?.globalState?.id
     ),
   };
 };

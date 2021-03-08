@@ -37,25 +37,21 @@ const Login = () => {
             ...r,
             load: false,
           });
-          r.error.message
-            ? toastr.error("Can't connect with service.", "ERROR")
-            : toastr.error(r.error, "ERROR");
-        } else if (r.non_field_errors) {
-          toastr.warning(r.non_field_errors, "WARNING");
-          setData({ ...data, load: false });
-        } else
+
+          toastr.error(r.error.message, "ERROR");
+        } else{
           setData({
             ...data,
-            ...r,
+            token: r.response.data.token,
             load: false,
-          });
+          });}
       });
     }
   };
 
   if (data.token && !data.error) {
     localStorage.setItem("token", data.token);
-    console.log("Session logged in successfully.");
+    toastr.success("Session logged in successfully.");
     return <Redirect to="/home/" />;
   }
   return (
