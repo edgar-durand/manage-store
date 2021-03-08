@@ -34,7 +34,7 @@ const Product = ({
             </div>
             <div className="product-desc">
               <span className="product-price">
-                {`$ ${price_cost.toFixed(2)}` || "RESERVED"}
+                {`$ ${price_cost?.toFixed(2)}` || "RESERVED"}
               </span>
               <small className="text-muted">{category || "Category"}</small>
               <Link to="#" className="product-name">

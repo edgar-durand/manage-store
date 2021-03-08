@@ -11,7 +11,7 @@ import {
   getAllProducts,
   getCategories,
   load,
-  setListProducts,
+  setListProducts, setPaginated,
   updateState,
 } from "../actions/actionCreator";
 import toastr from "toastr";
@@ -94,6 +94,7 @@ const Home = ({ cart, globalState }) => {
       store.dispatch(setListProducts());
       store.dispatch(getCategories());
       store.dispatch(getAllProducts());
+      store.dispatch(setPaginated());
     }
   }, []);
 

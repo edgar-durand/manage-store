@@ -29,7 +29,7 @@ const Register = () => {
     },
     users: JSON.parse(localStorage.getItem("store"))?.users,
   }); 
-  let users = Object.values(stat.users).find(
+  let users = stat.users.find(
     (x) => x.email === stat.user.email
   );
 

@@ -16,7 +16,7 @@ import { uuidv4 } from "../../js/uuidv4";
 import Loading from "../Loading/Loading";
 const Movement = ({ id, movements }) => {
   // const ID = props.match?.params?.id;
-  console.log(movements);
+
   useEffect(() => {
     send({ token: authHelper() }, "/api/account/" + id, "get").then((r) => {
       store.dispatch({
@@ -28,7 +28,7 @@ const Movement = ({ id, movements }) => {
   if (id) {
     return Object.values(movements).length ? (
       <React.Fragment>
-        <div className="ibox-content" id="ibox-content">
+        <div className="ibox-content" id="ibox-content" >
           <div
             id="vertical-timeline"
             className="vertical-container dark-timeline "
@@ -80,13 +80,18 @@ const Movement = ({ id, movements }) => {
                   <div className="vertical-timeline-content">
                     <h2>{movement.concept}</h2>
                     <p>{`$ ${movement.amount} >>> $ ${movement.left}`}</p>
-                    <Link
-                      to={`/home/movement_detail/${id}/${movement.date.toString().substr(0,10)}`}
-                      className="btn btn-sm btn-primary"
-                    >
-                      {" "}
-                      More info
-                    </Link>
+                    {
+                      movement.concept === "OPEN ACCOUNT" ? null : movement.concept === "PURCHASE" ?(
+                          <Link
+                              to={`/home/movement_detail/${id}/${movement.date.toString().substr(0,10)}`}
+                              className="btn btn-sm btn-primary"
+                          >
+                            {" "}
+                            More info
+                          </Link>
+                      ): null
+                    }
+
                     <span className="vertical-date">{movement.date}</span>
                   </div>
                 </div>
