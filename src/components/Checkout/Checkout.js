@@ -6,10 +6,11 @@ import send from "../../js/send";
 import CheckoutUI from "./CheckoutUI";
 import {
   clearCart,
-  getAccounts,
+  getAccounts, getAllPurchases,
   setListProducts,
 } from "../../actions/actionCreator";
 import { connect } from "react-redux";
+import store from "../../store";
 
 const Checkout = ({
   cart,
@@ -72,8 +73,9 @@ const Checkout = ({
               ).then((res) => {
                 if (!res.error) {
                   getAccounts();
-                  clearCart();
                   setListProducts();
+                  store.dispatch(getAllPurchases());
+                  clearCart();
                   toastr.success("Seccess. !");
                 } else {
                   toastr.error(res.error.message, "ERROR !");

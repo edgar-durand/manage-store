@@ -5,9 +5,11 @@ import send from "../js/send";
 import store from "../store";
 // CART
 export const addToCart = (product) => {
+    const isMy = store.getState().productList.find(x => x.id === product.id);
+
     return {
         type: "ADD_TO_CART",
-        product,
+        product: !isMy ? Object.assign(product, {price_cost: product.sales_price}) : product,
     };
 };
 
@@ -15,6 +17,12 @@ export const setPageNumber = (page) => {
     return {
         type: "SET_PAGE_NUMBER",
         page,
+    };
+}
+export const setSearchField = (searchField) => {
+    return {
+        type: "SET_SEARCH_FIELD",
+        searchField,
     };
 }
 
@@ -36,22 +44,24 @@ export const deleteAccounts = (id) => {
     return (dispatch) => {
         msgNotification(
             "Confirm !",
-            `Do you really want to delete.`,
+            `Do you really want to cancel account.`,
             "question",
             "ACEPTAR",
             true
         ).then((r) => {
             if (r.value) {
                 send({token: authHelper()}, `/api/account/${id}/`, "delete").then(
-                    () => {
-                        dispatch({
-                            type: "DELETE_ACCOUNTS",
-                            id,
-                        });
-                        toastr.options.closeButton = true;
-                        toastr.options.closeHtml =
-                            '<button><i class="fa fa-close"></i></button>';
-                        toastr.success(`Account deleted.`, "DELETED !");
+                    (r) => {
+                        if (r.error.message)
+                            if (r.error.message)
+                                toastr.error(r.error.message)
+                            else {
+                                dispatch({
+                                    type: "DELETE_ACCOUNTS",
+                                    id,
+                                });
+                                toastr.success(`Account deleted.`, "DELETED !");
+                            }
                     }
                 );
             }
@@ -83,13 +93,7 @@ export const getCategories = () => {
 };
 
 // PRODUCTS
-export const getAllProducts = () => {
-    return (dispatch) => {
-        send({token: authHelper()}, "/api/product", "get").then((r) => {
-            dispatch({type: "GET_ALL_PRODUCTS", products: r.response.data});
-        });
-    };
-};
+
 export const setListProducts = () => {
     return (dispatch) => {
         send({token: authHelper()}, "/api/my_product", "get").then((r) =>
@@ -133,34 +137,63 @@ export const getUsers = () => {
 };
 // GLOBAL STATE
 
-export const getPaginatedUsers = () => {
+export const getPaginatedUsers = (page = 1, search, perPage = 20) => {
     return (dispatch) => {
-        send({token: authHelper()}, `/api/user/${store.getState().paginated.page}/${store.getState().paginated.perPage}`, 'get')
-            .then(res => {
-                if (res.error?.message)
-                    toastr.error(res.error.message)
-                else {
-                    dispatch({
-                        type: "GET_PAGINATED_USERS",
-                        pUsers: res.response.data.results,
-                        all_results: res.response.data.all_results,
-                        all_pages: res.response.data.all_pages
-                    });
-                }
-            })
+        search ?
+            send({token: authHelper()}, `/api/user/${perPage}?page=${page}&search=${search}`, 'get')
+                .then(res => {
+                    if (res.error?.message)
+                        toastr.error(res.error.message)
+                    else {
+                        dispatch({
+                            type: "GET_PAGINATED_USERS",
+                            response: res.response
+
+                        });
+                    }
+                }) :
+            send({token: authHelper()}, `/api/user/${perPage}?page=${page}`, 'get')
+                .then(res => {
+                    if (res.error?.message)
+                        toastr.error(res.error.message)
+                    else {
+                        dispatch({
+                            type: "GET_PAGINATED_USERS",
+                            response: res.response
+
+                        });
+                    }
+                });
 
     };
 };
-
-export const setPaginated = (page = 1, table, perPage = 20) => {
+export const getPaginatedProducts = (page = 1, search, perPage = 20) => {
     return (dispatch) => {
-        dispatch({
-            type: "SET_PAGINATED",
-            page,
-            perPage
-        });
-        if (table==='users')
-        dispatch(getPaginatedUsers());
+        search ?
+            send({token: authHelper()}, `/api/product/${perPage}?page=${page}&search=${search}`, 'get')
+                .then(res => {
+                    if (res.error?.message)
+                        toastr.error(res.error.message)
+                    else {
+                        dispatch({
+                            type: "GET_PAGINATED_PRODUCTS",
+                            response: res.response
+
+                        });
+                    }
+                }) :
+            send({token: authHelper()}, `/api/product/${perPage}?page=${page}`, 'get')
+                .then(res => {
+                    if (res.error?.message)
+                        toastr.error(res.error.message)
+                    else {
+                        dispatch({
+                            type: "GET_PAGINATED_PRODUCTS",
+                            response: res.response
+
+                        });
+                    }
+                });
 
     };
 };
@@ -198,7 +231,185 @@ export const updateProfile = (profile) => {
         });
     };
 };
+//PURCHASES
+//ALL
+export const getAllPurchases = () => {
+    return (dispatch) => {
+        send(
+            {token: authHelper()},
+            "/api/purchase/get_all",
+            "get"
+        ).then(res => {
+            if (res.response.data) {
+                dispatch({
+                    type: "GET_PURCHASES",
+                    purchases: res.response.data
+                })
+            } else toastr.error(res.response.message);
 
+        })
+    }
+}
+
+//CONFIRMED
+export const getConfirmedPurchases = () => {
+    return (dispatch) => {
+        send(
+            {token: authHelper()},
+            "/api/purchase/get_confirmed",
+            "get"
+        ).then(res => {
+            if (res.response.data) {
+                dispatch({
+                    type: "GET_PURCHASES",
+                    purchases: res.response.data
+                });
+                dispatch(setLoad(false));
+            } else {
+                dispatch(setLoad(false));
+                toastr.error(res.response.message);
+            }
+
+        })
+
+    }
+}
+
+//PENDING
+export const getPendingPurchases = () => {
+    return (dispatch) => {
+        send(
+            {token: authHelper()},
+            "/api/purchase/get_pending",
+            "get"
+        ).then(res => {
+            if (res.response.data) {
+                dispatch({
+                    type: "GET_PURCHASES",
+                    purchases: res.response.data
+                });
+                dispatch(setLoad(false));
+            } else {
+                dispatch(setLoad(false));
+                toastr.error(res.response.message);
+            }
+
+        })
+
+    }
+}
+
+//DECLINED
+export const getDeclinedPurchases = () => {
+    return (dispatch) => {
+        send(
+            {token: authHelper()},
+            "/api/purchase/get_declined",
+            "get"
+        ).then(res => {
+            if (res.response.data) {
+                dispatch({
+                    type: "GET_PURCHASES",
+                    purchases: res.response.data
+                });
+                dispatch(setLoad(false));
+            } else {
+                dispatch(setLoad(false));
+                toastr.error(res.response.message);
+            }
+
+        })
+
+    }
+}
+
+
+//GET_SALES_REQUESTS
+export const getSalesRequests = () => {
+    return (dispatch) => {
+        send(
+            {token: authHelper()},
+            "/api/purchase/sale_request",
+            "get"
+        ).then(res => {
+            if (res.response.data) {
+                dispatch({
+                    type: "GET_SALES_REQUESTS",
+                    requests: res.response.data
+                });
+                dispatch(setLoad(false));
+            } else toastr.error(res.response.message);
+
+        })
+
+    }
+}
+export const confirmPurchase = (purchase) => {
+    return (dispatch) => {
+        send(
+            {
+                token: authHelper(),
+                data: [{
+                    id: purchase.purchase_id,
+                    product_id: purchase.product.id,
+                    user_id: purchase.user_requesting.id,
+                    account_id: purchase.account_id,
+                    my_account_id: purchase.my_account_id,
+                    movement_id: purchase.movement_id,
+                    quantity: purchase.quantity,
+                    total: purchase.total
+                }]
+
+            },
+            "/api/purchase/confirm",
+            "post"
+        ).then(res => {
+            if (res.response?.message) {
+                dispatch({
+                    type: "UPDATE_SALES_REQUESTS",
+                    id: purchase.purchase_id
+                });
+                dispatch(getAllPurchases());
+                toastr.success(res.response.message);
+            } else toastr.error(res.response.message);
+
+        })
+
+    }
+}
+export const declinePurchase = (purchase) => {
+    return (dispatch) => {
+        send(
+            {
+                token: authHelper(),
+                data: [{
+                    id: purchase.purchase_id,
+                    product_id: purchase.product.id,
+                    user_id: purchase.user_requesting.id,
+                    account_id: purchase.account_id,
+                    movement_id: purchase.movement_id,
+                    quantity: purchase.quantity,
+                    total: purchase.total
+                }]
+
+            },
+            "/api/purchase/decline",
+            "post"
+        )
+            .then(res => {
+                if (res.response.data) {
+                    dispatch({
+                        type: "UPDATE_SALES_REQUESTS",
+                        id: purchase.purchase_id
+                    });
+                    toastr.success(res.response.message);
+                    dispatch(getAllPurchases());
+                } else toastr.error(res.response.message);
+
+            })
+
+    }
+}
 // GENERAL
 
 export const load = () => {
@@ -216,7 +427,7 @@ export const clear = () => {
 export const updateState = () => {
     return (dispatch) => {
         send({token: authHelper()}, "/api/profile", "get").then((p) => {
-            if (p.response.data) {
+            if (p.response?.data) {
                 dispatch({
                     type: "UPDATE_STATE",
                     state: {...p.response.data},

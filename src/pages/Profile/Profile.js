@@ -7,9 +7,8 @@ import { connect } from "react-redux";
 import { setLoad, updateProfile } from "../../actions/actionCreator";
 import toastr from "toastr";
 import getBase64 from "../../js/getBase64";
-const LoadingButton = React.lazy(() =>
-  import("../../components/LoadingButton")
-);
+import LoadingButton from "../../components/LoadingButton";
+
 
 const Profile = ({
   id,

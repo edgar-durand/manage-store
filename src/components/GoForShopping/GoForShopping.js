@@ -7,12 +7,13 @@ import NewProductForm from "../NewProductForm/NewProductForm";
 import Paging from "../Paging/Paging";
 
 const GoForShopping = ({ products, cart, addToCart }) => {
-  if (Object.values(products || []).length) {
+  if (Object.values(products).length) {
     return (
       <React.Fragment>
         <div className="col-12 ">
             <Paging
               data={products}
+              are_mine={true}
               col={Object.values(cart).length ? "9" : "12"}
               Component={ProductGrid}
               action={(product, event) => addToCart(product, event)}

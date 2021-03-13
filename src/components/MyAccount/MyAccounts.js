@@ -6,9 +6,10 @@ import NewAccountForm from "../NewAccount/NewAccountForm";
 import { connect } from "react-redux";
 import { deleteAccounts } from "../../actions/actionCreator";
 import Movement from "./Movement";
+import {uuidv4} from "../../js/uuidv4";
 
 const MyAccounts = ({ accounts, deleteAccounts }) => {
-  const [movement,setMovement] = useState();
+  const [movement,setMovement] = useState(undefined);
   const handleClick = (e, id) => {
     e.preventDefault();
     deleteAccounts(id);
@@ -30,13 +31,13 @@ const MyAccounts = ({ accounts, deleteAccounts }) => {
           </div>
 
           <div className="row animated fadeInRight" style={{ display: "flex" }}>
-            {Object.values(accounts).map((account, index) => {
+            {Object.values(accounts).map((account) => {
               return (
                 <Card
                   id={account.id}
                   handleMovement={(mov)=>handleMovement(mov)}
                   handleClick={(e, id) => handleClick(e, id)}
-                  key={index}
+                  key={uuidv4()}
                   description={account.description}
                   amount={account.cash}
                   card_no={account.name}

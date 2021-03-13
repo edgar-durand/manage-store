@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import "../styles/fontawesome";
 import store from "../../store";
 import {uuidv4} from "../../js/uuidv4";
-import {setPageNumber, setPaginated} from "../../actions/actionCreator";
+import {getPaginatedProducts, getPaginatedUsers, setPageNumber, setSearchField} from "../../actions/actionCreator";
 
 const Paging = ({
                     data,
@@ -15,12 +15,14 @@ const Paging = ({
                     col,
                     action,
                     page,
+                    searField,
+                    are_mine,
                     Paginated
                 }) => {
     const [state, setState] = useState({
-        searchField: "",
+        searchField: searField || "",
         match: {active: false, value: 0},
-        page: page || 0,
+        page: page || 1,
         show: +show || 20,
     });
 
@@ -91,9 +93,12 @@ const Paging = ({
             ),
         });
 
-    let till = Paginated ? (Paginated === 'users' ? (store.getState().paginated.all_results / (state.show || 1)) : 'allProducts') : Math.ceil(Object.values(filtered).length / (state.show || 1));
+    let till = Paginated ?
+        (Paginated === 'users' ? (store.getState().paginated_users.last_page) :
+            (Paginated === 'products' ? store.getState().paginated_products.last_page : null)) :
+        Math.ceil(Object.values(filtered).length / (state.show || 1));
 
-    const FORMATED = Paginated ? filtered : dataToPages(filtered, state.show, state.page);
+    const FORMATED = Paginated ? filtered : dataToPages(filtered, state.show, store.getState().page - 1);
 
     const handleMatch = (e) => {
         setState({...state, match: {...state.match, value: e.target.value}});
@@ -104,8 +109,24 @@ const Paging = ({
             : setState({...state, match: {...state.match, active: true}});
     };
     const handleChange = (e) => {
-        store.dispatch(setPageNumber(0));
-        setState({...state, page: 0, [e.target.name]: e.target.value});
+        store.dispatch(setPageNumber(1));
+        if (Paginated && Paginated === 'users') {
+            store.dispatch(setSearchField(e.target.value));
+            clearTimeout();
+            setTimeout(() => {
+                store.dispatch(getPaginatedUsers(1, e.target.value));
+            }, 100);
+
+        } else
+        if (Paginated && Paginated === 'products') {
+            store.dispatch(setSearchField(e.target.value));
+            clearTimeout();
+            setTimeout(() => {
+                store.dispatch(getPaginatedProducts(1, e.target.value));
+            }, 100);
+
+        }else
+            setState({...state, [e.target.name]: e.target.value});
     };
 
     const xmPages = () => {
@@ -115,19 +136,18 @@ const Paging = ({
             page <= till;
             page++
         ) {
-            page !== state.page + 1
+            page !== store.getState().page
                 ? gather.push(
                 <button
                     key={uuidv4()}
                     onClick={() => {
-                        store.dispatch(setPageNumber(--page));
+                        store.dispatch(setPageNumber(page));
                         if (Paginated) {
                             if (Paginated === 'users')
-                                store.dispatch(setPaginated(page, 'users'))
-                            else if (Paginated === 'products')
-                                store.dispatch(setPaginated(page, 'products'))
-                        } else
-                            store.dispatch(setPaginated(page))
+                                store.dispatch(getPaginatedUsers(store.getState().page, store.getState().searchField));
+                            if (Paginated === 'products')
+                                store.dispatch(getPaginatedProducts(store.getState().page, store.getState().searchField));
+                        }
                         setState({...state, page: page});
                     }}
                     className="btn btn-xs btn-light pull-right "
@@ -139,8 +159,13 @@ const Paging = ({
                 <button
                     key={uuidv4()}
                     onClick={() => {
-                        store.dispatch(setPageNumber(--page));
-                        store.dispatch(setPaginated(page));
+                        store.dispatch(setPageNumber(page));
+                        if (Paginated) {
+                            if (Paginated === 'users')
+                                store.dispatch(getPaginatedUsers(store.getState().page, store.getState().searchField));
+                            if (Paginated === 'products')
+                                store.dispatch(getPaginatedProducts(store.getState().page, store.getState().searchField));
+                        }
                         setState({...state, page: page});
                     }}
                     className="btn btn-sm btn-outline-info pull-right"
@@ -194,79 +219,82 @@ const Paging = ({
         </React.Fragment>
     );
 
-    if (Object.values(data).length) {
-        return (
-            <React.Fragment>
-                <div className={"col-12"}>
-                    <div className="ibox-content form-inline ">
-                        {showingField && showingFieldSet()}
-
-                        <label>
-                            <FontAwesomeIcon icon={"search"} size="2x"/> &nbsp;
-                            <input
-                                type="text"
-                                name="searchField"
-                                className="form-control"
-                                onChange={(e) => handleChange(e)}
-                            />
-                        </label>
-
-                        {priceField && topPriceFieldSet()}
-                    </div>
-                </div>
-                <div className={"wrapper wrapper-content col-" + col || 12}>
-                    <div className="row float-left col-12 ">
-                        {Object.values(FORMATED).map((x, index) => {
-                            return (
-                                <Component {...x} key={index} addToCart={(e) => action(x, e)}/>
-                            );
-                        })}
-                        <div className="ibox ibox-content social-footer col-12">
-                            <button
-                                onClick={() => {
-                                    if (state.page > 0) {
-                                        setState({...state, page: state.page - 1});
-                                        store.dispatch(setPageNumber(state.page - 1));
-                                        store.dispatch(setPaginated(state.page - 1));
-                                    }
-
-                                }
-                                }
-                                className="btn btn-light"
-                                disabled={state.page === 0}
-                            >
-                                <FontAwesomeIcon icon="backward"/> Prev
-                            </button>
-                            {xmPages()}
-                            <button
-                                onClick={() => {
-                                    setState({...state, page: state.page + 1});
-                                    store.dispatch(setPageNumber(state.page + 1));
-                                    store.dispatch(setPaginated(state.page + 1));
-                                }
-                                }
-                                className="btn btn-light"
-                                disabled={
-                                    state.page >= till - 1
-                                }
-                            >
-                                Next <FontAwesomeIcon icon="forward"/>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </React.Fragment>
-        );
-    }
     return (
         <React.Fragment>
-            <div className="wrapper wrapper-content">
-                <div className="ibox ibox-content">
-                    <h2>Empty !</h2>
+            <div className={"col-12"}>
+                <div className="ibox-content form-inline ">
+                    {showingField && showingFieldSet()}
+
+                    <label>
+                        <FontAwesomeIcon icon={"search"} size="2x"/> &nbsp;
+                        <input
+                            type="text"
+                            name="searchField"
+                            className="form-control"
+                            onChange={(e) => handleChange(e)}
+                        />
+                    </label>
+
+                    {priceField && topPriceFieldSet()}
+                </div>
+            </div>
+            <div className={"wrapper wrapper-content col-" + col || 12}>
+                <div className="row float-left col-12 ">
+                    {Object.values(FORMATED).map((x, index) => {
+                        return are_mine === true ? (
+                            <Component {...x} are_mine={true} key={index} addToCart={(e) => action(x, e)}/>
+                        ):(
+                            <Component {...x} key={index} addToCart={(e) => action(x, e)}/>
+                        )
+                    })
+
+
+                    }
+                    <div className="ibox ibox-content social-footer col-12">
+                        <button
+                            onClick={() => {
+                                if (store.getState().page > 0) {
+                                    store.dispatch(setPageNumber(store.getState().page - 1));
+                                    if (Paginated) {
+                                        if (Paginated === 'users')
+                                            store.dispatch(getPaginatedUsers(store.getState().page, store.getState().searchField));
+                                        if (Paginated === 'products')
+                                            store.dispatch(getPaginatedProducts(store.getState().page, store.getState().searchField));
+                                    }
+                                }
+
+                            }
+                            }
+                            className="btn btn-light"
+                            disabled={store.getState().page === 1}
+                        >
+                            <FontAwesomeIcon icon="backward"/> Prev
+                        </button>
+                        {xmPages()}
+                        <button
+                            onClick={() => {
+                                store.dispatch(setPageNumber(store.getState().page + 1));
+                                if (Paginated) {
+                                    if (Paginated === 'users')
+                                        store.dispatch(getPaginatedUsers(store.getState().page, store.getState().searchField));
+                                    if (Paginated === 'products')
+                                        store.dispatch(getPaginatedProducts(store.getState().page, store.getState().searchField));
+                                }
+                            }
+                            }
+                            className="btn btn-light"
+                            disabled={
+                                store.getState().page >= (till)
+                            }
+                        >
+                            Next <FontAwesomeIcon icon="forward"/>
+                        </button>
+                    </div>
                 </div>
             </div>
         </React.Fragment>
     );
+
 };
 
 export default Paging;

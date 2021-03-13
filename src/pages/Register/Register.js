@@ -8,6 +8,7 @@ import toastr from "toastr";
 import msgNotification from "../../js/msgNotification";
 import store from "../../store";
 import { getUsers } from "../../actions/actionCreator";
+import getBase64 from "../../js/getBase64";
 
 const Register = () => {
   const [stat, setStat] = useState({
@@ -29,7 +30,7 @@ const Register = () => {
     },
     users: JSON.parse(localStorage.getItem("store"))?.users,
   }); 
-  let users = stat.users.find(
+  let users = stat.users?.find(
     (x) => x.email === stat.user.email
   );
 
@@ -45,31 +46,32 @@ const Register = () => {
     if (file.size > 30000)
       toastr.warning("You should set a picture that size is bellow 30 kb.");
     else
-      setStat({
+      getBase64(file).then(f=>setStat({
         ...stat,
-        user: { ...stat.user, photo: file },
-      });
+        user: { ...stat.user, photo: f },
+      }));
+
   };
 
   const handleSubmit = (e) => {
     setStat({ ...stat, load: true });
     e.preventDefault();
-    let form = new FormData();
-    for (let [keys, values] of Object.entries(stat.user))
-      if (keys !== "photo") form.append(keys, values);
-    if (stat.user.photo?.size <= 30000) form.append("photo", stat.user.photo);
+    // let form = new FormData();
+    // for (let [keys, values] of Object.entries(stat.user))
+    //   if (keys !== "photo") form.append(keys, values);
+    // if (stat.user.photo?.size <= 30000) form.append("photo", stat.user.photo);
 
     passwordRequirements(stat.user.password) &&
     stat.user.username &&
     stat.user.password &&
     !users &&
     stat.agree
-      ? send({ form }, "/api/user/", "file")
+      ? send({ ...stat.user }, "/api/user/", "post")
           .then((r) => {
             setStat({ ...stat, ...r, load: false });
             store.dispatch(getUsers());
           })
-          .catch((r) => toastr.error(r))
+          .catch((r) => toastr.error(r.error.message))
       : toastr.warning("Debe llenar todos los campos");
   };
 
@@ -96,10 +98,10 @@ const Register = () => {
     });
   };
 
-  if (stat.id && !stat.error) {
+  if (!stat.error?.message && stat?.status === 201) {
     msgNotification(
       "New user created !",
-      `User: ${stat.username} id: ${stat.id}  has been created successfully`,
+      `User has been created successfully`,
       "success",
       "ACEPTAR",
       false

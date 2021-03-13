@@ -8,10 +8,10 @@ import { connect } from "react-redux";
 import {
   clear,
   getAccounts,
-  getAllProducts,
-  getCategories,
+  getAllPurchases,
+  getCategories, getPaginatedProducts, getPaginatedUsers, getSalesRequests,
   load,
-  setListProducts, setPaginated,
+  setListProducts,
   updateState,
 } from "../actions/actionCreator";
 import toastr from "toastr";
@@ -90,11 +90,13 @@ const Home = ({ cart, globalState }) => {
       store.dispatch(load());
     else {
       store.dispatch(updateState());
+      store.dispatch(getAllPurchases());
+      store.dispatch(getSalesRequests());
       store.dispatch(getAccounts());
       store.dispatch(setListProducts());
       store.dispatch(getCategories());
-      store.dispatch(getAllProducts());
-      store.dispatch(setPaginated());
+      store.dispatch(getPaginatedUsers());
+      store.dispatch(getPaginatedProducts());
     }
   }, []);
 
@@ -166,7 +168,7 @@ const Home = ({ cart, globalState }) => {
                   exact
                   component={() => <MyAccounts />}
                 />
-                 <Route exact path="/home/movement_detail/:id/:date" component={MovementDetail} />
+                 <Route exact path="/home/movement_detail/:id/:mov" component={MovementDetail} />
                 <Route
                   path="/home/new_account/"
                   component={() => <NewAccountForm />}

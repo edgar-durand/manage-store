@@ -108,6 +108,7 @@ const CartSummary = ({ total }) => {
 };
 
 const mapStateToProps = (state) => {
+
   return {
     total: +Object.values(state.cart).reduce(
       (a, b) => a + b.price_cost * (b.inStock === 0 ? 1 : b.inStock),

@@ -8,22 +8,19 @@ import { addToCart } from "../../actions/actionCreator";
 const Detail = (props) => {
   const [product, setProduct] = useState({ product: {}, load: true });
   const TOKEN = { token: authHelper() };
-  const { name, image, description, category, _public } = product.product;
-  let price_cost;
-  product.product.price_cost
-    ? (price_cost = `$ ${product.product.price_cost}`)
-    : (price_cost = "RESERVED");
+  const { name, image, description, category, _public, price_cost, sales_price } = product.product;
+
   const ID = props.match.params.id;
 
   if (!Object.values(product.product).length)
-    send(TOKEN, "/api/product/" + ID, "get").then((r) => 
+    send(TOKEN, "/api/product_detail/" + ID, "get").then((r) =>
       setProduct({
         ...product,
-        product: r.response.data[0],
+        product: r.response.data,
         load: false,
       })
     ); 
-
+    const isMy = store.getState().productList.find(x=>x.id === product.product.id);
   return (
     <DetailUI
       {..._public}
@@ -33,7 +30,7 @@ const Detail = (props) => {
       author={`${
         JSON.parse(localStorage.getItem("store"))?.globalState?.email
       }`}
-      price={price_cost}
+      price={isMy ?price_cost: (sales_price ?? "RESERVED")}
       description={description}
       addToCart={() => store.dispatch(addToCart(product.product))}
       load={product.load}

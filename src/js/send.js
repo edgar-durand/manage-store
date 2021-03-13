@@ -110,9 +110,9 @@ const send = async (state, endPoint, method) => {
           {
             const config = {
               method: "DELETE",
-              mode: "cors",
               headers: {
-                Accept: "*/*",
+                Accept: "application/json",
+                "Content-Type": "application/json",
                 Authorization: `Bearer ${state.token}`,
               },
             };

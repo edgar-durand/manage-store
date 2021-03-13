@@ -24,14 +24,15 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     handleChange(e, product) {
+
       clearTimeout();
       setTimeout(() => {
         dispatch(
           setProductQuantity(
-            Object.assign(product, { inStock: +e.target.value })
+            Object.assign(product, { inStock: +e.target.value})
           )
         );
-      },2000);
+      },1000);
       if (e.target.value === "0") {
         e.target.value = 1;
         toastr.warning(

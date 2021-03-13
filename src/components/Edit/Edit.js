@@ -11,27 +11,36 @@ const Edit = (props) => {
   const [state, setState] = useState({
     back: false,
     category: [],
-    product: {},
+    product: {
+      name:"",
+      description:"",
+      price_cost:"",
+      sales_price:"",
+      inStock:"",
+      category_id:"",
+      _public:"",
+      image:"",
+    },
     load: true,
   });
   const {
     name,
     description,
     price_cost,
-    price_vent,
+    sales_price,
     inStock,
     category_id,
     _public,
     image,
-  } = state.product;
+  } = state?.product;
   const ID = props.match.params.id;
   const TOKEN = { token: authHelper() };
 
   if (!name)
-    send({ ...TOKEN }, "/api/product/" + ID, "get").then((r) => 
+    send({ ...TOKEN }, "/api/product_detail/" + ID, "get").then((r) =>
       setState({
         ...state,
-        product: r.response?.data[0],
+        product: r.response?.data,
         load: false,
       })
     );
@@ -119,8 +128,9 @@ const Edit = (props) => {
       handleSelect={(e) => handleSelect(e)}
       name={name}
       description={description}
+      category_id={category_id}
       price_cost={price_cost}
-      price_vent={price_vent}
+      sales_price={sales_price}
       inStock={inStock}
       _public={_public}
       handleSubmit={(e) => handleSubmit(e)}

@@ -96,12 +96,7 @@ const reducer = (state, action) => {
         }
 
         //productList actions
-        case "GET_ALL_PRODUCTS": {
-            return {
-                ...state,
-                allproducts: action.products,
-            };
-        }
+
         case "SET_LIST_PRODUCTS": {
             return {
                 ...state,
@@ -112,7 +107,7 @@ const reducer = (state, action) => {
         case "ADD_NEW_PRODUCT": {
             return {
                 ...state,
-                productList: Object.values(state.productList).concat(action.product),
+                productList: Object.values(state.productList || []).concat(action.product),
             };
         }
 
@@ -165,14 +160,16 @@ const reducer = (state, action) => {
                 ...state,
                 cart: [],
                 page: 0,
+                searchField: "",
                 globalState: [],
                 accounts: [],
                 movements: [],
+                purchases:[],
+                sales_requests:[],
                 productList: [],
                 categories: [],
-                allproducts: [],
-                paginated: {page: null, perPage: null, all_results: null, all_pages: null},
                 paginated_users: [],
+                paginated_products: [],
                 load: false,
             };
         }
@@ -183,18 +180,36 @@ const reducer = (state, action) => {
                 users: action.users,
             };
         }
+        //PURCHASES
+        case "GET_SALES_REQUESTS": {
+            return {
+                ...state,
+                sales_requests: action.requests
+            };
+        }
+        case "UPDATE_SALES_REQUESTS": {
+            return {
+                ...state,
+                sales_requests: state.sales_requests.filter(x=>x.purchase_id !== action.id),
+            };
+        }
+        case "GET_PURCHASES": {
+            return {
+                ...state,
+                purchases: action.purchases
+            };
+        }
         //LocalStorage actions
         case "GET_PAGINATED_USERS": {
             return {
                 ...state,
-                paginated_users: action.pUsers,
-                paginated: {...state.paginated, all_results: action.all_results, all_pages: action.all_pages}
+                paginated_users: {...action.response}
             };
         }
-        case "SET_PAGINATED": {
+        case "GET_PAGINATED_PRODUCTS": {
             return {
                 ...state,
-                paginated: {...state.paginated, page: action.page, perPage: action.perPage},
+                paginated_products: {...action.response}
             };
         }
         case "LOAD": {
@@ -210,6 +225,12 @@ const reducer = (state, action) => {
             };
         }
 
+        case "SET_SEARCH_FIELD": {
+            return {
+                ...state,
+                searchField: action.searchField,
+            };
+        }
         default: {
             return state;
         }
@@ -226,15 +247,17 @@ export default createStore(
     {
         cart: [],
         page: 0,
-        paginated: {page: null, perPage: null, all_results: null, all_pages: null},
+        searchField: "",
         paginated_users: [],
+        paginated_products: [],
         globalState: {},
         accounts: [],
         movements: [],
+        purchases:[],
+        sales_requests:[],
         productList: [],
         categories: [],
         users: [],
-        allproducts: [],
         load: false,
     },
     applyMiddleware(logger, thunk)

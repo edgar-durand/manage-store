@@ -16,9 +16,10 @@ const Deals = ({allproducts, cart, page}) => {
       page={page}
       col={Object.values(cart).length ? "9" : "12"}
       Component={ProductGrid}
-      show="10"
+      show="20"
       action={(product) =>store.dispatch(addToCart(product))}
       priceField
+      Paginated="products"
       />
        {Object.values(cart).length ? <CartSummary /> : null}
     </React.Fragment>
@@ -27,9 +28,9 @@ const Deals = ({allproducts, cart, page}) => {
 
 const mapStateToProps = () =>{
   return{
-    allproducts: JSON.parse(localStorage.getItem("store"))?.allproducts,
+    allproducts: JSON.parse(localStorage.getItem("store"))?.paginated_products.data,
     cart: JSON.parse(localStorage.getItem("store"))?.cart,
-    page: JSON.parse(localStorage.getItem("store"))?.page,
+    page: JSON.parse(localStorage.getItem("store"))?.paginated_products.current_page,
   }
 }
 export default connect(mapStateToProps)(Deals)

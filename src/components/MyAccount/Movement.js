@@ -18,6 +18,7 @@ const Movement = ({ id, movements }) => {
   // const ID = props.match?.params?.id;
 
   useEffect(() => {
+    if (id !== undefined)
     send({ token: authHelper() }, "/api/account/" + id, "get").then((r) => {
       store.dispatch({
         type: "GET_MOVEMENTS",
@@ -79,11 +80,23 @@ const Movement = ({ id, movements }) => {
 
                   <div className="vertical-timeline-content">
                     <h2>{movement.concept}</h2>
-                    <p>{`$ ${movement.amount} >>> $ ${movement.left}`}</p>
+                    <p><span className="label ml-2 label-warning mr-1">$ {movement.amount}</span> >>> <span className="label ml-2 label-info ">$ {movement.left}</span></p>
+                    {
+                      movement.concept === "PURCHASE" ?(
+                          <div className="form-inline">
+                            <h5 className="mr-2">Confirmed:</h5>
+                            {movement.confirmed}
+                            <h5 className="ml-3 mr-2">Declined:</h5>
+                            {movement.declined}
+                              <h5 className="ml-3 mr-2">Pending:</h5>
+                            {movement.pending}
+                          </div>
+                      ):null
+                    }
                     {
                       movement.concept === "OPEN ACCOUNT" ? null : movement.concept === "PURCHASE" ?(
                           <Link
-                              to={`/home/movement_detail/${id}/${movement.date.toString().substr(0,10)}`}
+                              to={`/home/movement_detail/${id}/${movement.movement_id}`}
                               className="btn btn-sm btn-primary"
                           >
                             {" "}
@@ -92,7 +105,7 @@ const Movement = ({ id, movements }) => {
                       ): null
                     }
 
-                    <span className="vertical-date">{movement.date}</span>
+                    <span className="vertical-date">{movement.date.substr(0,19).replace(/T/," ")}</span>
                   </div>
                 </div>
               );
@@ -113,7 +126,10 @@ const mapStateToProps = () => {
     (movement) => {
       real += movement.amount;
       let newObj = {
-        left: real,
+        left: real.toFixed(2),
+        confirmed: movement.confirmed,
+        declined: movement.declined,
+        pending: movement.pending,
         amount: movement.amount,
         concept: movement.concept,
         date: movement.date,
