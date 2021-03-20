@@ -291,7 +291,7 @@ const IndexHome = ({purchases, loading, sales_requests, accounts}) => {
 
                             </div>
                             <div className="table-responsive">
-                                <table className="table table-striped table-hover text-center">
+                                <table className="table-hover text-center col-12">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
@@ -346,7 +346,7 @@ const IndexHome = ({purchases, loading, sales_requests, accounts}) => {
                         </div>
                         <div className="ibox-content">
                             <div className="table-responsive">
-                                <table className="table table-striped table-hover text-center">
+                                <table className="col-12 table-hover text-center">
                                     <thead>
                                     <tr>
                                         <th>ID</th>

@@ -8,6 +8,7 @@ import { setLoad, updateProfile } from "../../actions/actionCreator";
 import toastr from "toastr";
 import getBase64 from "../../js/getBase64";
 import LoadingButton from "../../components/LoadingButton";
+import Compresor from "compressorjs";
 
 
 const Profile = ({
@@ -76,17 +77,26 @@ const Profile = ({
   };
 
   const handleFile = (file) => {
-    if (file.size > 30000) {
-      toastr.warning("You should set a picture that size is bellow 30 kb.");
-    } else
-      getBase64(file).then((res) => {
-        setState({
-          globalState: {
-            ...state.globalState,
-            photo: res,
-          },
-        });
-      });
+    // if (file.size > 30000) {
+    //   toastr.warning("You should set a picture that size is bellow 30 kb.");
+    // } else
+    new Compresor(file, {
+      quality: 0.2,
+      success(file) {
+        getBase64(file).then(res => {
+          setState({
+            globalState: {
+              ...state.globalState,
+              photo: res,
+            },
+          });
+        })
+            .catch(err => toastr.error(err));
+      },
+      error(error) {
+        toastr.error(error);
+      }
+    });
   };
   return (
     <React.Fragment>

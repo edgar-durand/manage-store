@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import React, { useRef } from "react";
 import Select from "react-select";
-import toastr from "toastr";
 import "../../components/styles/css/plugins/jasny/jasny-bootstrap.min.css";
 
 const NewProductFormUI = ({
@@ -126,16 +125,12 @@ const NewProductFormUI = ({
                           type="file"
                           onChange={(e) => {
                             if (e.target.files[0]) {
-                              if (e.target.files[0].size > 30000)
-                                toastr.warning(
-                                  "You should set a picture that size is bellow 30 kb."
-                                );
-                              else {
+
                                 img.current.src = URL.createObjectURL(
                                   e.target.files[0]
                                 );
                                 handleFile(e.target.files[0]);
-                              }
+
                             } else {
                               img.current.src = null;
                               handleFile(e.target.files[0]);

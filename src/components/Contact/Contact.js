@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import bg from "../../images/patterns/3.png";
+import bg from "../../static/css/patterns/3.png";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import "../styles/fontawesome";
 import "../../components/styles/css/plugins/jasny/jasny-bootstrap.min.css";

@@ -8,11 +8,12 @@ import "./treeTableReact/treeTable.css";
 import {TreeTable} from "./treeTableReact/treeTable";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
-import {updateList} from "../actions/actionCreator";
+import {setListProducts, updateList} from "../actions/actionCreator";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import "./styles/fontawesome";
 
 const ProductList = ({products, handleClick}) => {
+
     return products && Object.values(products).length ? (
         <React.Fragment>
             <div className="ibox-content col-12 text-right">
@@ -114,18 +115,18 @@ const ProductList = ({products, handleClick}) => {
                                     },
                                 ]}
                                 data={Object.values(products).map((x) => ({
-                                    name: x.name,
-                                    category: x.category,
-                                    price: x.price_cost,
-                                    sale_price: x.sales_price || "NOT SET",
-                                    status: x._public,
-                                    id: x.id,
-                                    inStock: x.inStock,
+                                    name: x?.name,
+                                    category: x?.category,
+                                    price: x?.price_cost,
+                                    sale_price: x?.sales_price || "NOT SET",
+                                    status: x?._public,
+                                    id: x?.id,
+                                    inStock: x?.inStock,
                                     action: true,
                                     children: [
                                         {
-                                            name: `${x.description} `,
-                                            image: x.image,
+                                            name: `${x?.description} `,
+                                            image: x?.image,
                                         },
                                     ],
                                 }))}
@@ -185,6 +186,10 @@ const mapDispatchToProps = (dispatch) => {
                 }
             });
         },
+        setListProducts(){
+            dispatch(setListProducts());
+        },
+
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

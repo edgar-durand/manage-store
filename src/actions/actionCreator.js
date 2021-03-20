@@ -53,19 +53,20 @@ export const deleteAccounts = (id) => {
                 send({token: authHelper()}, `/api/account/${id}/`, "delete").then(
                     (r) => {
                         if (r.error.message)
-                            if (r.error.message)
-                                toastr.error(r.error.message)
-                            else {
-                                dispatch({
-                                    type: "DELETE_ACCOUNTS",
-                                    id,
-                                });
-                                toastr.success(`Account deleted.`, "DELETED !");
-                            }
+                            toastr.error(r.error.message)
+                        else {
+                            dispatch({
+                                type: "DELETE_ACCOUNTS",
+                                id,
+                            });
+                            toastr.success(`Account deleted.`, "DELETED !");
+                        }
+
                     }
                 );
             }
-        });
+        })
+            .catch(err => toastr.error(err));
     };
 };
 
@@ -74,21 +75,26 @@ export const getAccounts = () => {
         send({token: authHelper()}, "/api/account", "get").then((res) => {
             dispatch({
                 type: "GET_ACCOUNTS",
-                accounts: res.response.data.accounts,
+                accounts: res.response?.data?.accounts,
             });
-        });
+
+        })
+        // .catch(err => toastr.error(err));
     };
 };
 
 // CATEGORIES
 export const getCategories = () => {
     return (dispatch) => {
-        send({token: authHelper()}, "/api/category", "get").then((r) =>
-            dispatch({
-                type: "GET_CATEGORIES",
-                categories: r.response.data,
-            })
-        );
+        send({token: authHelper()}, "/api/category", "get").then((r) => {
+                dispatch({
+                    type: "GET_CATEGORIES",
+                    categories: r.response.data,
+                });
+
+            }
+        )
+            .catch(err => toastr.error(err));
     };
 };
 
@@ -96,12 +102,15 @@ export const getCategories = () => {
 
 export const setListProducts = () => {
     return (dispatch) => {
-        send({token: authHelper()}, "/api/my_product", "get").then((r) =>
-            dispatch({
-                type: "SET_LIST_PRODUCTS",
-                product: r.response.data,
-            })
-        );
+        send({token: authHelper()}, "/api/my_product", "get").then((r) => {
+                dispatch({
+                    type: "SET_LIST_PRODUCTS",
+                    product: r.response.data,
+                });
+
+            }
+        )
+            .catch(err => toastr.error(err));
     };
 };
 
@@ -132,7 +141,9 @@ export const getUsers = () => {
     return (dispatch) => {
         send({}, "/api/user/", "get").then((r) => {
             dispatch({type: "GET_USERS", users: r?.response?.data});
-        });
+
+        })
+            .catch(err => toastr.error(err));
     };
 };
 // GLOBAL STATE
@@ -150,8 +161,10 @@ export const getPaginatedUsers = (page = 1, search, perPage = 20) => {
                             response: res.response
 
                         });
+
                     }
-                }) :
+                })
+                .catch(err => toastr.error(err)) :
             send({token: authHelper()}, `/api/user/${perPage}?page=${page}`, 'get')
                 .then(res => {
                     if (res.error?.message)
@@ -162,38 +175,39 @@ export const getPaginatedUsers = (page = 1, search, perPage = 20) => {
                             response: res.response
 
                         });
+
                     }
-                });
+                })
+                .catch(err => toastr.error(err));
 
     };
 };
-export const getPaginatedProducts = (page = 1, search, perPage = 20) => {
+export const getPaginatedProducts = (page = 1, search , perPage = 20) => {
     return (dispatch) => {
-        search ?
+        // search ?
             send({token: authHelper()}, `/api/product/${perPage}?page=${page}&search=${search}`, 'get')
                 .then(res => {
-                    if (res.error?.message)
-                        toastr.error(res.error.message)
-                    else {
                         dispatch({
                             type: "GET_PAGINATED_PRODUCTS",
                             response: res.response
 
                         });
-                    }
-                }) :
-            send({token: authHelper()}, `/api/product/${perPage}?page=${page}`, 'get')
-                .then(res => {
-                    if (res.error?.message)
-                        toastr.error(res.error.message)
-                    else {
-                        dispatch({
-                            type: "GET_PAGINATED_PRODUCTS",
-                            response: res.response
 
-                        });
-                    }
-                });
+
+
+                })
+                .catch(err => toastr.error(err));
+            // :
+            // send({token: authHelper()}, `/api/product/${perPage}?page=${page}`, 'get')
+            //     .then(res => {
+            //             dispatch({
+            //                 type: "GET_PAGINATED_PRODUCTS",
+            //                 response: res.response
+            //             });
+            //
+            //
+            //     });
+                // .catch(err => toastr.error(err))
 
     };
 };
@@ -228,7 +242,8 @@ export const updateProfile = (profile) => {
             r.error?.message
                 ? toastr.info(r.error.message)
                 : toastr.success("Updated !");
-        });
+        })
+            .catch(err => toastr.error(err));
     };
 };
 //PURCHASES
@@ -244,10 +259,12 @@ export const getAllPurchases = () => {
                 dispatch({
                     type: "GET_PURCHASES",
                     purchases: res.response.data
-                })
+                });
+
             } else toastr.error(res.response.message);
 
         })
+            .catch(err => toastr.error(err));
     }
 }
 
@@ -265,12 +282,14 @@ export const getConfirmedPurchases = () => {
                     purchases: res.response.data
                 });
                 dispatch(setLoad(false));
+
             } else {
                 dispatch(setLoad(false));
                 toastr.error(res.response.message);
             }
 
         })
+            .catch(err => toastr.error(err));
 
     }
 }
@@ -289,12 +308,15 @@ export const getPendingPurchases = () => {
                     purchases: res.response.data
                 });
                 dispatch(setLoad(false));
+
             } else {
                 dispatch(setLoad(false));
+
                 toastr.error(res.response.message);
             }
 
         })
+            .catch(err => toastr.error(err));
 
     }
 }
@@ -313,12 +335,15 @@ export const getDeclinedPurchases = () => {
                     purchases: res.response.data
                 });
                 dispatch(setLoad(false));
+
             } else {
                 dispatch(setLoad(false));
+
                 toastr.error(res.response.message);
             }
 
         })
+            .catch(err => toastr.error(err));
 
     }
 }
@@ -338,9 +363,11 @@ export const getSalesRequests = () => {
                     requests: res.response.data
                 });
                 dispatch(setLoad(false));
+
             } else toastr.error(res.response.message);
 
         })
+            .catch(err => toastr.error(err));
 
     }
 }
@@ -364,16 +391,18 @@ export const confirmPurchase = (purchase) => {
             "/api/purchase/confirm",
             "post"
         ).then(res => {
-            if (res.response?.message) {
+            if (res.response?.status === 200) {
                 dispatch({
                     type: "UPDATE_SALES_REQUESTS",
                     id: purchase.purchase_id
                 });
                 dispatch(getAllPurchases());
                 toastr.success(res.response.message);
-            } else toastr.error(res.response.message);
+            }
+            else toastr.error(res.response.message);
 
         })
+            .catch(err => toastr.error(err));
 
     }
 }
@@ -402,11 +431,19 @@ export const declinePurchase = (purchase) => {
                         type: "UPDATE_SALES_REQUESTS",
                         id: purchase.purchase_id
                     });
+                    toastr.options.preventDuplicates = true;
                     toastr.success(res.response.message);
                     dispatch(getAllPurchases());
-                } else toastr.error(res.response.message);
+                } else {
+                    toastr.options.preventDuplicates = true;
+                    toastr.error(res.response.message);
+                }
 
             })
+            .catch(err => {
+                toastr.options.preventDuplicates = true;
+                toastr.error(err)
+            });
 
     }
 }
@@ -423,7 +460,19 @@ export const clear = () => {
         type: "CLEAR",
     };
 };
+export const getMovements = (id) =>{
+    return dispatch =>{
+        send({token: authHelper()}, "/api/account/" + id, "get").then((r) => {
 
+            dispatch({
+                type: "GET_MOVEMENTS",
+                movements: r.response.data,
+            });
+
+
+        });
+    }
+}
 export const updateState = () => {
     return (dispatch) => {
         send({token: authHelper()}, "/api/profile", "get").then((p) => {
@@ -433,12 +482,11 @@ export const updateState = () => {
                     state: {...p.response.data},
                 });
 
+
                 toastr.options.preventDuplicates = true;
-                toastr.options.closeButton = true;
-                toastr.options.closeHtml =
-                    '<button><i class="fa fa-close"></i></button>';
                 toastr.info(`${p.response.data.username}`, "Bienvenido");
             }
-        });
+        })
+            .catch(err => toastr.error(err));
     };
 };

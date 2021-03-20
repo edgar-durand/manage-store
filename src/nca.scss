@@ -1,0 +1,216 @@
+$color-rojo: rgb(237, 85, 101);
+$color-green: #2c8f7b;
+$color-fuente: rgb(103, 106, 108);
+$color-success: rgb(98, 203, 49);
+html {
+  text-transform: uppercase;
+}
+.colorRojo{
+  color: $color-rojo;
+}
+input[type="checkbox"] {
+    position: absolute; // take it out of document flow
+    opacity: 0; // hide it
+  
+    & + label {
+      position: relative;
+      cursor: pointer;
+      padding: 0;
+    }
+  
+    // Box.
+    & + label:before {
+      content: '';
+      margin-right: 10px;
+      display: inline-block;
+      vertical-align: text-top;
+      width: 20px;
+      height: 20px;
+      background: white;
+      box-shadow: 0 0 0 1px rgb(211, 207, 200);
+    }
+  
+    // Box hover
+    &:hover + label:before {
+      box-shadow: 0 0 0 2px $color-green !important;
+    }
+    
+    // Box focus
+    &:focus + label:before {
+      box-shadow: 0 0 0 1px rgb(211, 207, 200);
+      
+    }
+  
+    // Box checked
+    &:checked + label:before {
+      background: $color-green;
+      box-shadow: 0 0 0 2px $color-green;
+    }
+    
+    // Disabled state label.
+    &:disabled + label {
+      color: #b8b8b8;
+      cursor: auto;
+    }
+  
+    // Disabled box.
+    &:disabled + label:before {
+      box-shadow: none;
+      background: #ddd;
+    }
+  
+    // Checkmark. Could be replaced with an image
+    &:checked + label:after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 9px;
+      background: white;
+      width: 2px;
+      height: 2px;
+      box-shadow: 
+        2px 0 0 white,
+        4px 0 0 white,
+        4px -2px 0 white,
+        4px -4px 0 white,
+        4px -6px 0 white,
+        4px -8px 0 white;
+      transform: rotate(45deg);
+    }
+  }
+.mini-navbar .hide-on-mini {
+    display: none;
+}
+
+.navbar-top-links li svg[class*="fa"] {
+    margin-right: 6px;
+}
+[class^="icheckbox_"] {
+    margin-right: 5px !important;
+}
+
+.diagram-component {
+    width: 400px;
+    height: 400px;
+    border: solid 1px black;
+    background-color: white;
+  }
+
+#wrapper > #page-wrapper {
+    -webkit-transition: width 0.4s;
+    transition: width 0.4s;
+    width: 100%;
+}
+.collapse.show {
+  display: block !important;
+}
+.accordion {
+  width: 100%;
+  & > div{
+
+      & > li {
+        width: 100%;
+        position: relative;
+        display: block;
+    
+        & > a {
+          color: rgb(167, 177, 194);
+          font-weight: 600;
+          padding: 14px 20px 14px 25px;
+          width: 100%;
+          display: block;
+          &:hover{
+            background-color: rgb(41, 56, 70);
+            color: rgb(255, 255, 255);
+          }
+        }
+      }
+    }
+  }
+.nav div.active {
+  border-left: 4px solid rgb(25, 170, 141);
+  background: rgb(41, 56, 70);
+}
+.react-bs-table-container input.form-control{
+  width: 15em;
+  margin: 0 0 0 auto;
+}
+.nav-second-level.component, .component-li-icon {
+  display: none;
+}
+.mini-navbar .nav-second-level.component, .mini-navbar .component-li-icon {
+  display: block;
+}
+.mini-navbar .component-li{
+  display: none;
+}
+.navbar-top-links .dropdown-alerts {
+  width: auto;
+  min-width: 0;
+}
+.dropdown-menu.dropdown-alerts {
+  & a {
+    color: rgb(136, 136, 136);
+  }
+  & i {
+    font-size: 2em;
+  }
+}
+
+.btn-filters-menu {
+  width: 100%;
+  min-width: 195px;
+  & button {
+    width: 50%;
+    border-radius: 0;
+}
+}
+.mini-navbar .nav .nav-second-level, .mini-navbar li.active .nav-second-level {
+  left: 63px;
+}
+.nav.nav-second-level .component-submenu {
+  padding: 5px 20px 5px 21px;
+}
+.mini-navbar .nav-second-level li .component-submenu {
+  padding: 5px 0px;
+}
+body.mini-navbar .navbar-default .nav > li > a svg:first-of-type {
+  margin: 0 auto !important;
+  display: block;
+}
+.navbar-default .nav > li div{
+  color: $color-fuente !important;
+}
+.color-success {
+  color: $color-success;
+}
+.footer label{
+  margin-bottom: 0;
+}
+.nav.navbar-top-links a {
+  font-size: 14px;
+  color: inherit;
+}
+.navbar-default .nav > li > a:hover.not-hover {
+  background-color: inherit;
+  color: inherit;
+}
+@media (min-width: 768px) {
+
+  .navbar-static-side {
+    z-index: 2001;
+    width: 280px;
+  }
+}
+nav.navbar.navbar-static-top {
+  background-color: white;
+}
+.react-bs-container-header.table-header-wrapper table thead tr > th span.dropdown {
+  display: none;
+}
+.react-bs-container-header.table-header-wrapper table thead tr > th span.dropup {
+  margin-left: 5px;
+}
+body:not(.fixed-sidebar):not(.canvas-menu).mini-navbar .nav li:hover > .nav-second-level, .mini-navbar .nav li:focus > .nav-second-level {
+  min-width: 215px;
+}

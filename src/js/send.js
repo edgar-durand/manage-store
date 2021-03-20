@@ -14,6 +14,7 @@ const send = async (state, endPoint, method) => {
               method: "POST",
               headers: {
                 Accept: "application/json",
+                "accept-encoding": "gzip, deflate, br",
                 "Content-Type": "application/json",
                 Authorization: "Bearer " + authHelper(),
               },
@@ -31,6 +32,7 @@ const send = async (state, endPoint, method) => {
               method: "POST",
               headers: {
                 Accept: "*/*",
+                "accept-encoding": "gzip, deflate, br",
                 Authorization: "Bearer " + authHelper(),
               },
               body: state.form,
@@ -47,6 +49,7 @@ const send = async (state, endPoint, method) => {
               mode: "cors",
               headers: {
                 Accept: "application/json",
+                "accept-encoding": "gzip, deflate, br",
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${state.token}`,
               },
@@ -62,6 +65,7 @@ const send = async (state, endPoint, method) => {
               method: "PUT",
               headers: {
                 Accept: "application/json",
+                "accept-encoding": "gzip, deflate, br",
                 "Content-Type": "application/json",
                 Authorization: "Bearer " + state.token,
               },
@@ -78,6 +82,7 @@ const send = async (state, endPoint, method) => {
               method: "PUT",
               headers: {
                 Accept: "*/*",
+                "accept-encoding": "gzip, deflate, br",
                 // "Content-Type": "application/json",
                 // "Content-Type": "multipart/form-data",
                 Authorization: "Bearer " + state.token,
@@ -94,7 +99,8 @@ const send = async (state, endPoint, method) => {
             const config = {
               method: "PATCH",
               headers: {
-                Accept: "*/*",
+                Accept: "application/json",
+                "accept-encoding": "gzip, deflate, br",
                 "Content-Type": "application/json",
                 // "Content-Type": "multipart/form-data",
                 Authorization: "Bearer " + state.token,
@@ -112,6 +118,7 @@ const send = async (state, endPoint, method) => {
               method: "DELETE",
               headers: {
                 Accept: "application/json",
+                "accept-encoding": "gzip, deflate, br",
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${state.token}`,
               },
@@ -129,6 +136,7 @@ const send = async (state, endPoint, method) => {
           method: "POST",
           headers: {
             Accept: "*/*",
+            "accept-encoding": "gzip, deflate, br",
             // "Content-Type": "application/json",
             // "Content-Type": "multipart/form-data",
           },
@@ -143,6 +151,7 @@ const send = async (state, endPoint, method) => {
           method: method,
           headers: {
             Accept: "application/json",
+            "accept-encoding": "gzip, deflate, br",
             "Content-Type": "application/json",
           },
           body: JSON.stringify(state),
@@ -155,6 +164,7 @@ const send = async (state, endPoint, method) => {
           method: method,
           headers: {
             Accept: "application/json",
+            "accept-encoding": "gzip, deflate, br",
             "Content-Type": "application/json",
           },
         };

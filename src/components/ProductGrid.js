@@ -37,7 +37,7 @@ const Product = ({
                         </div>
                         <div className="product-desc">
               <span className="product-price">
-                {are_mine === true ? `$ ${price_cost?.toFixed(2)}`: sales_price === 0 ? "RESERVED" : `$ ${sales_price?.toFixed(2) }` }
+                {are_mine === true ? `$ ${parseFloat(price_cost).toFixed(2)}`: sales_price === 0 ? "RESERVED" : `$ ${sales_price?.toFixed(2) }` }
               </span>
                             <small className="text-muted">{category || "Category"}</small>
                             <Link to="#" className="product-name">

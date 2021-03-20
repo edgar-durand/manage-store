@@ -27,10 +27,10 @@ const GoForShopping = ({ products, cart, addToCart }) => {
   return <NewProductForm />;
 };
 
-const mapStateToProps = () => {
+const mapStateToProps = (state) => {
   return {
-    products: JSON.parse(localStorage.getItem("store"))?.productList,
-    cart: JSON.parse(localStorage.getItem("store"))?.cart,
+    products: state?.productList,
+    cart: state?.cart,
   };
 };
 

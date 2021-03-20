@@ -51,6 +51,7 @@ const Login = () => {
 
   if (data.token && !data.error) {
     localStorage.setItem("token", data.token);
+    toastr.options.preventDuplicates = true;
     toastr.success("Session logged in successfully.");
     return <Redirect to="/home/" />;
   }
