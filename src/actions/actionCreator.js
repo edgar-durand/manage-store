@@ -3,6 +3,7 @@ import authHelper from "../js/authHelper";
 import msgNotification from "../js/msgNotification";
 import send from "../js/send";
 import store from "../store";
+import {storeToLocalStore} from "../js/storeHelper";
 // CART
 export const addToCart = (product) => {
     const isMy = store.getState().productList.find(x => x.id === product.id);
@@ -52,13 +53,14 @@ export const deleteAccounts = (id) => {
             if (r.value) {
                 send({token: authHelper()}, `/api/account/${id}/`, "delete").then(
                     (r) => {
-                        if (r.error.message)
-                            toastr.error(r.error.message)
-                        else {
+                        if (r.error) {
+                            toastr.error("Account is not empty, empty or transfer first.")
+                        } else {
                             dispatch({
                                 type: "DELETE_ACCOUNTS",
                                 id,
                             });
+                            dispatch(getAccounts());
                             toastr.success(`Account deleted.`, "DELETED !");
                         }
 
@@ -66,7 +68,7 @@ export const deleteAccounts = (id) => {
                 );
             }
         })
-            .catch(err => toastr.error(err));
+        // .catch(err => toastr.error(err));
     };
 };
 
@@ -77,9 +79,10 @@ export const getAccounts = () => {
                 type: "GET_ACCOUNTS",
                 accounts: res.response?.data?.accounts,
             });
+            storeToLocalStore('accounts', 'accounts');
 
         })
-        // .catch(err => toastr.error(err));
+            .catch(err => toastr.error(err));
     };
 };
 
@@ -91,6 +94,7 @@ export const getCategories = () => {
                     type: "GET_CATEGORIES",
                     categories: r.response.data,
                 });
+                storeToLocalStore('categories', 'categories');
 
             }
         )
@@ -107,6 +111,7 @@ export const setListProducts = () => {
                     type: "SET_LIST_PRODUCTS",
                     product: r.response.data,
                 });
+                storeToLocalStore('productList', 'productList');
 
             }
         )
@@ -140,10 +145,13 @@ export const addNewProduct = (product) => {
 export const getUsers = () => {
     return (dispatch) => {
         send({}, "/api/user/", "get").then((r) => {
-            dispatch({type: "GET_USERS", users: r?.response?.data});
+            if (r.response?.data) {
+                dispatch({type: "GET_USERS", users: r.response.data});
+                storeToLocalStore('users', 'users');
+            } else toastr.error(`Can not connect with service.`);
 
         })
-            .catch(err => toastr.error(err));
+            .catch(err => toastr.error(`Can not connect with service. ${err}`));
     };
 };
 // GLOBAL STATE
@@ -159,8 +167,8 @@ export const getPaginatedUsers = (page = 1, search, perPage = 20) => {
                         dispatch({
                             type: "GET_PAGINATED_USERS",
                             response: res.response
-
                         });
+                        storeToLocalStore('paginated_users', 'paginated_users');
 
                     }
                 })
@@ -173,8 +181,8 @@ export const getPaginatedUsers = (page = 1, search, perPage = 20) => {
                         dispatch({
                             type: "GET_PAGINATED_USERS",
                             response: res.response
-
                         });
+                        storeToLocalStore('paginated_users', 'paginated_users');
 
                     }
                 })
@@ -182,32 +190,31 @@ export const getPaginatedUsers = (page = 1, search, perPage = 20) => {
 
     };
 };
-export const getPaginatedProducts = (page = 1, search , perPage = 20) => {
+export const getPaginatedProducts = (page = 1, search, perPage = 20) => {
     return (dispatch) => {
-        // search ?
-            send({token: authHelper()}, `/api/product/${perPage}?page=${page}&search=${search}`, 'get')
+        search ?
+            (send({token: authHelper()}, `/api/product/${perPage}?page=${page}&search=${search}`, 'get')
                 .then(res => {
-                        dispatch({
-                            type: "GET_PAGINATED_PRODUCTS",
-                            response: res.response
-
-                        });
-
+                    dispatch({
+                        type: "GET_PAGINATED_PRODUCTS",
+                        response: res.response
+                    });
+                    storeToLocalStore('paginated_products', 'paginated_products');
 
 
                 })
-                .catch(err => toastr.error(err));
-            // :
-            // send({token: authHelper()}, `/api/product/${perPage}?page=${page}`, 'get')
-            //     .then(res => {
-            //             dispatch({
-            //                 type: "GET_PAGINATED_PRODUCTS",
-            //                 response: res.response
-            //             });
-            //
-            //
-            //     });
-                // .catch(err => toastr.error(err))
+                .catch(err => toastr.error(err)))
+            :
+            (send({token: authHelper()}, `/api/product/${perPage}?page=${page}`, 'get')
+                .then(res => {
+                    dispatch({
+                        type: "GET_PAGINATED_PRODUCTS",
+                        response: res.response
+                    });
+                    storeToLocalStore('paginated_products', 'paginated_products');
+
+                })
+                .catch(err => toastr.error(err)))
 
     };
 };
@@ -232,16 +239,13 @@ export const updateProfile = (profile) => {
             "patch"
         ).then((r) => {
 
-            if (!r.error?.message) {
+            if (!r.error) {
                 dispatch(updateState());
             }
-            dispatch({
-                type: "SET_LOAD",
-                load: false,
-            });
+            dispatch(setLoad(false));
             r.error?.message
                 ? toastr.info(r.error.message)
-                : toastr.success("Updated !");
+                : toastr.success(r.response.message);
         })
             .catch(err => toastr.error(err));
     };
@@ -260,6 +264,7 @@ export const getAllPurchases = () => {
                     type: "GET_PURCHASES",
                     purchases: res.response.data
                 });
+                storeToLocalStore('purchases', 'purchases');
 
             } else toastr.error(res.response.message);
 
@@ -276,16 +281,19 @@ export const getConfirmedPurchases = () => {
             "/api/purchase/get_confirmed",
             "get"
         ).then(res => {
-            if (res.response.data) {
+            if (res.response?.data) {
                 dispatch({
                     type: "GET_PURCHASES",
-                    purchases: res.response.data
+                    purchases: res.response?.data
                 });
+                storeToLocalStore('purchases', 'purchases');
                 dispatch(setLoad(false));
+                storeToLocalStore('load', 'load');
 
             } else {
                 dispatch(setLoad(false));
-                toastr.error(res.response.message);
+                storeToLocalStore('load', 'load');
+                toastr.error(res.response?.message);
             }
 
         })
@@ -307,11 +315,13 @@ export const getPendingPurchases = () => {
                     type: "GET_PURCHASES",
                     purchases: res.response.data
                 });
+                storeToLocalStore('purchases', 'purchases');
                 dispatch(setLoad(false));
+                storeToLocalStore('load', 'load');
 
             } else {
                 dispatch(setLoad(false));
-
+                storeToLocalStore('load', 'load');
                 toastr.error(res.response.message);
             }
 
@@ -334,11 +344,12 @@ export const getDeclinedPurchases = () => {
                     type: "GET_PURCHASES",
                     purchases: res.response.data
                 });
+                storeToLocalStore('purchases', 'purchases');
                 dispatch(setLoad(false));
 
             } else {
                 dispatch(setLoad(false));
-
+                storeToLocalStore('load', 'load');
                 toastr.error(res.response.message);
             }
 
@@ -362,8 +373,9 @@ export const getSalesRequests = () => {
                     type: "GET_SALES_REQUESTS",
                     requests: res.response.data
                 });
+                storeToLocalStore('sales_requests', 'sales_requests');
                 dispatch(setLoad(false));
-
+                storeToLocalStore('load', 'load');
             } else toastr.error(res.response.message);
 
         })
@@ -398,8 +410,7 @@ export const confirmPurchase = (purchase) => {
                 });
                 dispatch(getAllPurchases());
                 toastr.success(res.response.message);
-            }
-            else toastr.error(res.response.message);
+            } else toastr.error(res.response.message);
 
         })
             .catch(err => toastr.error(err));
@@ -449,9 +460,10 @@ export const declinePurchase = (purchase) => {
 }
 // GENERAL
 
-export const load = () => {
+export const load = (keyName) => {
     return {
         type: "LOAD",
+        keyName
     };
 };
 
@@ -460,16 +472,16 @@ export const clear = () => {
         type: "CLEAR",
     };
 };
-export const getMovements = (id) =>{
-    return dispatch =>{
+export const getMovements = (id) => {
+    return dispatch => {
         send({token: authHelper()}, "/api/account/" + id, "get").then((r) => {
 
             dispatch({
                 type: "GET_MOVEMENTS",
-                movements: r.response.data,
+                movements: r.response?.data,
             });
 
-
+            storeToLocalStore('movements', 'movements');
         });
     }
 }
@@ -479,9 +491,10 @@ export const updateState = () => {
             if (p.response?.data) {
                 dispatch({
                     type: "UPDATE_STATE",
-                    state: {...p.response.data},
+                    state: p.response.data,
                 });
 
+                storeToLocalStore('globalState', 'globalState');
 
                 toastr.options.preventDuplicates = true;
                 toastr.info(`${p.response.data.username}`, "Bienvenido");

@@ -15,7 +15,6 @@ import {
     updateState,
 } from "../actions/actionCreator";
 import toastr from "toastr";
-import store from "../store";
 import send from "../js/send";
 import msgNotification from "../js/msgNotification";
 import authHelper from "../js/authHelper";
@@ -23,7 +22,6 @@ import Loading from "../components/Loading/Loading";
 import NavUI from "../components/NavBar/NavUI";
 import MovementDetail from "../components/MyAccount/MovementDetail";
 import NavBar from "../components/NavBar";
-import {storeToLocalStore} from "../js/storeHelper";
 
 const IndexHome = lazy(() => import("./index/IndexHome"));
 const Detail = lazy(() => import("../components/Detail/Detail"));
@@ -61,12 +59,22 @@ const UsersContatc = lazy(() => import("./Deals/UsersContact"));
 const Home = ({cart, globalState}) => {
     const dispatch = useDispatch();
     useEffect(() => {
-        if (
-            Object.values(
-                JSON.parse(localStorage.getItem('store'))?.globalState?.email || []
-            ).length
+        if (JSON.parse(localStorage.getItem('globalState'))?.email.length
         ) {
-            dispatch(load());
+            dispatch(load('globalState'));
+            dispatch(load('cart'));
+            dispatch(load('page'));
+            dispatch(load('searchField'));
+            dispatch(load('accounts'));
+            dispatch(load('movements'));
+            dispatch(load('purchases'));
+            dispatch(load('sales_requests'));
+            dispatch(load('productList'));
+            dispatch(load('categories'));
+            dispatch(load('paginated_users'));
+            dispatch(load('paginated_products'));
+            dispatch(load('load'));
+            dispatch(load('users'));
         } else {
             dispatch(setListProducts());
             dispatch(updateState());
@@ -77,19 +85,13 @@ const Home = ({cart, globalState}) => {
             dispatch(getPaginatedUsers());
             dispatch(getPaginatedProducts());
         }
-        const unsubscribe = store.subscribe(()=>{
-            storeToLocalStore();
 
-        });
-        return ()=>{
-            unsubscribe();
-        }
         // eslint-disable-next-line
     }, []);
 
     const logOut = () => {
         let msg = "";
-        Object.values(cart).length
+        Object.values(cart || []).length
             ? (msg =
                 "You will lose the items in your shopping cart. Continue logging out ?")
             : (msg = "Desea cerrar la sesion ?");
@@ -105,6 +107,20 @@ const Home = ({cart, globalState}) => {
                     });
 
                     localStorage.removeItem("token");
+                    localStorage.removeItem('globalState');
+                    localStorage.removeItem('cart');
+                    localStorage.removeItem('page');
+                    localStorage.removeItem('searchField');
+                    localStorage.removeItem('accounts');
+                    localStorage.removeItem('movements');
+                    localStorage.removeItem('purchases');
+                    localStorage.removeItem('sales_requests');
+                    localStorage.removeItem('productList');
+                    localStorage.removeItem('categories');
+                    localStorage.removeItem('paginated_users');
+                    localStorage.removeItem('paginated_products');
+                    localStorage.removeItem('load');
+                    localStorage.removeItem('account_id');
                     dispatch(clear());
                     return <Redirect to="/login"/>;
                 }
@@ -212,7 +228,7 @@ const mapStateToProps = (state) => {
         cart: state?.cart,
         // cart: JSON.parse(localStorage.getItem("store"))?.cart,
         // globalState: state?.globalState,
-        globalState: JSON.parse(localStorage.getItem("store"))?.globalState,
+        globalState: JSON.parse(localStorage.getItem("globalState")),
     };
 };
 export default connect(mapStateToProps)(Home);

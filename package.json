@@ -34,7 +34,8 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "rimraf": "^3.0.0",
-    "sweetalert2": "^9.7.0"
+    "sweetalert2": "^9.7.0",
+    "toastr": "latest"
   },
   "scripts": {
     "start": "rimraf ./build && react-scripts start",

@@ -7,6 +7,7 @@ import {
   deleteFromCart,
   setProductQuantity,
 } from "../../actions/actionCreator";
+import {storeToLocalStore} from "../../js/storeHelper";
 
 const CartList = ({ cart, handleChange, handleClick }) => (
   <CartListUI
@@ -18,6 +19,7 @@ const CartList = ({ cart, handleChange, handleClick }) => (
 
 const mapStateToProps = (state) => {
   return {
+    // cart: JSON.parse(localStorage.getItem('store')).cart,
     cart: state.cart,
   };
 };
@@ -25,14 +27,13 @@ const mapDispatchToProps = (dispatch) => {
   return {
     handleChange(e, product) {
 
-      clearTimeout();
-      setTimeout(() => {
         dispatch(
           setProductQuantity(
-            Object.assign(product, { inStock: +e.target.value})
+            Object.assign(product, {inStock: +e.target?.value})
           )
         );
-      },1000);
+        storeToLocalStore('cart','cart');
+
       if (e.target.value === "0") {
         e.target.value = 1;
         toastr.warning(
@@ -52,6 +53,7 @@ const mapDispatchToProps = (dispatch) => {
       ).then((r) => {
         if (r.value) {
           dispatch(deleteFromCart(id));
+          storeToLocalStore('cart','cart');
         }
       });
     },

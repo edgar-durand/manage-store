@@ -18,7 +18,7 @@ const Movement = ({movements}) => {
                 <div className="ibox-content" id="ibox-content">
                     <div
                         id="vertical-timeline"
-                        className="vertical-container dark-timeline "
+                        className="vertical-container center-orientation dark-timeline "
                     >
                         {Object.values(movements).map((movement) => {
                             return (
@@ -111,7 +111,7 @@ const mapStateToProps = (state) => {
     let real = 0,
         stored = [];
     // state.movements.forEach(
-    Object.values(state.movements).forEach(
+    Object.values(state.movements ?? []).forEach(
     // Object.values(JSON.parse(localStorage.getItem('store')).movements).forEach(
         (movement) => {
             real += movement.amount;

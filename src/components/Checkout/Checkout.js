@@ -36,7 +36,7 @@ const Checkout = ({
       setState({
         ...state,
         account: e.value,
-        credit: Object.values(accounts).find((x) => x.id === e.value).cash,
+        credit: accounts.find((x) => x.id === e.value).cash,
       });
     else setState({ ...state, credit: 0 });
   };

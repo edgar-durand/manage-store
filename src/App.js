@@ -14,9 +14,8 @@ const Home = lazy(() => import("./pages/Home"));
 export default () => {  
     useEffect(() => {
         if (
-          !Object.values(JSON.parse(localStorage.getItem("store"))?.users || [])
-            .length ||
-          store.getState?.users?.error
+          !localStorage.getItem("users")?.length ||
+          store.getState()?.users?.error
         ) {
           store.dispatch(getUsers());
         }
@@ -30,7 +29,7 @@ export default () => {
           <Route exact path="/register" component={Register} />
           <Route path="/home" component={Home} />
           <Route>
-                <Redirect to='/' />
+                <Redirect to='/login' />
           </Route>
         </Switch>
       </Suspense>

@@ -4,7 +4,7 @@ import Contact from "../../components/Contact/Contact";
 import Paging from "../../components/Paging/Paging";
 
 const Deals = ({users,searField}) => (
-    <Paging data={users} Component={Contact} searField={searField} page={JSON.parse(localStorage.getItem("store"))?.paginated_users.current_page}
+    <Paging data={users} Component={Contact} searField={searField} page={JSON.parse(localStorage.getItem("paginated_users"))?.current_page}
             Paginated="users"/>
 );
 

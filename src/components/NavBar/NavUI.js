@@ -28,7 +28,7 @@ const NavUI = ({
         <nav className="navbar-default navbar-static-side" role="navigation">
             <div className="sidebar-collapse">
                 <ul className="nav metismenu animated fadeIn" id="side-menu">
-                    <NavHeader name={last_name} profile_small={image} status={status_message} />
+                    <NavHeader name={last_name} profile_small={image} status={status_message}/>
                     <NavLi
                         title="Home"
                         icon={faHome}
@@ -38,6 +38,11 @@ const NavUI = ({
                         title="My accounts"
                         icon={faCreditCard}
                         to="/home/my_accounts"
+                        keep_active
+                        menu={  [{component: <Link className="label col-12" to="/home/new_account/">
+                                   Create new account <FontAwesomeIcon icon={"plus"} />
+                                </Link>}]}
+
                     />
                     <NavLi
                         title="My products"
@@ -69,6 +74,7 @@ const NavUI = ({
               </span>}
                     />
 
+
                     <li>
                         <Link onClick={() => logOut()} to={document.location.pathname}>
                             <FontAwesomeIcon icon={'sign-out-alt'} size="2x"/>{" "}
@@ -84,11 +90,8 @@ const NavUI = ({
 
 const mapStateToProps = (state) => {
     return {
-        products: Object.values(state?.productList || []
-        ).length,
-        contacts:
-            Object.values(state?.users || []).length -
-            1,
+        products: state?.productList?.length,
+        contacts: JSON.parse(localStorage.getItem('users')).length - 1,
     };
 };
 export default connect(mapStateToProps)(NavUI);

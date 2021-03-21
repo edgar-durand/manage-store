@@ -5,6 +5,7 @@ import "../styles/fontawesome";
 import store from "../../store";
 import {uuidv4} from "../../js/uuidv4";
 import {getPaginatedProducts, getPaginatedUsers, setPageNumber, setSearchField} from "../../actions/actionCreator";
+import {storeToLocalStore} from "../../js/storeHelper";
 
 const Paging = ({
                     data,
@@ -19,13 +20,13 @@ const Paging = ({
                     are_mine,
                     Paginated
                 }) => {
-        const [state, setState] = useState({
-            searchField: searField || "",
-            match: {active: false, value: 0},
-            page: page || 1,
-            show: +show || 20,
-        });
-    if (data!== null && data!==undefined) {
+    const [state, setState] = useState({
+        searchField: searField || "",
+        match: {active: false, value: 0},
+        page: page || 1,
+        show: +show || 20,
+    });
+    if (data !== null && data !== undefined) {
 
 
         const {searchField, match} = state;
@@ -113,22 +114,24 @@ const Paging = ({
         };
         const handleChange = (e) => {
             store.dispatch(setPageNumber(1));
+            storeToLocalStore('page','page');
             if (Paginated && Paginated === 'users') {
-                store.dispatch(setSearchField(e.target.value));
-                clearTimeout();
-                setTimeout(() => {
-                    store.dispatch(getPaginatedUsers(1, e.target.value));
-                }, 100);
+                store.dispatch(setSearchField(e.target?.value));
+                storeToLocalStore('searchField','searchField');
+                store.dispatch(getPaginatedUsers(1, e.target?.value));
+
 
             } else if (Paginated && Paginated === 'products') {
                 store.dispatch(setSearchField(e.target.value));
-                clearTimeout();
-                setTimeout(() => {
-                    store.dispatch(getPaginatedProducts(1, e.target.value));
-                }, 100);
+                storeToLocalStore('searchField','searchField');
+                store.dispatch(getPaginatedProducts(1, e.target.value));
 
-            } else
+            } else {
+                store.dispatch(setSearchField(e.target.value));
+                storeToLocalStore('searchField','searchField');
                 setState({...state, [e.target.name]: e.target.value});
+            }
+
         };
 
         const xmPages = () => {
@@ -144,6 +147,7 @@ const Paging = ({
                         key={uuidv4()}
                         onClick={() => {
                             store.dispatch(setPageNumber(page));
+                            storeToLocalStore('page','page');
                             if (Paginated) {
                                 if (Paginated === 'users')
                                     store.dispatch(getPaginatedUsers(store.getState().page, store.getState().searchField));
@@ -162,6 +166,7 @@ const Paging = ({
                         key={uuidv4()}
                         onClick={() => {
                             store.dispatch(setPageNumber(page));
+                            storeToLocalStore('page','page');
                             if (Paginated) {
                                 if (Paginated === 'users')
                                     store.dispatch(getPaginatedUsers(store.getState().page, store.getState().searchField));
@@ -181,14 +186,16 @@ const Paging = ({
         };
         const topPriceFieldSet = () => (
             <React.Fragment>
-                <label className="col-1">Top price:</label>
+                <label className="col-1 ">Top price:</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
                 <input
                     type="checkbox"
                     name="matchControl"
+                    className="form-control"
                     onChange={() => handleMatchControl()}
                 />
-                <label/>
+                <label />
                 &nbsp;&nbsp;
                 <FontAwesomeIcon icon={"dollar-sign"} size="2x"/>
                 &nbsp;&nbsp;
@@ -232,7 +239,9 @@ const Paging = ({
                             <input
                                 type="text"
                                 name="searchField"
+                                autoFocus={true}
                                 className="form-control"
+                                value={store.getState().searchField}
                                 onChange={(e) => handleChange(e)}
                             />
                         </label>
@@ -257,6 +266,7 @@ const Paging = ({
                                 onClick={() => {
                                     if (store.getState().page > 0) {
                                         store.dispatch(setPageNumber(store.getState().page - 1));
+                                        storeToLocalStore('page','page');
                                         if (Paginated) {
                                             if (Paginated === 'users')
                                                 store.dispatch(getPaginatedUsers(store.getState().page, store.getState().searchField));
@@ -276,6 +286,7 @@ const Paging = ({
                             <button
                                 onClick={() => {
                                     store.dispatch(setPageNumber(store.getState().page + 1));
+                                    storeToLocalStore('page','page');
                                     if (Paginated) {
                                         if (Paginated === 'users')
                                             store.dispatch(getPaginatedUsers(store.getState().page, store.getState().searchField));

@@ -1,6 +1,7 @@
 import authHelper from "./authHelper";
 
 const send = async (state, endPoint, method) => {
+
   const SERVER = "http://localhost:8000";
   let result, res, dat;
   method = method.toUpperCase();
@@ -117,8 +118,7 @@ const send = async (state, endPoint, method) => {
             const config = {
               method: "DELETE",
               headers: {
-                Accept: "application/json",
-                "accept-encoding": "gzip, deflate, br",
+                Accept: "*/*",
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${state.token}`,
               },

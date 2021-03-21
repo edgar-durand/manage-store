@@ -1,10 +1,11 @@
 import React from 'react'
-import { addToCart } from '../../actions/actionCreator';
+import {addToCart} from '../../actions/actionCreator';
 import Paging from '../../components/Paging/Paging';
 import {connect} from "react-redux";
 import store from '../../store';
 import ProductGrid from '../../components/ProductGrid';
 import CartSummary from '../../components/CartSummary/CartSummary';
+import {storeToLocalStore} from "../../js/storeHelper";
 
 
 const Deals = ({allproducts, cart, page}) => {
@@ -17,7 +18,10 @@ const Deals = ({allproducts, cart, page}) => {
                 col={(cart !== null && Object.values(cart).length) ? "9" : "12"}
                 Component={ProductGrid}
                 show="20"
-                action={(product) => store.dispatch(addToCart(product))}
+                action={(product) => {
+                    store.dispatch(addToCart(product));
+                    storeToLocalStore('cart','cart');
+                }}
                 priceField
                 Paginated="products"
             />

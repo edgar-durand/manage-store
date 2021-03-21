@@ -1,7 +1,8 @@
 import React, {useRef, useEffect} from "react";
 import {Link} from "react-router-dom";
+import {storeToLocalStore} from "../../js/storeHelper";
 
-const DetailUI = ({load,photo,producName,price,category,description,author,addToCart}) => {
+const DetailUI = ({load, photo, producName, price, category, description, author, addToCart}) => {
     let div = useRef("div");
     let div2 = useRef("div2");
 
@@ -27,7 +28,8 @@ const DetailUI = ({load,photo,producName,price,category,description,author,addTo
                     <div className="col-md-5">
 
                         <div ref={div} className="img-container">
-                            <img width="300px" height="300px" style={{ objectFit: "contain" }} className="img-thumbnail " src={photo} alt=""/>
+                            <img width="300px" height="300px" style={{objectFit: "contain"}} className="img-thumbnail "
+                                 src={photo} alt=""/>
                             <div className="sk-rect1"/>
                             <div className="sk-rect2"/>
                             <div className="sk-rect3"/>
@@ -44,8 +46,8 @@ const DetailUI = ({load,photo,producName,price,category,description,author,addTo
                         </h2>
                         <div className="m-t-md">
                             <h2 className="product-main-price">{price || "RESERVED"}</h2> <h4
-                                className="text-muted">(Exclude Tax)</h4>
-                            
+                            className="text-muted">(Exclude Tax)</h4>
+
                         </div>
                         <hr/>
 
@@ -57,7 +59,10 @@ const DetailUI = ({load,photo,producName,price,category,description,author,addTo
                         <hr/>
                         <div>
                             <div className="btn-group">
-                                <button onClick={()=>addToCart()} className="btn btn-primary btn-sm"><i
+                                <button onClick={() => {
+                                    addToCart();
+                                    storeToLocalStore('cart','cart');
+                                }} className="btn btn-primary btn-sm"><i
                                     className="fa fa-cart-plus"/> Add
                                     to cart
                                 </button>

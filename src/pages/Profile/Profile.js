@@ -9,6 +9,7 @@ import toastr from "toastr";
 import getBase64 from "../../js/getBase64";
 import LoadingButton from "../../components/LoadingButton";
 import Compresor from "compressorjs";
+import {storeToLocalStore} from "../../js/storeHelper";
 
 
 const Profile = ({
@@ -73,6 +74,7 @@ const Profile = ({
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoad(true);
+    storeToLocalStore('load','load');
     handleProfile({ ...state.globalState });
   };
 
@@ -477,10 +479,9 @@ const mapStateToProps = (state) => {
     municipality: state?.globalState?.municipality,
     province: state?.globalState?.province,
 
-    facebook: JSON.parse(localStorage.getItem("store"))?.globalState?.facebook,
-    twitter: JSON.parse(localStorage.getItem("store"))?.globalState?.twitter,
-    instagram: JSON.parse(localStorage.getItem("store"))?.globalState
-      ?.instagram,
+    facebook: JSON.parse(localStorage.getItem("globalState"))?.facebook,
+    twitter: JSON.parse(localStorage.getItem("globalState"))?.twitter,
+    instagram: JSON.parse(localStorage.getItem("globalState"))?.instagram,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -490,6 +491,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     setLoad(load) {
       dispatch(setLoad(load));
+      storeToLocalStore('load','load');
     },
   };
 };

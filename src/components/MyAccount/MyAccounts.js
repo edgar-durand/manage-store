@@ -1,7 +1,5 @@
 import React from "react";
 import Card from "../Card";
-import AddNewButton from "../NewAccount/AddNewButton";
-import { Link } from "react-router-dom";
 import NewAccountForm from "../NewAccount/NewAccountForm";
 import { useSelector, useDispatch } from "react-redux";
 import {deleteAccounts, getMovements} from "../../actions/actionCreator";
@@ -23,19 +21,12 @@ const MyAccounts = () => {
         localStorage.setItem('account_id', mov);
     };
 
-    if (Object.values(accounts).length) {
+    if (accounts.length) {
         return (
             <React.Fragment>
-                <div className="wrapper wrapper-content col-12">
-                    <div
-                        style={{marginLeft: "12px"}}
-                        className="ibox-content col-md-6 float-right"
-                    >
-                        <h1 className="text-box">Account movements.</h1>
-                        <Movement/>
-                    </div>
 
-                    <div className="row animated fadeInRight" style={{display: "flex"}}>
+                <div className="row col-12">
+                    <div className="row animated fadeInRight">
                         {Object.values(accounts).map((account) => {
                             return (
                                 <Card
@@ -49,10 +40,17 @@ const MyAccounts = () => {
                                 />
                             );
                         })}
-                        <Link to="/home/new_account/">
-                            <AddNewButton/>
-                        </Link>
+
                     </div>
+                    <div
+                        style={{marginLeft: "12px"}}
+                        className="ibox-content col-12 float-right mt-1"
+                    >
+                        <h1 className="text-box">Account movements.</h1>
+                        <Movement/>
+                    </div>
+
+
                 </div>
             </React.Fragment>
         );

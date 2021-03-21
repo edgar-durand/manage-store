@@ -11,6 +11,7 @@ import {connect} from "react-redux";
 import {setListProducts, updateList} from "../actions/actionCreator";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import "./styles/fontawesome";
+import {storeToLocalStore} from "../js/storeHelper";
 
 const ProductList = ({products, handleClick}) => {
 
@@ -24,7 +25,7 @@ const ProductList = ({products, handleClick}) => {
             <div className="row">
                 <div className="col-lg-12">
                     <div className="ibox">
-                        <div className="ibox-content">
+                        <div className="ibox-content table-responsive">
                             <TreeTable
                                 columns={[
                                     {
@@ -182,11 +183,14 @@ const mapDispatchToProps = (dispatch) => {
                         {token: authHelper()},
                         `/api/product/${id}`,
                         "delete"
-                    ).then(() => dispatch(updateList(id)));
+                    ).then(() => {
+                        dispatch(updateList(id));
+                        storeToLocalStore('productList','productList');
+                    });
                 }
             });
         },
-        setListProducts(){
+        setListProducts() {
             dispatch(setListProducts());
         },
 

@@ -1,14 +1,13 @@
 import store from "../store";
 
-export const storeToLocalStore = () =>{
- // if (localStorage.getItem("store")) {
- //     localStorage.removeItem("store")
- //     localStorage.setItem("store",JSON.stringify(store.getState()))
- // }else
-     localStorage.setItem("store",JSON.stringify(store.getState()))
+export const storeToLocalStore = (keyName = "globalState", storeKey = 'globalState') => {
+    try {
+        localStorage.setItem(keyName, JSON.stringify(store.getState()[storeKey]));
+    } catch (e) {
+        console.error(e);
+        storeToLocalStore(keyName, JSON.parse(localStorage.getItem(keyName)));
+    }
+
 };
 
-export const localStoreToStore = () =>{
-    if (localStorage.getItem("store"))
-        return {...JSON.parse(localStorage.getItem("store"))}
-};
+export const localStoreToStore = (keyName = "store") => localStorage.getItem(keyName) ? JSON.parse(localStorage.getItem(keyName)) : null;

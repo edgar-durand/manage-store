@@ -9,7 +9,7 @@ const Section = ({ match, users }) => {
 };
 const mapStateToProps = () => {
   return {
-    users: JSON.parse(localStorage.getItem("store"))?.users,
+    users: JSON.parse(localStorage.getItem("users")),
   };
 };
 export default connect(mapStateToProps)(Section);

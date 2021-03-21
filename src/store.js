@@ -86,12 +86,9 @@ const reducer = (state, action) => {
         case "UPDATE_PROFILE": {
             return {
                 ...state,
-                globalState: {
-                    0: {
-                        ...state.globalState[0],
-                        ...action.profile,
-                    },
-                },
+                globalState: { ...state.globalState , ...action.profile },
+
+
             };
         }
 
@@ -132,9 +129,8 @@ const reducer = (state, action) => {
         case "DELETE_ACCOUNTS": {
             return {
                 ...state,
-                accounts: {
-                    ...Object.values(state.accounts).filter((x) => x.id !== action.id),
-                },
+                accounts: Object.values(state.accounts).filter((x) => x.id !== action.id),
+
             };
         }
 
@@ -142,7 +138,7 @@ const reducer = (state, action) => {
         case "GET_MOVEMENTS": {
             return {
                 ...state,
-                movements: {...action.movements},
+                movements: action.movements,
             };
         }
 
@@ -150,7 +146,7 @@ const reducer = (state, action) => {
         case "GET_CATEGORIES": {
             return {
                 ...state,
-                categories: {...action.categories},
+                categories: action.categories,
             };
         }
 
@@ -203,19 +199,19 @@ const reducer = (state, action) => {
         case "GET_PAGINATED_USERS": {
             return {
                 ...state,
-                paginated_users: {...action.response}
+                paginated_users: action.response
             };
         }
         case "GET_PAGINATED_PRODUCTS": {
             return {
                 ...state,
-                paginated_products: {...action.response}
+                paginated_products: action.response
             };
         }
         case "LOAD": {
             return {
                 ...state,
-                ...localStoreToStore(),
+                [action.keyName]: localStoreToStore(action.keyName),
             };
         }
         case "SET_PAGE_NUMBER": {

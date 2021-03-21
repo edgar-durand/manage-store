@@ -15,6 +15,7 @@ import Loading from "../../components/Loading/Loading";
 import Contact from "../../components/Contact/Contact";
 import ProductGrid from "../../components/ProductGrid";
 import Select from "react-select";
+import {storeToLocalStore} from "../../js/storeHelper";
 
 const IndexHome = ({purchases, loading, sales_requests, accounts}) => {
     const [state, setState] = useState(null);
@@ -22,6 +23,7 @@ const IndexHome = ({purchases, loading, sales_requests, accounts}) => {
         if (selected)
             setState(selected.value);
     };
+
     return (
         <React.Fragment>
             <div className="row">
@@ -255,6 +257,7 @@ const IndexHome = ({purchases, loading, sales_requests, accounts}) => {
                                             <input
                                                 onClick={() => {
                                                     store.dispatch(setLoad(true));
+                                                    storeToLocalStore('load','load');
                                                     store.dispatch(getPendingPurchases());
                                                 }}
                                                 type="radio"
@@ -267,6 +270,7 @@ const IndexHome = ({purchases, loading, sales_requests, accounts}) => {
                                             <input
                                                 onClick={() => {
                                                     store.dispatch(setLoad(true));
+                                                    storeToLocalStore('load','load');
                                                     store.dispatch(getConfirmedPurchases());
                                                 }}
                                                 type="radio"
@@ -279,6 +283,7 @@ const IndexHome = ({purchases, loading, sales_requests, accounts}) => {
                                             <input
                                                 onClick={() => {
                                                     store.dispatch(setLoad(true));
+                                                    storeToLocalStore('load','load');
                                                     store.dispatch(getDeclinedPurchases());
                                                 }}
                                                 type="radio"
@@ -304,7 +309,7 @@ const IndexHome = ({purchases, loading, sales_requests, accounts}) => {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {(!loading && purchases && purchases.map(purchase => {
+                                    {!loading ? purchases && (purchases.map(purchase => {
                                         return (
                                             <tr key={uuidv4()}>
                                                 <th>{purchase.id}</th>
@@ -324,7 +329,7 @@ const IndexHome = ({purchases, loading, sales_requests, accounts}) => {
                                                 </th>
                                             </tr>
                                         )
-                                    })) || <Loading/>
+                                    })) : <Loading/>
 
                                     }
 
@@ -359,7 +364,7 @@ const IndexHome = ({purchases, loading, sales_requests, accounts}) => {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {(sales_requests && sales_requests.map(request => {
+                                    {(sales_requests && Object.values(sales_requests).map(request => {
                                         return (
                                             <tr key={uuidv4()}>
                                                 <td className="align-middle ">{request.purchase_id}</td>

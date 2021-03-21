@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import CartSummary from "../CartSummary/CartSummary";
+import {uuidv4} from "../../js/uuidv4";
 
 const CartListUI = ({ products, handleClick, handleChange }) => {
   return (
@@ -15,17 +16,17 @@ const CartListUI = ({ products, handleClick, handleChange }) => {
               <h5>Items in your cart</h5>
             </div>
 
-            {Object.values(products)
+            {products
               ?.sort((a, b) => a.id - b.id)
-              ?.map((product, index) => {
+              ?.map((product) => {
                 return (
-                  <div key={index} className="ibox-content">
+                  <div key={uuidv4()} className="ibox-content">
                     <div className="table-responsive">
                       <table className="table shopping-cart-table">
                         <tbody>
                           <tr>
                             <td width="90">
-                              <div>
+
                                 <img
                                   style={{
                                     objectFit: "contain",
@@ -35,7 +36,7 @@ const CartListUI = ({ products, handleClick, handleChange }) => {
                                   src={product?.image}
                                   alt=""
                                 />
-                              </div>
+
                             </td>
                             <td width="520" className="desc">
                               <h3>
@@ -62,14 +63,14 @@ const CartListUI = ({ products, handleClick, handleChange }) => {
                             <td>
                               $ {parseFloat(product?.price_cost).toFixed(2)}
                             </td>
-                            <td width="65">
+                            <td width="70">
                               <input
                                 onChange={(event) =>
                                   handleChange(event, product)
                                 }
                                 type="text"
-                                defaultValue={product?.inStock || 1}
-                                className="form-control col-12 float-right"
+                                value={product.inStock || 1}
+                                className="form-control float-right"
                               />
                             </td>
                             <td className="float-right">
