@@ -15,7 +15,7 @@ const Deals = ({allproducts, cart, page}) => {
             <Paging
                 data={allproducts}
                 page={page}
-                col={(cart !== null && Object.values(cart).length) ? "9" : "12"}
+                col={(cart && Object.values(cart ?? []).length) ? "9" : "12"}
                 Component={ProductGrid}
                 show="20"
                 action={(product) => {
@@ -25,7 +25,7 @@ const Deals = ({allproducts, cart, page}) => {
                 priceField
                 Paginated="products"
             />
-            {Object.values(cart).length ? <CartSummary/> : null}
+            {Object.values(cart ?? []).length ? <CartSummary/> : null}
         </React.Fragment>
     )
 }

@@ -8,30 +8,31 @@ import Paging from "../Paging/Paging";
 import {storeToLocalStore} from "../../js/storeHelper";
 
 const GoForShopping = ({products, cart, addToCart, search}) => {
-    console.log(search);
-    if (products.length) {
-        return (
-            <React.Fragment>
-                <div className="col-12 ">
-                    <Paging
-                        data={products}
-                        are_mine={true}
-                        col={cart && Object.values(cart).length ? "9" : "12"}
-                        Component={ProductGrid}
-                        action={(product, event) => {
-                            addToCart(product, event);
-                          storeToLocalStore('cart','cart');
-                        }}
-                        priceField
-                        searField={String(search).length ? search : ""}
 
-                    />
-                    {Object.values(cart).length ? <CartSummary/> : null}
-                </div>
-            </React.Fragment>
-        );
-    }
-    return <NewProductForm/>;
+        if (products.length) {
+            return (
+                <React.Fragment>
+                    <div className="col-12 ">
+
+                        <Paging
+                            data={products}
+                            are_mine={true}
+                            col={cart && Object.values(cart || []).length ? "9" : "12"}
+                            Component={ProductGrid}
+                            action={(product, event) => {
+                                addToCart(product, event);
+                                storeToLocalStore('cart','cart');
+                            }}
+                            priceField
+                            searField={String(search).length ? search : ""}
+
+                        />
+                        {Object.values(cart || []).length ? <CartSummary/> : null}
+                    </div>
+                </React.Fragment>
+            );
+        }
+        return <NewProductForm/>;
 };
 
 const mapStateToProps = (state) => {

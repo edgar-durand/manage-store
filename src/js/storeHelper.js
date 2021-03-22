@@ -10,4 +10,5 @@ export const storeToLocalStore = (keyName = "globalState", storeKey = 'globalSta
 
 };
 
-export const localStoreToStore = (keyName = "store") => localStorage.getItem(keyName) ? JSON.parse(localStorage.getItem(keyName)) : null;
+export const localStoreToStore = (keyName = "store") => localStorage.getItem(keyName) ?
+    JSON.parse(localStorage.getItem(keyName)) : localStorage.setItem(keyName,"");

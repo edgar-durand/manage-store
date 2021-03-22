@@ -17,10 +17,10 @@ const MovementDetail = (props) => {
     }, [ID, MOV])
     return (
         <React.Fragment>
-            <div className="wrapper wrapper-content row animated fadeInRight ">
+            <div className="row animated fadeInRight ">
                 {detail.map(purchase => {
                     return (
-                        <div key={uuidv4()} className="ibox ibox-content col-lg-6">
+                        <div key={uuidv4()} className="ibox ibox-content col-lg-6 table-responsive">
                             <table
                                 className="table table-hover">
                                 <thead>

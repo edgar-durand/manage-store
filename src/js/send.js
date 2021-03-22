@@ -2,7 +2,8 @@ import authHelper from "./authHelper";
 
 const send = async (state, endPoint, method) => {
 
-  const SERVER = "http://localhost:8000";
+  const SERVER = "http://192.168.137.1:8000";
+  // const SERVER = "http://localhost:8000";
   let result, res, dat;
   method = method.toUpperCase();
 
